@@ -1,0 +1,22 @@
+/* .toggle{
+    position: relative;
+    width: 50px;
+    height: 100%;
+}
+
+.toggle::after{
+    content: '';
+    background-color: red;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border-radius: 50%;
+    top: 0;
+} */
+.inpdiv:hover{
+    background-color: rgba(212 212 212);
+}
+
+.inpdiv:hover .input{
+    background-color: rgba(212 212 212);
+}
