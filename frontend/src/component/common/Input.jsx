@@ -1,9 +1,9 @@
 import React from 'react'
 import {twMerge} from 'tailwind-merge'
 
-const Input = ({className,...props}) => {
+const Input = ({type='text',className,...props}) => {
   return (
-    <input type="text" className={twMerge('py-3 outline-none',className)} {...props} />
+    <input type={type} className={twMerge('py-3 outline-none',className)} {...props} />
   )
 }
 

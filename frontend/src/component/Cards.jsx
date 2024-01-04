@@ -5,7 +5,7 @@ const Cards = ({name,imgDet,date,price,img}) => {
   return (
     <div className='mt-8 relative'>
         <Heart enableBackground={true} color='white' size={30} className='absolute left-[90%] cursor-pointer top-3' />
-        <img className='rounded-xl h-[370px]' src={img} alt="" />
+        <img className='rounded-xl' src={img} alt="" />
         <div className='flex justify-between items-center'>
         <h1 className='text-xl font-bold mt-5'>{name}</h1>
         <p className='text-lg text-black font-bold'>New</p>
