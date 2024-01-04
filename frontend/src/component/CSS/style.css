@@ -20,3 +20,23 @@
 .inpdiv:hover .input{
     background-color: rgba(212 212 212);
 }
+
+.filterbar{
+    z-index: 1;
+}
+
+.profilemodal{
+    position: relative;
+    z-index: 9;
+}
+
+/* .profilemodal::after{
+    content: '';
+    background-color: gray;
+    position: absolute;
+    width: 20px;
+    left: 75%;
+    top: -4%;
+    height: 20px;
+    transform: rotate(45deg);
+} */

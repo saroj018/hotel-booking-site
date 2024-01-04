@@ -2,10 +2,20 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Globe, Menu, Search } from 'lucide-react'
 import Input from './common/Input'
+import ProfilePopup from './popup/ProfilePopup'
 
 const Header = () => {
 
     const [scrollValue, setScrollValue] = useState(false)
+    const[showProfileModal,setShowProfileModal]=useState(false)
+
+    useEffect(()=>{
+        window.addEventListener('click',()=>{
+            if(showProfileModal==true){
+                setShowProfileModal(false)
+            }
+        })
+    },[showProfileModal])
     useEffect(() => {
         function getScrollValue() {
             if (window.scrollY > 24) {
@@ -35,14 +45,15 @@ const Header = () => {
             </div>
 
 
-            <nav className='flex items-center gap-8'>
+            <nav className='flex relative items-center gap-8'>
                 <Link className='font-semibold text-black'>Airbnb your Home</Link>
                 <Globe />
 
-                <div className='flex items-center gap-3 border-2 border-neutral-300 px-3 py-2 rounded-full'>
+                <div onClick={(e)=>{e.stopPropagation(), setShowProfileModal(!showProfileModal)}} className='flex items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
                     <Menu />
                     <img className='h-10 w-10 rounded-full' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
                 </div>
+               {showProfileModal &&  <ProfilePopup onClick={(e)=>e.stopPropagation()} className={'absolute  w-[300px] left-[20%] top-[120%]'}/>}
             </nav>
         </header>
     )

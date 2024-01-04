@@ -5,6 +5,7 @@ import Input from '../common/Input';
 import Select from '../common/Select';
 import Option from '../common/Option';
 import { BedDouble, Home, Hotel, School } from 'lucide-react';
+import Button from '../common/Button';
 
 
 const FilterPopup = () => {
@@ -59,7 +60,7 @@ const FilterPopup = () => {
             <h1 className='text-3xl font-bold'>Type of Place</h1>
             <p className='text-xl my-4'>A home all to yourself</p>
           </div>
-          <div className='flex px-9 text-center'>
+          <div className='flex px-9 text-center my-5'>
             <div className='grow p-3 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold '>Any Type</div>
             <div className='grow p-3 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold '>Room</div>
             <div className='grow p-3 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold '>Entire Home</div>
@@ -111,9 +112,10 @@ const FilterPopup = () => {
              }
             </div>
           </div>
-          <form className='' action="">
-
-          </form>
+        <div className='flex justify-between my-4 p-4'>
+        <Button>Clear</Button>
+        <Button>Find</Button>
+        </div>
         </div>
       </Popup>
     </div>

@@ -34,15 +34,43 @@ const FilterBar = () => {
             name:'Amazing View',
             icon:<Home />
         },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
+        {
+            name:'Amazing View',
+            icon:<Home />
+        },
         
     ]
   return (
-    <div className='flex gap-5 px-10 mt-8 items-center justify-between sticky z-10 top-[15%] bg-white'>
-       <div className='flex gap-5 overflow-scroll max-w-[70%] border-2 border-green-500  px-5'>
+    <div className='filterbar flex gap-5 px-2 mt-8 items-center justify-between sticky border-2 rounded-md  top-[15%] bg-white'>
+       <div className='flex gap-2 rounded-xl cursor-pointer max-w-[70%]  overflow-x-scroll px-5'>
        {
             filterOption.map((item,index)=>{
                 return(
-                    <div className='flex border-2 border-green-500 w-[200px] gap-3 flex-col justify-center items-center p-2' key={index+item.name}>
+                    <div className='flex flex-col items-center min-w-[130px]  my-4 gap-4 p-2' key={index+item.name}>
                         <span>{item.icon}</span>
                         <p className='text-lg'>{item.name}</p>
                     </div>
