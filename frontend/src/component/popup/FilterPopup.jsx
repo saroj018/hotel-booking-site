@@ -53,7 +53,7 @@ const FilterPopup = () => {
       <FilterBtn onClick={() => setIsOpen(true)} />
 
       <Popup onClose={() => setIsOpen(false)} open={isOpen} {...{ overlayStyle }}>
-        <div className='bg-white px-7 shadow-md rounded-md py-3 w-[1000px] max-h-[700px] overflow-y-scroll  border-2 border-red-500'>
+        <div className='bg-white px-7 shadow-md rounded-md py-3 w-[1000px] max-h-[700px] overflow-y-scroll'>
           <h1 className='text-center my-4 text-3xl font-bold'>Filter</h1>
           <hr />
           <div className='my-6'>

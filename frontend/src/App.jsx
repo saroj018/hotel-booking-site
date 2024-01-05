@@ -3,14 +3,33 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './component/shared/Layout'
 import Home from './page/home/Home'
 import DetailPage from './page/details/DetailPage'
+import IntroPage from './host/page/IntroPage'
+import LayoutHost from './component/shared/LayoutHost'
+import SelectHomeType from './host/page/SelectHomeType'
+import SelectRoomType from './host/page/SelectRoomType'
+import AddLocation from './host/page/AddLocation'
+import AboutRoom from './host/page/AboutRoom'
+import OfferServices from './host/page/OfferServices'
+import AddPhotos from './host/page/AddPhotos'
+import HouseTitle from './host/page/HouseTitle'
 
 const App = () => {
   return (
     <Routes>
-        <Route path='/' element={<Layout/>}>
-            <Route index element={<Home/>}/>
-            <Route path='/detail' element={<DetailPage/>}/>
-        </Route>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path='detail' element={<DetailPage />} />
+      </Route>
+      <Route path='/host' element={<LayoutHost />}>
+        <Route index element={<IntroPage />} />
+        <Route path='hometype' element={<SelectHomeType />} />
+        <Route path='roomtype' element={<SelectRoomType />} />
+        <Route path='addlocation' element={<AddLocation />} />
+        <Route path='aboutroom' element={<AboutRoom />} />
+        <Route path='offerservice' element={<OfferServices />} />
+        <Route path='addphotos' element={<AddPhotos />} />
+        <Route path='housename' element={<HouseTitle />} />
+      </Route>
     </Routes>
   )
 }

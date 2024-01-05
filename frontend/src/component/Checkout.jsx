@@ -26,7 +26,7 @@ const Checkout = ({className}) => {
                         <p className='text-lg font-black'>2023/2/3</p>
                     </div>
                 </div>
-                <div onClick={()=>setList(!list)} className='w-full flex justify-between items-center cursor-pointer h-[70px] px-4 py-2 text-xl border-2'>
+                <div onClick={()=>setList(!list)} className='w-full my-2 flex justify-between items-center cursor-pointer h-[70px] px-4 py-2 text-xl border-2'>
                     <div>
                         <p className='font-bold'>Guest</p>
                         <p>1 Guest</p>
@@ -34,7 +34,7 @@ const Checkout = ({className}) => {
                     <ChevronDown className={!list ? 'rotate-180 duration-300': 'rotate-0 duration-300'} />
                 </div>
             </div>
-            {list && <ListPopup className={'absolute top-[38%] left-[4%] bg-white max-w-[92%] w-full'} />}
+            {list && <ListPopup className={'absolute top-[46%] left-[4%] bg-white max-w-[92%] w-full'} />}
 
             <Button className={'w-full my-5 bg-[#ff385c] outline-none border-none hover:bg-[#ff385c] hover:text-white'}>Reserve</Button>
 

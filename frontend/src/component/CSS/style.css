@@ -44,3 +44,17 @@
 .bodycolor{
     background-color: red;
 }
+
+.footer{
+    position: relative;
+}
+
+.footer::after{
+    content: '';
+    width: 10%;
+    height: 10px;
+    background-color: rgba(128, 0, 128, 0.444);
+    position: absolute;
+    left: 0;
+    top: 0;
+}

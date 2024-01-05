@@ -47,7 +47,7 @@ const Header = () => {
 
 
             <nav className='flex relative items-center gap-8'>
-                <Link className='font-semibold text-black'>Airbnb your Home</Link>
+                <Link to={'/host'} className='font-semibold text-black'>Airbnb your Home</Link>
                 <Globe />
 
                 <div onClick={(e)=>{e.stopPropagation(), setShowProfileModal(!showProfileModal)}} className='flex items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
