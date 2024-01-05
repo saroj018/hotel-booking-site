@@ -1,7 +1,6 @@
 import { AirVent, Bath, Building2, Droplets, Ship, Star, Tv, Wifi } from 'lucide-react'
 import React from 'react'
 import Checkout from '../../component/Checkout'
-import CalenderPopup from '../../component/popup/CalenderPopup'
 
 
 const DetailPage = () => {
@@ -88,7 +87,8 @@ const DetailPage = () => {
               })
             }
           </div>
-          <CalenderPopup />
+          <div>
+          </div>
         </div>
       </div>
 

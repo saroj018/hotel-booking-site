@@ -6,6 +6,7 @@ import ListPopup from './popup/ListPopup'
 import { ChevronDown } from 'lucide-react'
 import Button from './common/Button'
 import { twMerge } from 'tailwind-merge'
+import DateRangePicker from './utlils/DateRange'
 
 const Checkout = ({className}) => {
 
@@ -14,6 +15,7 @@ const Checkout = ({className}) => {
         <div className={twMerge('w-[500px] rounded-xl shadow-xl p-5 border-2 relative',className)}>
             <h1 className='text-2xl font-bold'>$909 <span>night</span></h1>
             <div className=' my-3'>
+                <DateRangePicker/>
                 <div className='flex'>
                     <div className='border-2 px-4 py-1 grow text-xl'>
                         <p>CheckIn</p>

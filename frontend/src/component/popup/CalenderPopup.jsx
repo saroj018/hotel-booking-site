@@ -1,12 +1,13 @@
 import React from 'react'
-import Input from '../common/Input'
+import { twMerge } from 'tailwind-merge'
+import DateRange from '../utlils/DateRange'
 
-const CalenderPopup = () => {
+const CalenderPopup = ({className}) => {
   return (
     <div>
-        <h1 className='text-center text-3xl'>Set Calender</h1>
-        <div>
-            <Input type='date'/>
+        <h1 className={twMerge('text-center text-3xl',className)}>Select Checkout Date</h1>
+        <div className='w-full border-2 border-red-500' >
+            <DateRange/>
         </div>
     </div>
   )
