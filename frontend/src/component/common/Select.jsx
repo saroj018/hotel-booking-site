@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Select = ({children,...props}) => {
-  return <select {...props} name="" id="">{children}</select>
+const Select = ({children,className,...props}) => {
+  return <select className={className} {...props} name="" id="">{children}</select>
 }
 
 export default Select

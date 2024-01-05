@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Option = ({children}) => {
-  return <option value="">{children}</option>
+const Option = ({children,className}) => {
+  return <option className={className} value="">{children}</option>
 }
 
 export default Option

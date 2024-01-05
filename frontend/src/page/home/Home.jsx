@@ -7,7 +7,7 @@ const Home = () => {
 
     
   return (
-    <div className='px-10'>
+    <div >
         <InputBar/>
         <FilterBar/>
 

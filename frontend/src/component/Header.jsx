@@ -32,13 +32,14 @@ const Header = () => {
     }, [])
     return (
         <header className='flex items-center z-10 justify-between px-10 py-8 text-xl text-neutral-700 sticky top-0 bg-white'>
-            <img className='h-10' src="https://th.bing.com/th/id/R.11566b13ebe3fe195137ce2bd1804a69?rik=Og%2bcKTbfN4mhBA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2016%2f03%2fAirbnb_logo.png&ehk=QhLUqOjF6HxBvuuxjqpvtKEeCf%2bnDOuAUWx8DInRPOo%3d&risl=&pid=ImgRaw&r=0" alt="" />
+            <Link to={'/'}><img className='h-10' src="https://th.bing.com/th/id/R.11566b13ebe3fe195137ce2bd1804a69?rik=Og%2bcKTbfN4mhBA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2016%2f03%2fAirbnb_logo.png&ehk=QhLUqOjF6HxBvuuxjqpvtKEeCf%2bnDOuAUWx8DInRPOo%3d&risl=&pid=ImgRaw&r=0" alt="" /></Link>
 
             <div className='relative lg:block hidden'>
                 <nav className={`flex items-center gap-8 ${scrollValue ? 'hidden' : ''}`}>
                     <Link>Stays</Link>
                     <Link>Experinces</Link>
                     <Link>Online Experinces</Link>
+                    <Link to={'/detail'}>Details</Link>
                 </nav>
                 {scrollValue && <Input className={' border-2 border-neutral-600 min-w-[800px] rounded-full pl-4 '} placeholder={'Search your destinations...'} />}
                 {scrollValue && <Search className='absolute left-[95%] top-4 ' />}

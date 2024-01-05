@@ -32,11 +32,15 @@
 
 /* .profilemodal::after{
     content: '';
-    background-color: gray;
+    background-color: rgb(229 229 229);
     position: absolute;
     width: 20px;
     left: 75%;
-    top: -4%;
+    top: -3%;
     height: 20px;
     transform: rotate(45deg);
 } */
+
+.bodycolor{
+    background-color: red;
+}
