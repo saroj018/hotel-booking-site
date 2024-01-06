@@ -17,13 +17,17 @@ import HomeDescription from './host/page/HomeDescription'
 import BookingType from './host/page/BookingType'
 import SetPrice from './host/page/SetPrice'
 import DiscountPage from './host/page/DiscountPage'
+import FinalPage from './host/page/FinalPage'
+import Dashboard from './host/dashboard/page/Dashboard'
+import HostDashboardLayout from './component/shared/HostDashboardLayout'
+import Listing from './host/dashboard/page/Listing'
 
 const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path='detail' element={<DetailPage />} />
+        <Route path='details' element={<DetailPage />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />
@@ -39,6 +43,11 @@ const App = () => {
         <Route path='bookingtype' element={<BookingType />} />
         <Route path='setprice' element={<SetPrice />} />
         <Route path='discount' element={<DiscountPage />} />
+      </Route>
+      <Route path='/host/finalpage' element={<FinalPage />} />
+      <Route path='/host/dashboard' element={<HostDashboardLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path='listing' element={<Listing />} />
       </Route>
     </Routes>
   )

@@ -43,7 +43,7 @@ const DetailPage = () => {
   return (
     <div>
       <h1 className='text-4xl font-bold my-5'>Two Bedroom Beach House Seaview</h1>
-      <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl border-2 border-green-500'>
+      <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl '>
         <img src="https://a0.muscache.com/im/pictures/miso/Hosting-859709719997723808/original/ca07821e-c540-41a5-8e89-1daf0ea9e9a6.jpeg?im_w=960" alt="" />
         <div className='grid grid-cols-2 gap-3'>
           <img className='h-[243px]' src="https://a0.muscache.com/im/pictures/miso/Hosting-859709719997723808/original/d3a5392e-e3fb-4c21-b13f-62455ec4f164.jpeg?im_w=720" alt="" />

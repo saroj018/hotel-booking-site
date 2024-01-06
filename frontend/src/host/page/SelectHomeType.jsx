@@ -1,7 +1,7 @@
 import Footer from '../bar/Footer'
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SelectHomeType = () => {
 
@@ -35,6 +35,8 @@ const SelectHomeType = () => {
             icon:<Tractor />
         }
     ]
+    
+    const navigate=useNavigate()
   return (
     <>
         <h1 className='text-center text-4xl font-bold my-8'>Which of these best describes your place?</h1>
@@ -48,7 +50,7 @@ const SelectHomeType = () => {
                 })
             }
         </div>
-        <Link to={'/host/roomtype'}><Footer/></Link>
+        <Footer back={'/host'} forward={'/host/roomtype'}/>
     </>
   )
 }

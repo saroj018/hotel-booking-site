@@ -3,28 +3,9 @@ import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import '../CSS/style.css'
 
-const ProfilePopup = ({className,...props}) => {
+const ProfilePopup = ({className,profileItem,...props}) => {
 
-    const profileItem=[
-        {
-            name:'Message'
-        },
-        {
-            name:'Trips'
-        },
-        {
-            name:'WishList'
-        },
-        {
-            name:'Account'
-        },
-        {
-            name:'Airbnb Your Home'
-        },
-        {
-            name:'LogOut'
-        }
-    ]
+    
   return (
     <div className={twMerge('bg-white border-2 profilemodal text-xl font-black shadow-md rounded-xl',className)}>
         {
