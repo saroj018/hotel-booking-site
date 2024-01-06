@@ -21,7 +21,7 @@ const InputBar = () => {
         }
     ]
     return (
-        <section className='flex mb-10 items-center py-1 h-[70px] w-full max-w-[1000px] border-2 border-neutral-300 mx-auto p-1 rounded-full shadow-sm'>
+        <section className='flex mb-10 items-center my-5 py-1 h-[70px] w-full max-w-[1000px] border-2 border-neutral-300 mx-auto p-1 rounded-full shadow-sm'>
 
             <div className='inpdiv pl-10 border-r h-full w-full cursor-pointer pb-2  pr-4  rounded-full'>
                 <Input className={ 'input w-full h-full  cursor-pointer rounded-r-full'} id={'destinations'} placeholder={'Search destinations'} />

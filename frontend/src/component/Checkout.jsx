@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import Input from './common/Input'
-import Select from './common/Select'
-import Option from './common/Option'
 import ListPopup from './popup/ListPopup'
 import { ChevronDown } from 'lucide-react'
 import Button from './common/Button'
 import { twMerge } from 'tailwind-merge'
 import DateRangePicker from './utlils/DateRange'
+import { Link } from 'react-router-dom'
 
 const Checkout = ({className}) => {
 
@@ -36,7 +34,7 @@ const Checkout = ({className}) => {
             </div>
             {list && <ListPopup className={'absolute top-[46%] left-[4%] bg-white max-w-[92%] w-full'} />}
 
-            <Button className={'w-full my-5 bg-[#ff385c] outline-none border-none hover:bg-[#ff385c] hover:text-white'}>Reserve</Button>
+            <Link to={'/payprice'}><Button className={'w-full my-5 bg-[#ff385c] outline-none border-none hover:bg-[#ff385c] hover:text-white'}>Reserve</Button></Link>
 
             <p className='text-center text-xl'>You won't be Charged Yet</p>
             <div className='flex justify-between items-center my-4 text-2xl'>

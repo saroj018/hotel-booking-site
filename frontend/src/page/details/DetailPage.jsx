@@ -68,7 +68,7 @@ const DetailPage = () => {
           <div className='flex items-center gap-4 my-5'>
             <img className='rounded-full h-[50px] w-[50px]' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
             <div>
-              <h1 className='text-xl font-black'>Hosted By Saroj</h1>
+              <h1 className='text-lg font-black'>Hosted By Saroj</h1>
               <p className='text-lg '>Superhost</p>
             </div>
           </div>

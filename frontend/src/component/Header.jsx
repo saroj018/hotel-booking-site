@@ -34,7 +34,7 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
         return () => window.removeEventListener('scroll', getScrollValue)
     }, [])
     return (
-        <header className={twMerge(`flex items-center z-10 justify-between px-10 py-8 text-xl text-neutral-700 ${extraItem ? 'sticky': ''} top-0 bg-white`,className)}>
+        <header className={twMerge(`flex items-center shadow-md z-10 justify-between px-10 py-8 text-xl text-neutral-700 ${extraItem ? 'sticky': ''} top-0 bg-white`,className)}>
             <Link to={'/'}><img className='h-10' src="https://th.bing.com/th/id/R.11566b13ebe3fe195137ce2bd1804a69?rik=Og%2bcKTbfN4mhBA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2016%2f03%2fAirbnb_logo.png&ehk=QhLUqOjF6HxBvuuxjqpvtKEeCf%2bnDOuAUWx8DInRPOo%3d&risl=&pid=ImgRaw&r=0" alt="" /></Link>
 
             <div className='relative lg:block hidden'>

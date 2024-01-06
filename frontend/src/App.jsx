@@ -22,6 +22,7 @@ import Dashboard from './host/dashboard/page/Dashboard'
 import HostDashboardLayout from './component/shared/HostDashboardLayout'
 import Listing from './host/dashboard/page/Listing'
 import CalenderPage from './host/dashboard/page/CalenderPage'
+import PayPrice from './page/pay/PayPrice'
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} />
         <Route path='details' element={<DetailPage />} />
+        <Route path='payprice' element={<PayPrice />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />
