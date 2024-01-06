@@ -4,7 +4,7 @@ import Popup from 'reactjs-popup'
 import Input from '../common/Input';
 import Select from '../common/Select';
 import Option from '../common/Option';
-import { BedDouble, Home, Hotel, School } from 'lucide-react';
+import { BedDouble, Home, Hotel, School, X } from 'lucide-react';
 import Button from '../common/Button';
 
 
@@ -52,8 +52,9 @@ const FilterPopup = () => {
     <div>
       <FilterBtn onClick={() => setIsOpen(true)} />
 
-      <Popup onClose={() => setIsOpen(false)} open={isOpen} {...{ overlayStyle }}>
-        <div className='bg-white px-7 shadow-md rounded-md py-3 w-[1000px] max-h-[700px] overflow-y-scroll'>
+      <Popup lockScroll={true} onClose={() => setIsOpen(false)} open={isOpen} {...{ overlayStyle }}>
+        <div className='bg-white px-7 shadow-md rounded-md py-3 w-[1000px] max-h-[700px] overflow-y-scroll relative'>
+          <X onClick={()=>setIsOpen(false)} className='absolute left-[95%] cursor-pointer top-6'/>
           <h1 className='text-center my-4 text-3xl font-bold'>Filter</h1>
           <hr />
           <div className='my-6'>

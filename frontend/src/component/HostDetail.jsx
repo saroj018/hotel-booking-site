@@ -1,5 +1,7 @@
 import { Hotel, ShieldCheck, Star } from 'lucide-react'
 import React from 'react'
+import ChatPopup from './popup/ChatPopup'
+import OwnerProfile from './utlils/OwnerProfile'
 
 const HostDetail = () => {
 
@@ -19,12 +21,9 @@ const HostDetail = () => {
     ]
     return (
         <div className='my-8'>
-            <div className='flex items-center gap-4 '>
-                <img className='rounded-full h-[50px] w-[50px]' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
-                <div>
-                    <h1 className='text-xl font-black'>Hosted By Saroj</h1>
-                    <p className='text-lg '>Joind in 2018</p>
-                </div>
+            <div className='flex justify-between items-center pr-10'>
+                <OwnerProfile/>
+                <ChatPopup/>
             </div>
             <div className='flex items-center gap-4 mt-5'>
                 {

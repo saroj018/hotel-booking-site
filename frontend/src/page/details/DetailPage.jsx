@@ -3,6 +3,7 @@ import React from 'react'
 import Checkout from '../../component/Checkout'
 import AboutPopup from '../../component/popup/AboutPopup'
 import HostDetail from '../../component/HostDetail'
+import OwnerProfile from '../../component/utlils/OwnerProfile'
 
 
 const DetailPage = () => {
@@ -65,13 +66,7 @@ const DetailPage = () => {
           </div>
 
           <hr />
-          <div className='flex items-center gap-4 my-5'>
-            <img className='rounded-full h-[50px] w-[50px]' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
-            <div>
-              <h1 className='text-lg font-black'>Hosted By Saroj</h1>
-              <p className='text-lg '>Superhost</p>
-            </div>
-          </div>
+          <OwnerProfile/>
 
           <div className='mt-6 w-1/2 border-2 rounded-md shadow-sm p-5'>
         <p className='text-xl'>In  The Two Bedroom Villa, the first floor features a master bedroom and a second bedroom with king and twin beds, each equipped with its own terrace. The ground floor, with a living area and outdoor terrace which provides direct access to the beach, is perfect for family bonding.</p>
