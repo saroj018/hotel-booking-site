@@ -21,6 +21,7 @@ import FinalPage from './host/page/FinalPage'
 import Dashboard from './host/dashboard/page/Dashboard'
 import HostDashboardLayout from './component/shared/HostDashboardLayout'
 import Listing from './host/dashboard/page/Listing'
+import CalenderPage from './host/dashboard/page/CalenderPage'
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
       <Route path='/host/dashboard' element={<HostDashboardLayout />}>
         <Route index element={<Dashboard />} />
         <Route path='listing' element={<Listing />} />
+        <Route path='calender' element={<CalenderPage />} />
       </Route>
     </Routes>
   )

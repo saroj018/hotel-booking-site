@@ -11,11 +11,11 @@ const Navbar = () => {
     },
     {
         title:'Calender',
-        url:''
+        url:'/host/dashboard/calender'
     },
     {
         title:'Listings',
-        url:''
+        url:'/host/dashboard/listing'
     },
     {
         title:'Inbox',
