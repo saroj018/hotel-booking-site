@@ -26,7 +26,7 @@ const ChatBox = ({className}) => {
   return (
     <div className={twMerge('mt-2 w-full relative',className)}>
         <div className='border-2 shadow-md p-4'>
-            <OwnerProfile title={'Saroj Aryal'}/>
+            <OwnerProfile title={'Saroj Aryal'} subtitle={'online'}/>
         </div>
         <div className='flex flex-col px-7 h-[78%] text-lg   py-3 overflow-y-scroll'>
         {
@@ -37,7 +37,7 @@ const ChatBox = ({className}) => {
         </div>
         <div className='flex w-[95%] absolute left-4 top-[90%] bg-white'>
             <Input className={'w-full text-xl pl-4 border-2 border-neutral-700 rounded-full'}/>
-            <SendHorizontal size={34} className='relative top-2 left-3 cursor-pointer'/>
+            <SendHorizontal color='purple' size={34} className='relative top-2 left-3 cursor-pointer'/>
         </div>
     </div>
   )

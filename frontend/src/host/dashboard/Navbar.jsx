@@ -32,7 +32,8 @@ const Navbar = () => {
         name:'Profile'
     },
     {
-        name:'Account'
+        name:'Account',
+        url:'/account'
     },
     {
         name:'Switch to Traveller',

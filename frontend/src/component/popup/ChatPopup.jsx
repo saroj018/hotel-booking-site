@@ -51,7 +51,7 @@ const ChatPopup = () => {
                     </div>
                     <div className='mt-4 absolute top-[86%] bg-white w-full p-4 left-0 '>
                         <Input className={'w-[90%] px-4 text-xl rounded-full border-2 border-neutral-700'} />
-                        <SendHorizontal size={35} className='absolute cursor-pointer left-[90%] top-6' />
+                        <SendHorizontal color='purple' size={35} className='absolute cursor-pointer left-[90%] top-6' />
                     </div>
                 </div>
             </Popup>

@@ -24,6 +24,8 @@ import Listing from './host/dashboard/page/Listing'
 import CalenderPage from './host/dashboard/page/CalenderPage'
 import PayPrice from './page/pay/PayPrice'
 import Inbox from './host/dashboard/page/Inbox'
+import Account from './page/account/Account'
+import WishList from './page/wishlist/WishList'
 
 const App = () => {
   return (
@@ -32,6 +34,8 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path='details' element={<DetailPage />} />
         <Route path='payprice' element={<PayPrice />} />
+        <Route path='account' element={<Account />} />
+        <Route path='wishlist' element={<WishList />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />

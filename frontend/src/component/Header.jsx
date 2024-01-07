@@ -32,7 +32,11 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
         window.addEventListener('scroll', getScrollValue)
 
         return () => window.removeEventListener('scroll', getScrollValue)
+
     }, [])
+    const closePopup=()=>{
+        setShowProfileModal(false)
+    }
     return (
         <header className={twMerge(`flex items-center shadow-md z-10 justify-between px-10 py-8 text-xl text-neutral-700 ${extraItem ? 'sticky': ''} top-0 bg-white`,className)}>
             <Link to={'/'}><img className='h-10' src="https://th.bing.com/th/id/R.11566b13ebe3fe195137ce2bd1804a69?rik=Og%2bcKTbfN4mhBA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2016%2f03%2fAirbnb_logo.png&ehk=QhLUqOjF6HxBvuuxjqpvtKEeCf%2bnDOuAUWx8DInRPOo%3d&risl=&pid=ImgRaw&r=0" alt="" /></Link>
@@ -60,7 +64,7 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
                     <Menu />
                     <img className='h-10 w-10 rounded-full' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
                 </div>
-               {showProfileModal &&  <ProfilePopup profileItem={profileItem} onClick={(e)=>e.stopPropagation()} className={'absolute  w-[300px] left-[20%] top-[120%]'}/>}
+               {showProfileModal &&  <ProfilePopup closePopup={closePopup} profileItem={profileItem} onClick={(e)=>e.stopPropagation()} className={'absolute  w-[300px] left-[20%] top-[120%]'}/>}
             </nav>
         </header>
     )

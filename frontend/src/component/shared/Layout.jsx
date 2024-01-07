@@ -14,10 +14,12 @@ const Layout = () => {
         name:'Trips'
     },
     {
-        name:'WishList'
+        name:'WishList',
+        url:'wishlist'
     },
     {
-        name:'Account'
+        name:'Account',
+        url:'/account'
     },
     {
         name:'Airbnb Your Home'
