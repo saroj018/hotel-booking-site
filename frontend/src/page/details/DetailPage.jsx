@@ -66,7 +66,7 @@ const DetailPage = () => {
           </div>
 
           <hr />
-          <OwnerProfile/>
+          <OwnerProfile title={'Saroj Aryal'} subtitle={'Joined in 2018'}/>
 
           <div className='mt-6 w-1/2 border-2 rounded-md shadow-sm p-5'>
         <p className='text-xl'>In  The Two Bedroom Villa, the first floor features a master bedroom and a second bedroom with king and twin beds, each equipped with its own terrace. The ground floor, with a living area and outdoor terrace which provides direct access to the beach, is perfect for family bonding.</p>

@@ -7,7 +7,7 @@ const Navbar = () => {
  const navlinks=[
     {
         title:'Today',
-        url:''
+        url:'/host/dashboard'
     },
     {
         title:'Calender',
@@ -19,7 +19,7 @@ const Navbar = () => {
     },
     {
         title:'Inbox',
-        url:''
+        url:'/host/dashboard/inbox'
     },
     {
         title:'Menu',
@@ -35,7 +35,8 @@ const Navbar = () => {
         name:'Account'
     },
     {
-        name:'Switch to Traveller'
+        name:'Switch to Traveller',
+        url:'/'
     },
     {
         name:'Log Out'

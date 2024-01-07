@@ -41,10 +41,6 @@ const Layout = () => {
       url: ''
     },
     {
-      title: 'Details',
-      url: '/details'
-    },
-    {
       title: 'Dashboard',
       url: '/host/dashboard'
     }

@@ -15,10 +15,14 @@ const ChatPopup = () => {
     const messages = [
         { text: 'Hello!', isOutgoing: true },
         { text: 'Hi there!', isOutgoing: false },
+        { text: 'Hi there!', isOutgoing: false },
+        { text: 'Hi there!', isOutgoing: false },
         { text: 'How are you?', isOutgoing: true },
         { text: 'I am doing well, thanks!', isOutgoing: false },
         { text: 'Hello!', isOutgoing: true },
         { text: 'Hi there!', isOutgoing: false },
+        { text: 'How are you?', isOutgoing: true },
+        { text: 'How are you?', isOutgoing: true },
         { text: 'How are you?', isOutgoing: true },
         { text: 'I am doing well, thanks!', isOutgoing: false },
         { text: 'How are you?', isOutgoing: true },
@@ -33,7 +37,7 @@ const ChatPopup = () => {
                     <div className='sticky px-7 left-0 -top-5 bg-white border-2 shadow-md w-full'>
                         <h1 className='text-2xl font-bold py-1 text-center'>Chat Box</h1>
                         <hr />
-                        <OwnerProfile className={'py-3'} />
+                        <OwnerProfile className={'py-3'} title={'Saroj Aryal'} subtitle={'Online'} />
                     <X onClick={() => setOpenPopup(false)} className='absolute left-[94%] top-2 cursor-pointer' />
                     </div>
                     <hr />
@@ -41,7 +45,7 @@ const ChatPopup = () => {
                     <div className='flex px-7 flex-col h-[70%] pt-3 overflow-y-scroll mb-3'>
                         {
                             messages.map((ele, index) => {
-                                return <p key={index} className={`${ele.isOutgoing == true ? 'self-start bg-neutral-300 rounded-md py-2 px-3 text-lg text-black ' : 'self-end bg-blue-500 rounded-md py-2 px-3 text-lg text-white'}`}>{ele.text}</p>
+                                return <p key={index} className={`${ele.isOutgoing == true ? 'self-start bg-neutral-300 rounded-md py-2 px-3 text-lg text-black ' : 'self-end bg-blue-500 rounded-md py-2 px-3 text-lg text-white'} my-1`}>{ele.text}</p>
                             })
                         }
                     </div>

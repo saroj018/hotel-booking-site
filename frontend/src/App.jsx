@@ -23,6 +23,7 @@ import HostDashboardLayout from './component/shared/HostDashboardLayout'
 import Listing from './host/dashboard/page/Listing'
 import CalenderPage from './host/dashboard/page/CalenderPage'
 import PayPrice from './page/pay/PayPrice'
+import Inbox from './host/dashboard/page/Inbox'
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
         <Route index element={<Dashboard />} />
         <Route path='listing' element={<Listing />} />
         <Route path='calender' element={<CalenderPage />} />
+        <Route path='inbox' element={<Inbox/>} />
       </Route>
     </Routes>
   )

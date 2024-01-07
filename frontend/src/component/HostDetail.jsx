@@ -22,7 +22,7 @@ const HostDetail = () => {
     return (
         <div className='my-8'>
             <div className='flex justify-between items-center pr-10'>
-                <OwnerProfile/>
+                <OwnerProfile title={'Saroj Aryal'} subtitle={'Host'}/>
                 <ChatPopup/>
             </div>
             <div className='flex items-center gap-4 mt-5'>
