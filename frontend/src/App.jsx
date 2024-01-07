@@ -36,6 +36,7 @@ const App = () => {
         <Route path='payprice' element={<PayPrice />} />
         <Route path='account' element={<Account />} />
         <Route path='wishlist' element={<WishList />} />
+        <Route path='message' element={<Inbox />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />

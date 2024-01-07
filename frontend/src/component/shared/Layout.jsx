@@ -8,7 +8,8 @@ const Layout = () => {
 
   const profileItem=[
     {
-        name:'Message'
+        name:'Message',
+        url:'/message'
     },
     {
         name:'Trips'
@@ -22,7 +23,8 @@ const Layout = () => {
         url:'/account'
     },
     {
-        name:'Airbnb Your Home'
+        name:'Airbnb Your Home',
+        url:'/host'
     },
     {
         name:'LogOut'

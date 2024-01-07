@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import '../CSS/style.css'
 
 const ProfilePopup = ({className,profileItem,closePopup,...props}) => {
+  
 
     
   return (
