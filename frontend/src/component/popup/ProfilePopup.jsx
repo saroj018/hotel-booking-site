@@ -1,9 +1,9 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import '../CSS/style.css'
 
 const ProfilePopup = ({className,profileItem,closePopup,...props}) => {
+  
 
     
   return (

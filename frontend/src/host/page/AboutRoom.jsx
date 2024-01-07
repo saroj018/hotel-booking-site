@@ -1,4 +1,3 @@
-import React from 'react'
 import Footer from '../bar/Footer'
 import { Link } from 'react-router-dom'
 
@@ -7,7 +6,7 @@ const AboutRoom = () => {
        <>
         <div className='w-1/2 mx-auto'>
             <h1 className='text-4xl font-bold my-4'>Share some basics about your place</h1>
-            <p className='text-xl'>You'll add more details later, like bed types.</p>
+            <p className='text-xl'>Youll add more details later, like bed types.</p>
             <div>
                 <div className='flex items-center border-2 p-3 rounded-md my-3 justify-between'>
                         <p className='text-xl font-semibold my-1'>Guests</p>

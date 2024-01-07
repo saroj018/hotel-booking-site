@@ -1,7 +1,6 @@
 import Footer from '../bar/Footer'
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+// import {  useNavigate } from 'react-router-dom'
 
 const SelectHomeType = () => {
 
@@ -36,7 +35,7 @@ const SelectHomeType = () => {
         }
     ]
     
-    const navigate=useNavigate()
+    // const navigate=useNavigate()
   return (
     <>
         <h1 className='text-center text-4xl font-bold my-8'>Which of these best describes your place?</h1>

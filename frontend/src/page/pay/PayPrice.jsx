@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from '../../component/common/Button'
 import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'

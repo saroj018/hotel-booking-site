@@ -1,8 +1,6 @@
 
 import { Link } from 'react-router-dom'
 import Button from '../../component/common/Button'
-import React from 'react'
-import Footer from '../bar/Footer'
 
 
 const IntroPage = () => {

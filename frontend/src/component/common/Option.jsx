@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Option = ({children,className}) => {
   return <option className={className} value="">{children}</option>

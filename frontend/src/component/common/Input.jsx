@@ -1,4 +1,4 @@
-import React from 'react'
+
 import {twMerge} from 'tailwind-merge'
 
 const Input = ({type='text',className,...props}) => {

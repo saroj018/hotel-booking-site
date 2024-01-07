@@ -1,8 +1,7 @@
-import React from 'react'
 import OwnerProfile from '../../component/utlils/OwnerProfile'
 import { twMerge } from 'tailwind-merge'
 import Input from '../../component/common/Input'
-import { Send, SendHorizontal } from 'lucide-react'
+import {  SendHorizontal } from 'lucide-react'
 
 const ChatBox = ({className}) => {
 

@@ -1,5 +1,4 @@
 import { ActivitySquare, MessageCircleMore } from 'lucide-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../bar/Footer'
 

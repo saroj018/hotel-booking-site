@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import InputBar from '../../component/bar/InputBar'
 import FilterBar from '../../component/bar/FilterBar'
 import Cards from '../../component/Cards'

@@ -1,5 +1,5 @@
-import { ChevronUp, Pencil } from 'lucide-react'
-import React, { useState } from 'react'
+import {  Pencil } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../bar/Footer'
 import PricePopup from '../popup/PricePopup'

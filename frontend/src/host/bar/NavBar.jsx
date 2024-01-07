@@ -1,5 +1,4 @@
 
-import React from 'react'
 import Button from '../../component/common/Button'
 import { Link } from 'react-router-dom'
 

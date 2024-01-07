@@ -1,5 +1,4 @@
 import { Blinds, DoorClosed, Home } from 'lucide-react'
-import React from 'react'
 import Footer from '../bar/Footer'
 import { Link } from 'react-router-dom'
 

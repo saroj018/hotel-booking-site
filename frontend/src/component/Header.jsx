@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import  {  useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Globe, Menu, Search } from 'lucide-react'
+import {  Menu, Search } from 'lucide-react'
 import Input from './common/Input'
 import ProfilePopup from './popup/ProfilePopup'
 import { twMerge } from 'tailwind-merge'

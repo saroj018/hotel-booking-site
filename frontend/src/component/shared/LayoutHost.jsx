@@ -1,7 +1,5 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 import NavBar from '../../host/bar/NavBar'
-import Footer from '../../host/bar/Footer'
 
 
 const LayoutHost = () => {

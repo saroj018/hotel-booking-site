@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Popup from 'reactjs-popup'
 
 const AboutPopup = () => {

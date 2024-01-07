@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './component/shared/Layout'
 import Home from './page/home/Home'
@@ -36,6 +35,7 @@ const App = () => {
         <Route path='payprice' element={<PayPrice />} />
         <Route path='account' element={<Account />} />
         <Route path='wishlist' element={<WishList />} />
+        <Route path='message' element={<Inbox />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />

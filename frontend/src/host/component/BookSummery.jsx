@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { ControlBox } from './Control'
 
 const BookSummery = () => {

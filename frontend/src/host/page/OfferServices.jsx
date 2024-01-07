@@ -1,5 +1,4 @@
 import { ChefHat, Tv, Wifi, ParkingCircle, AirVent, Cross, Dumbbell, GlassWater, ShowerHead, FlameKindling, Refrigerator, Briefcase } from 'lucide-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../bar/Footer'
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import Input from '../../component/common/Input'
 import { Link } from 'react-router-dom'
 import Footer from '../bar/Footer'

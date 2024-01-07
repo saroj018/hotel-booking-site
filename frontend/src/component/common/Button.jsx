@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { twMerge } from 'tailwind-merge'
 
 const Button = ({children,className,...props}) => {

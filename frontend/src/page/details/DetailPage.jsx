@@ -1,5 +1,4 @@
 import { AirVent, Bath, Building2, Droplets, Ship, Star, Tv, Wifi } from 'lucide-react'
-import React from 'react'
 import Checkout from '../../component/Checkout'
 import AboutPopup from '../../component/popup/AboutPopup'
 import HostDetail from '../../component/HostDetail'

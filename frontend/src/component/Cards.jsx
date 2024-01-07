@@ -1,9 +1,8 @@
 import { Heart } from 'lucide-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from './common/Button'
 
-const Cards = ({ name, imgDet, date,rating, price, img,optional=true }) => {
+const Cards = ({ name, imgDet, date,rating='4.2/5', price, img,optional=true }) => {
   return (
     <div className='mt-8 relative'>
     <Link to={'/details'} >

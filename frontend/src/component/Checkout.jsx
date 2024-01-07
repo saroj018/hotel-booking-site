@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ListPopup from './popup/ListPopup'
 import { ChevronDown } from 'lucide-react'
 import Button from './common/Button'

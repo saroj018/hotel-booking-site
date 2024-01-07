@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from '../../../component/common/Button'
 
 const Dashboard = () => {
@@ -35,7 +34,7 @@ const Dashboard = () => {
           }
       </div>
       <div className='bg-neutral-100 mt-6 h-[300px] rounded-xl flex justify-center items-center'>
-        <p className='text-3xl font-bold'>You Don't Have any Guest</p>
+        <p className='text-3xl font-bold'>You Dont Have any Guest</p>
       </div>
     </div>
   )

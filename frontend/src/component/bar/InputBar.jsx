@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Input from '../common/Input'
 import { Search } from 'lucide-react'
 import '../CSS/style.css'

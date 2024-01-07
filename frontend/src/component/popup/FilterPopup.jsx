@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import FilterBtn from '../FilterBtn'
 import Popup from 'reactjs-popup'
 import Input from '../common/Input';
-import Select from '../common/Select';
-import Option from '../common/Option';
 import { BedDouble, Home, Hotel, School, X } from 'lucide-react';
 import Button from '../common/Button';
 

@@ -1,5 +1,4 @@
-import { Home, ListFilter } from 'lucide-react'
-import React, { useState } from 'react'
+import { Home} from 'lucide-react'
 import '../CSS/style.css'
 import FilterPopup from '../popup/FilterPopup'
 

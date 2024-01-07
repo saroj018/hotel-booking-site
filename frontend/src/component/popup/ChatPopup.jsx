@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Button from '../common/Button'
 import Popup from 'reactjs-popup'
-import OwnerProfile from '../utlils/OwnerProfile';
+import OwnerProfile from '../utlils/OwnerProfile'
 import Input from '../common/Input';
-import { Send, SendHorizontal, X } from 'lucide-react';
+import {  SendHorizontal, X } from 'lucide-react'
 
 const ChatPopup = () => {
 
-    const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
+    const overlayStyle = { background: 'rgba(0,0,0,0.5)' }
 
     const [openPopup, setOpenPopup] = useState(false)
 

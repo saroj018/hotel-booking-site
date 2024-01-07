@@ -1,4 +1,3 @@
-import React from 'react'
 import TextArea from '../../component/common/TextArea'
 import Footer from '../bar/Footer'
 import { Link } from 'react-router-dom'
