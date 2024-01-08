@@ -4,6 +4,9 @@ import { Globe, Menu, Search } from 'lucide-react'
 import Input from './common/Input'
 import ProfilePopup from './popup/ProfilePopup'
 import { twMerge } from 'tailwind-merge'
+import Button from './common/Button'
+import SignupPopup from './popup/SignupPopup'
+import LoginPopup from './popup/LoginPopup'
 
 const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=true}) => {
 
@@ -56,8 +59,10 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
             </div>
 
 
-            <nav className='flex relative items-center gap-8'>
+            <nav className='flex relative items-center gap-6'>
                 <Link to={'/host'} className='font-semibold text-black'>{accountSwitch}</Link>
+                {extraItem && <LoginPopup/>}
+                {extraItem && <SignupPopup/>}
                 <span className='cursor-pointer border-2 rounded-full p-1'>{icon}</span>
 
                 <div onClick={(e)=>{e.stopPropagation(), setShowProfileModal(!showProfileModal)}} className='flex items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>

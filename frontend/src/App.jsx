@@ -26,6 +26,7 @@ import PayPrice from './page/pay/PayPrice'
 import Inbox from './host/dashboard/page/Inbox'
 import Account from './page/account/Account'
 import WishList from './page/wishlist/WishList'
+import SignupPopup from './component/popup/SignupPopup'
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='account' element={<Account />} />
         <Route path='wishlist' element={<WishList />} />
         <Route path='message' element={<Inbox />} />
+        <Route path='signup' element={<SignupPopup />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />

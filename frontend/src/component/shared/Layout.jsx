@@ -3,6 +3,7 @@ import Header from '../Header'
 import { Outlet } from 'react-router-dom'
 import { Globe } from 'lucide-react'
 import ProfilePopup from '../popup/ProfilePopup'
+import SignupPopup from '../popup/SignupPopup'
 
 const Layout = () => {
 
@@ -47,7 +48,7 @@ const Layout = () => {
     {
       title: 'Dashboard',
       url: '/host/dashboard'
-    }
+    },
   ]
   return (
     <div>
