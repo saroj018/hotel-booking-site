@@ -4,6 +4,7 @@ import Input from '../common/Input'
 import Popup from 'reactjs-popup'
 import Button from '../common/Button'
 import { X } from 'lucide-react'
+import { usePostFetch } from '../../hooks/fetch-data'
 
 const SignupPopup = () => {
 
@@ -20,6 +21,12 @@ const SignupPopup = () => {
     const inputHandler=(e)=>{
        setSignupData((prv)=>({...prv,[e.target.name]:e.target.value}))
     }
+
+    const clickHandler=async (e)=>{
+        e.preventDefault()
+       const result= await usePostFetch('http://localhost:3000/api/user/signup',signupData)
+       console.log(result);
+    }
     return (
         <>
             <Button className={'rounded-full bg-pink-500 outline-none border-none'} onClick={() => setIsShow(true)}>SignUp</Button>
@@ -34,7 +41,7 @@ const SignupPopup = () => {
                         <Input name={'email'} value={signupData.email} onChange={inputHandler} className={'border-2 rounded-md px-3 w-full border-pink-400'} />
                         <Lable>Password</Lable>
                         <Input name={'password'} value={signupData.password} onChange={inputHandler} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
-                        <Button className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>SignUp</Button>
+                        <Button onClick={clickHandler} className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>SignUp</Button>
                         <p className='text-center text-xl'>Or</p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>SignUp with Google <span></span></p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>SignUp with Facebook</p>
