@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../common/Button'
 import Popup from 'reactjs-popup'
-import OwnerProfile from '../utlils/OwnerProfile';
+import OwnerProfile from '../OwnerProfile';
 import Input from '../common/Input';
 import { Send, SendHorizontal, X } from 'lucide-react';
 

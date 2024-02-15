@@ -1,5 +1,5 @@
 import React from 'react'
-import OwnerProfile from '../../../component/utlils/OwnerProfile'
+import OwnerProfile from '../../../component/OwnerProfile'
 import ChatBox from '../../component/ChatBox'
 
 
