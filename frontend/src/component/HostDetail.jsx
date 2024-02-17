@@ -1,7 +1,7 @@
 import { Hotel, ShieldCheck, Star } from 'lucide-react'
 import React from 'react'
 import ChatPopup from './popup/ChatPopup'
-import OwnerProfile from './utlils/OwnerProfile'
+import OwnerProfile from './OwnerProfile'
 
 const HostDetail = () => {
 

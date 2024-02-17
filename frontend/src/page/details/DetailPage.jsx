@@ -3,7 +3,7 @@ import React from 'react'
 import Checkout from '../../component/Checkout'
 import AboutPopup from '../../component/popup/AboutPopup'
 import HostDetail from '../../component/HostDetail'
-import OwnerProfile from '../../component/utlils/OwnerProfile'
+import OwnerProfile from '../../component/OwnerProfile'
 
 
 const DetailPage = () => {

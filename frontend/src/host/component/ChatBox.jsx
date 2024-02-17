@@ -1,5 +1,5 @@
 import React from 'react'
-import OwnerProfile from '../../component/utlils/OwnerProfile'
+import OwnerProfile from '../../component/OwnerProfile'
 import { twMerge } from 'tailwind-merge'
 import Input from '../../component/common/Input'
 import { Send, SendHorizontal } from 'lucide-react'

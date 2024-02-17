@@ -19,7 +19,6 @@ const Home = () => {
             <Cards price={'$120'} name={'Kathmandu,Nepal'} imgDet={'Mountain View and Park'} date={'14th April-28 May'} img={'https://a0.muscache.com/im/pictures/miso/Hosting-568517731809040109/original/5bbf0534-3335-4569-b4c0-16b2a4dae089.jpeg?im_w=720'}/>
             <Cards price={'$120'} name={'Kathmandu,Nepal'} imgDet={'Mountain View and Park'} date={'14th April-28 May'} img={'https://a0.muscache.com/im/pictures/miso/Hosting-568517731809040109/original/5bbf0534-3335-4569-b4c0-16b2a4dae089.jpeg?im_w=720'}/>
         </div>
-        <SignupPopup/>
     </div>
     
   )
