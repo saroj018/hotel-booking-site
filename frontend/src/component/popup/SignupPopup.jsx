@@ -1,53 +1,60 @@
-import React, {  useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Lable from '../common/Lable'
 import Input from '../common/Input'
 import Popup from 'reactjs-popup'
 import Button from '../common/Button'
-import { X } from 'lucide-react'
+import { ImageIcon, X } from 'lucide-react'
 import { usePostFetch } from '../../hooks/fetch-data'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { user } from '../../validation/userValidation'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignupPopup = () => {
 
     const [isShow, setIsShow] = useState(false)
-    const[signupData,setSignupData]=useState({
-        fullname:'',
-        email:'',
-        password:''
-    })
+    const inputRef = useRef()
+    const [serverError, setServerError] = useState()
 
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-    console.log(signupData);
 
-    const inputHandler=(e)=>{
-       setSignupData((prv)=>({...prv,[e.target.name]:e.target.value}))
+    const{register,formState:{errors},handleSubmit}=useForm({resolver:zodResolver(user)})
+    console.log(document.cookie);
+
+    const onSubmit=async (data)=>{
+        const result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/signup`,data)
+        console.log(result);
+        if(!result.success){
+            setServerError(result.message)
+        }
+        toast.success(result.message,{autoClose:1000})
     }
 
-    const clickHandler=async (e)=>{
-        e.preventDefault()
-       const result= await usePostFetch('http://localhost:3000/api/user/signup',signupData)
-       console.log(result);
-    }
+
     return (
         <>
             <Button className={'rounded-full bg-pink-500 outline-none border-none'} onClick={() => setIsShow(true)}>SignUp</Button>
-                <Popup lockScroll={true} open={isShow} onClose={() => setIsShow(false)} {...{ overlayStyle }}>
-            <div className=' border-2 w-[500px] bg-white p-4 rounded-md relative'>
-                <X onClick={()=>setIsShow(false)} className='absolute left-[93%] cursor-pointer'/>
+            <Popup lockScroll={true} open={isShow} onClose={() => setIsShow(false)} {...{ overlayStyle }}>
+                <div className=' border-2 w-[500px] bg-white p-4 rounded-md relative'>
+                    <X onClick={() => setIsShow(false)} className='absolute left-[93%] cursor-pointer' />
                     <h1 className='text-center text-4xl font-bold' >Signup Form</h1>
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <Lable className={'block'}>Name</Lable>
-                        <Input name={'fullname'} value={signupData.name} onChange={inputHandler} className={'border-2 rounded-md px-3 w-full border-pink-400'} />
+                        <Input {...register("fullname")}  className={'border-2 rounded-md px-3 w-full border-pink-400'} />
+                        <p className='text-red-600'>{errors?.fullname?.message || serverError?.fullname?._errors[0]}</p>
                         <Lable>Email</Lable>
-                        <Input name={'email'} value={signupData.email} onChange={inputHandler} className={'border-2 rounded-md px-3 w-full border-pink-400'} />
+                        <Input {...register("email")}  className={'border-2 rounded-md px-3 w-full border-pink-400'} />
+                        <p className='text-red-600'>{errors?.email?.message || serverError?.email?._errors[0]}</p>
                         <Lable>Password</Lable>
-                        <Input name={'password'} value={signupData.password} onChange={inputHandler} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
-                        <Button onClick={clickHandler} className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>SignUp</Button>
-                        <p className='text-center text-xl'>Or</p>
-                        <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>SignUp with Google <span></span></p>
-                        <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>SignUp with Facebook</p>
+                        <Input {...register("password")} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
+                        <p className='text-red-600'>{errors?.password?.message || serverError?.password?._errors[0]}</p>
+                        <Button type="submit" className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>SignUp</Button>
+
                     </form>
-            </div>
-                </Popup>
+                </div>
+            </Popup>
+            <ToastContainer/>
         </>
     )
 }
