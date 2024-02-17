@@ -5,25 +5,28 @@ import Popup from 'reactjs-popup'
 import Lable from '../common/Lable'
 import { X } from 'lucide-react'
 import { usePostFetch } from '../../hooks/fetch-data'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { user } from '../../validation/userValidation'
+import { toast } from 'react-toastify'
 
 const LoginPopup = () => {
 
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
     const [isShow, setIsShow] = useState(false)
-    const[loginData,setLoginData]=useState({
-        email:"",
-        password:""
-    })
+    const[serverError,setServerError]=useState()
 
-    const inputHandler=(e)=>{
-        setLoginData((prv)=>({...prv,[e.target.name]:e.target.value}))
-    }
+    const{register,handleSubmit,formState:{errors}}=useForm({resolver:zodResolver(user)})
 
-    const clickHandler=async (e)=>{
-        e.preventDefault()
-        const result=await usePostFetch('http://localhost:3000/api/user/login',loginData)
-        console.log(result);
+    const onSubmit=async (data)=>{
+        console.log(data);
+       let result= await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/login`,data)
+       console.log(result);
+       if(!result.success){
+        setServerError(result.message)
+       }
+       toast.success(result.message,{autoClose:1000})
     }
     return (
         <>
@@ -32,12 +35,14 @@ const LoginPopup = () => {
                 <div className=' border-2 w-[500px] bg-white p-4 rounded-md relative '>
                     <X onClick={() => setIsShow(false)} className='absolute left-[93%] cursor-pointer' />
                     <h1 className='text-center text-4xl font-bold' >Login Form</h1>
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <Lable>Email</Lable>
-                        <Input onChange={inputHandler} name={'email'} value={loginData.email} className={'border-2 rounded-md px-3 w-full border-pink-400'} />
+                        <Input {...register("email")} className={'border-2 rounded-md px-3 w-full border-pink-400'} />
+                        <p className='text-red-500'>{errors?.email?.message || serverError?.email?._errors[0]}</p>
                         <Lable>Password</Lable>
-                        <Input onChange={inputHandler} name={'password'} value={loginData.password} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
-                        <Button onClick={clickHandler} className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>Login</Button>
+                        <Input {...register("password")} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
+                        <p className='text-red-500'>{errors?.password?.message || serverError?.password?._errors[0]}</p>
+                        <Button  className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>Login</Button>
                         <p className='text-center text-xl'>Or</p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Google <span></span></p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Facebook</p>

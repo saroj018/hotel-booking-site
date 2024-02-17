@@ -13,9 +13,11 @@ export const useGetFetch = async (url) => {
 };
 
 export const usePostFetch = async (url,bodyData) => {
+  console.log(bodyData);
   try {
     const resp = await fetch(url, {
       method: "POST",
+      // credentials: "include",
       body: JSON.stringify(bodyData),
       headers: {
         "Content-Type": "application/json",

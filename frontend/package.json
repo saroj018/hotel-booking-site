@@ -10,14 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "antd": "^5.12.7",
     "dayjs": "^1.11.10",
     "lucide-react": "^0.303.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.50.1",
     "react-router-dom": "^6.21.1",
+    "react-toastify": "^10.0.4",
     "reactjs-popup": "^2.0.6",
-    "tailwind-merge": "^2.2.0"
+    "tailwind-merge": "^2.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
