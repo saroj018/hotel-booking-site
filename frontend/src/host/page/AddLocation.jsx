@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '../../component/common/Button'
-import Footer from '../bar/Footer'
-import { Link } from 'react-router-dom'
+
 
 const AddLocation = () => {
   return (
@@ -10,7 +9,6 @@ const AddLocation = () => {
         <h1 className='text-3xl font-bold text-center'>Where's your place located?</h1>
         <Button>Get Location</Button>
     </div>
-    <Link to={'/host/aboutroom'}><Footer/></Link>
     </>
   )
 }

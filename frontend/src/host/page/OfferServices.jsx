@@ -1,7 +1,6 @@
 import { ChefHat, Tv, Wifi, ParkingCircle, AirVent, Cross, Dumbbell, GlassWater, ShowerHead, FlameKindling, Refrigerator, Briefcase } from 'lucide-react'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Footer from '../bar/Footer'
+import React, { useState } from 'react'
+
 
 const OfferServices = () => {
 
@@ -55,6 +54,17 @@ const OfferServices = () => {
             icon:<Briefcase size={50} strokeWidth={1} />
         }
     ]
+
+    const[services,setServices]=useState([])
+
+    const clickHandler=(text)=>{
+       const result= services.find((item)=>item===text)
+        if(!result){
+
+            setServices([...services,text])
+        }
+    }
+    console.log(services);
   return (
     <>
     <div className='w-[45%] mx-auto '>
@@ -63,7 +73,7 @@ const OfferServices = () => {
         <div className='grid grid-cols-3 gap-3'>
             {
                 servicesOffer.map((ele,index)=>{
-                    return <div key={index+ele.name} className='border-2 cursor-pointer z-10 bg-white border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col'>
+                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 cursor-pointer z-10 bg-white border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col ${services.find((item)=>item===ele.name) ? 'bg-[#ff5a5f] text-white border-none':''}`}>
                         <span>{ele.icon}</span>
                         <p className='text-2xl font-bold'>{ele.name}</p>
                     </div>
@@ -71,7 +81,6 @@ const OfferServices = () => {
             }
         </div>
     </div>
-    <Link to={'/host/addphotos'}><Footer/></Link>
     </>
   )
 }

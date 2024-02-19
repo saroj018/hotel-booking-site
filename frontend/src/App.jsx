@@ -27,6 +27,7 @@ import Inbox from './host/dashboard/page/Inbox'
 import Account from './page/account/Account'
 import WishList from './page/wishlist/WishList'
 import SignupPopup from './component/popup/SignupPopup'
+import HotelDetails from './host/page/HotelDetails'
 
 const App = () => {
   return (
@@ -42,7 +43,7 @@ const App = () => {
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />
-        <Route path='hometype' element={<SelectHomeType />} />
+        <Route path='hoteldetails' element={<HotelDetails />} />
         <Route path='roomtype' element={<SelectRoomType />} />
         <Route path='addlocation' element={<AddLocation />} />
         <Route path='aboutroom' element={<AboutRoom />} />

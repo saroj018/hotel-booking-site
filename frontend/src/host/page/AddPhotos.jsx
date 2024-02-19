@@ -1,7 +1,6 @@
 import { ImagePlus } from 'lucide-react'
 import React, { useRef } from 'react'
-import { Link } from 'react-router-dom'
-import Footer from '../bar/Footer'
+
 
 const AddPhotos = () => {
 
@@ -21,7 +20,6 @@ const AddPhotos = () => {
                     <input ref={inputFile} type="file" hidden />
                 </div>
             </div>
-            <Link to={'/host/housename'}><Footer/></Link>
         </>
     )
 }

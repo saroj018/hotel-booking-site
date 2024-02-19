@@ -1,7 +1,6 @@
 import { BringToFront, Contact, MapPin, Shell, ShieldHalf } from 'lucide-react'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Footer from '../bar/Footer'
+import React, { useState } from 'react'
+
 
 const HomeSummery = () => {
 
@@ -27,6 +26,14 @@ const HomeSummery = () => {
             icon:<MapPin />
         }
     ]
+
+    const[summery,setSummery]=useState()
+
+    const clickHandler=(text)=>{
+        setSummery(text)
+    }
+    console.log(summery);
+
   return (
     <>
     <div className='w-1/2 mx-auto mt-20'>
@@ -35,7 +42,7 @@ const HomeSummery = () => {
         <div className='grid grid-cols-3 gap-4'>
             {
                 item.map((ele,index)=>{
-                    return <div key={index+ele.name} className='border-2 rounded-full p-4 flex items-center cursor-pointer border-neutral-600 gap-3'>
+                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 rounded-full p-4 flex items-center cursor-pointer border-neutral-600 gap-3 ${summery===ele.name ? 'bg-[#ff5a5f] border-none text-white':''}`}>
                         <span>{ele.icon}</span>
                         <span className='text-xl'>{ele.name}</span>
                     </div>
@@ -43,7 +50,6 @@ const HomeSummery = () => {
             }
         </div>
     </div>
-    <Link to={'/host/description'}><Footer/></Link>
     </>
   )
 }
