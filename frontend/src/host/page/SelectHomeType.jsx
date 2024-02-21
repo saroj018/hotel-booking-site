@@ -1,7 +1,12 @@
 import Footer from '../bar/Footer'
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
+<<<<<<< Updated upstream
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+=======
+import React, { useContext, useEffect, useState } from 'react'
+import { Context, useFormData } from '../context/HotelDetailContext'
+>>>>>>> Stashed changes
 
 const SelectHomeType = () => {
 
