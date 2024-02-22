@@ -13,11 +13,12 @@ import FinalPage from './FinalPage'
 import Button from '../../component/common/Button'
 import AboutRoom from './AboutRoom'
 import HouseTitle from './HouseTitle'
+import HotelDetailContext, { Context } from '../context/HotelDetailContext'
 
 const HotelDetails = () => {
     const[count,setCount]=useState(1)
   return (
-    <>
+    <HotelDetailContext>
     {count===1 && <SelectHomeType/>}
     {count===2 && <SelectRoomType/>}
     {count===3 && <AddLocation/>}
@@ -31,11 +32,11 @@ const HotelDetails = () => {
     {count===11 && <SetPrice/>}
     {count===12 && <DiscountPage/>}
     {count===13 && <FinalPage   />}
-      <div className='footer bg-neutral-300 p-7 fixed w-full left-0 top-[87%] z-0'>
-        {count>1 && <Button className='text-2xl ' onClick={() => setCount(count-1)}> Back</Button>}
-        {count<13 && <Button className='text-2xl ml-[85%]' onClick={() => setCount(count+1)}>Next</Button>}
+      <div className='footer flex justify-between items-center bg-neutral-300 p-7 h-[80px] top-[90%] w-full fixed left-0  z-0'>
+        {count>1 && <Button className='text-2xl py-0 ' onClick={() => setCount(count-1)}> Back</Button>}
+        {count<13 && <Button className='text-2xl py-0 ' onClick={() => setCount(count+1)}>Next</Button>}
       </div>
-    </>
+    </HotelDetailContext>
   )
 }
 

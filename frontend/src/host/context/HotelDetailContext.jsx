@@ -1,11 +1,30 @@
 import React, { createContext, useContext, useState } from 'react'
 
-const Context=createContext()
+export const Context=createContext()
 
 const HotelDetailContext = ({children}) => {
-    const formData=new FormData()
+  const[hotelDetails,setHotelDetails]=useState({
+    homeType:'',
+    roomType:'',
+    location:'',
+    customerNumber:{
+      guest:1,
+      bed:1,
+      bathroom:1
+  },
+    offerServices:[],
+    photos:[],
+    houseTitle:'',
+    aboutHome:'',
+    description:'',
+    bookingType:'',
+    price:0,
+    discount:0,
+
+  })
+    
   return (
-    <Context.Provider value={formData}>
+    <Context.Provider value={{hotelDetails,setHotelDetails}}>
       {children}
     </Context.Provider>
   )
@@ -13,7 +32,7 @@ const HotelDetailContext = ({children}) => {
 
 export default HotelDetailContext
 
-export const useFormData=()=>{
-  const formData=useContext(Context)
-  return formData
+export const useHotelInfo=()=>{
+  let {hotelDetails,setHotelDetails}=useContext(Context)
+  return {hotelDetails,setHotelDetails}
 }

@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { Context } from '../context/HotelDetailContext'
 
 
 const AboutRoom = () => {
 
-    const[aboutRoom,setAboutRoom]=useState({
-        guest:1,
-        bed:1,
-        bathroom:1
-    })
+    const{hotelDetails,setHotelDetails}=useContext(Context)
 
     const addHandler=(text)=>{
         
-        setAboutRoom((prv)=>({...prv,[text]:prv[text]+1}))
+        setHotelDetails((prv)=>({...prv,customerNumber:{
+            ...prv.customerNumber,
+            [text]:prv.customerNumber[text]+1
+        }}))
     }
     const lessHandler=(text)=>{
-        if(aboutRoom[text]>1){
-            setAboutRoom((prv)=>({...prv,[text]:prv[text]-1}))
+        if(hotelDetails?.customerNumber?.[text]>1){
+            setHotelDetails((prv)=>({...prv,customerNumber:{
+                ...prv.customerNumber,
+                [text]: prv.customerNumber[text] - 1
+            }}))
         }
     }
 
@@ -28,25 +31,25 @@ const AboutRoom = () => {
                 <div className='flex items-center border-2 p-3 rounded-md my-3 justify-between'>
                         <p className='text-xl font-semibold my-1'>Guests</p>
                     <div className='flex w-[25%] gap-6'>
-                        <p onClick={()=>addHandler('guest')} className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
-                        <p className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>{aboutRoom.guest}</p>
-                        <p onClick={()=>lessHandler('guest')} className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
+                        <p onClick={()=>addHandler('guest')} className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
+                        <p className='rounded-full cursor-pointer border-2 text-2xl px-4 select-none py-2 h-[50px] w-[50px]'>{hotelDetails?.customerNumber?.guest}</p>
+                        <p onClick={()=>lessHandler('guest')} className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
                     </div>
                 </div>
                 <div className='flex items-center border-2 p-3 rounded-md my-3 justify-between'>
                         <p className='text-xl font-semibold my-1'>Beds</p>
                     <div className='flex w-[25%] gap-6'>
-                        <p onClick={()=>addHandler('bed')} className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
-                        <p className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>{aboutRoom.bed}</p>
-                        <p onClick={()=>lessHandler('bed')} className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
+                        <p onClick={()=>addHandler('bed')} className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
+                        <p className='rounded-full cursor-pointer border-2 text-2xl px-4 select-none py-2 h-[50px] w-[50px]'>{hotelDetails?.customerNumber?.bed}</p>
+                        <p onClick={()=>lessHandler('bed')} className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
                     </div>
                 </div>
                 <div className='flex items-center border-2 p-3 rounded-md my-3 justify-between'>
                         <p className='text-xl font-semibold my-1'>Bathrooms</p>
                     <div className='flex w-[25%] gap-6'>
-                        <p onClick={()=>addHandler('bathroom')} className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
-                        <p className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>{aboutRoom.bathroom}</p>
-                        <p onClick={()=>lessHandler('bathroom')} className='rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
+                        <p onClick={()=>addHandler('bathroom')} className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
+                        <p className='rounded-full cursor-pointer border-2 text-2xl px-4 select-none py-2 h-[50px] w-[50px]'>{hotelDetails?.customerNumber?.bathroom}</p>
+                        <p onClick={()=>lessHandler('bathroom')} className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
                     </div>
                 </div>
             </div>

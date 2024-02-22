@@ -1,16 +1,18 @@
 import { Blinds, DoorClosed, Home } from 'lucide-react'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import RoomType from '../component/RoomType'
+import { Context } from '../context/HotelDetailContext'
 
 
 const SelectRoomType = () => {
 
-    const [roomType, setRoomType] = useState()
+    const{hotelDetails,setHotelDetails}=useContext(Context)
 
     const clickHandler = (item) => {
         console.log(item);
-        setRoomType(item)
+        setHotelDetails((prv)=>({...prv,roomType:item}))
     }
+    console.log(hotelDetails);
 
     const roomInfo = [
         {
@@ -35,7 +37,7 @@ const SelectRoomType = () => {
         <div className='w-1/2 mx-auto' >
             {
                 roomInfo.map((item, index) => {
-                    return  <RoomType onClick={()=>clickHandler(item.type)} key={index} name={item.name} description={item.description} icon={item.icon} className={`${roomType===item.type ? 'bg-[#ff5a5f] text-white border-none':''}`} />
+                    return  <RoomType onClick={()=>clickHandler(item.type)} key={index} name={item.name} description={item.description} icon={item.icon} className={`${hotelDetails.roomType===item.type ? 'bg-[#ff5a5f] text-white border-none':''}`} />
                 })
             }
         </div >

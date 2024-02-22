@@ -1,5 +1,6 @@
 import { BringToFront, Contact, MapPin, Shell, ShieldHalf } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { Context } from '../context/HotelDetailContext'
 
 
 const HomeSummery = () => {
@@ -27,12 +28,12 @@ const HomeSummery = () => {
         }
     ]
 
-    const[summery,setSummery]=useState()
+    const{hotelDetails,setHotelDetails}=useContext(Context)
 
     const clickHandler=(text)=>{
-        setSummery(text)
+        setHotelDetails((prv)=>({...prv,aboutHome:text}))
     }
-    console.log(summery);
+    console.log(hotelDetails);
 
   return (
     <>
@@ -42,7 +43,7 @@ const HomeSummery = () => {
         <div className='grid grid-cols-3 gap-4'>
             {
                 item.map((ele,index)=>{
-                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 rounded-full p-4 flex items-center cursor-pointer border-neutral-600 gap-3 ${summery===ele.name ? 'bg-[#ff5a5f] border-none text-white':''}`}>
+                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 rounded-full p-4 flex items-center cursor-pointer border-neutral-600 gap-3 ${hotelDetails.aboutHome===ele.name ? 'bg-[#ff5a5f] border-none text-white':''}`}>
                         <span>{ele.icon}</span>
                         <span className='text-xl'>{ele.name}</span>
                     </div>

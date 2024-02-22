@@ -1,5 +1,6 @@
 import { ChefHat, Tv, Wifi, ParkingCircle, AirVent, Cross, Dumbbell, GlassWater, ShowerHead, FlameKindling, Refrigerator, Briefcase } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { Context } from '../context/HotelDetailContext'
 
 
 const OfferServices = () => {
@@ -55,16 +56,20 @@ const OfferServices = () => {
         }
     ]
 
-    const[services,setServices]=useState([])
+    const{hotelDetails,setHotelDetails}=useContext(Context)
 
     const clickHandler=(text)=>{
-       const result= services.find((item)=>item===text)
+       const result= hotelDetails.offerServices.find((item)=>item===text)
         if(!result){
 
-            setServices([...services,text])
+            setHotelDetails((prv)=>({...prv,offerServices:[...prv.offerServices,text]}))
         }
+        else{
+            setHotelDetails((prv)=>({...prv,offerServices:prv.offerServices.filter((item)=>item!==text)}))
+        }
+
     }
-    console.log(services);
+    console.log(hotelDetails);
   return (
     <>
     <div className='w-[45%] mx-auto '>
@@ -73,7 +78,7 @@ const OfferServices = () => {
         <div className='grid grid-cols-3 gap-3'>
             {
                 servicesOffer.map((ele,index)=>{
-                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 cursor-pointer z-10 bg-white border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col ${services.find((item)=>item===ele.name) ? 'bg-[#ff5a5f] text-white border-none':''}`}>
+                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 select-none cursor-pointer z-10 bg-white border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col ${hotelDetails.offerServices.find((item)=>item===ele.name) ? 'bg-red-500 text-white border-none':''}`}>
                         <span>{ele.icon}</span>
                         <p className='text-2xl font-bold'>{ele.name}</p>
                     </div>

@@ -1,6 +1,7 @@
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
-import React, { useState } from 'react'
-import { useFormData } from '../context/HotelDetailContext'
+import React, { useContext } from 'react'
+import {Context } from '../context/HotelDetailContext'
+// import { Context, useFormData } from '../context/HotelDetailContext'
 
 const SelectHomeType = () => {
 
@@ -35,13 +36,18 @@ const SelectHomeType = () => {
         }
     ]
 
-    const[homeType,setHomeType]=useState()
-    const formData=useFormData()
-
+    const {hotelDetails,setHotelDetails}=useContext(Context)
+    
+    
+    
+    
     const clickHandler=(item)=>{
-        console.log(item);
-        setHomeType(item)
+        setHotelDetails((prv)=>({
+            ...prv,
+            homeType:item
+        }))
     }
+    console.log(hotelDetails);
     
   return (
     <>
@@ -49,7 +55,7 @@ const SelectHomeType = () => {
         <div className='grid grid-cols-3 w-[50%] gap-5 mx-auto'>
             {
                 homeTypes.map((ele,index)=>{
-                    return <div  onClick={()=>clickHandler(ele.name.toLocaleLowerCase())} key={index+ele.name} className={`p-4 border-2 border-neutral-600 cursor-pointer rounded-md shadow-sm ${homeType===ele.name.toLocaleLowerCase() ? 'bg-[#ff5a5f] text-white border-none':''}`}>
+                    return <div  onClick={()=>clickHandler(ele.name.toLocaleLowerCase())} key={index+ele.name} className={`p-4 border-2 border-neutral-600 cursor-pointer rounded-md shadow-sm ${hotelDetails.homeType===ele.name.toLocaleLowerCase() ? 'bg-[#ff5a5f] text-white border-none':''}`}>
                         <span>{ele.icon}</span>
                         <p className='text-2xl font-bold'>{ele.name}</p>
                     </div>
