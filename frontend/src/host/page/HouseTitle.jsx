@@ -1,12 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Input from '../../component/common/Input'
 import { Context } from '../context/HotelDetailContext'
 
 
 const HouseTitle = () => {
 
-  const{hotelDetails,setHotelDetails}=useContext(Context)
+  const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
   console.log(hotelDetails);
+
+  useEffect(()=>{
+    if(hotelDetails.houseTitle.length>10){
+        setBtnDisable(false)
+    }
+},[hotelDetails.houseTitle])
   return (
     <>
     <div className='w-1/2 mx-auto'>

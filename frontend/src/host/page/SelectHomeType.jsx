@@ -1,5 +1,5 @@
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {Context } from '../context/HotelDetailContext'
 // import { Context, useFormData } from '../context/HotelDetailContext'
 
@@ -37,7 +37,7 @@ const SelectHomeType = () => {
     ]
 
     const {hotelDetails,setHotelDetails}=useContext(Context)
-    
+    const{setBtnDisable}=useContext(Context)
     
     
     
@@ -46,7 +46,14 @@ const SelectHomeType = () => {
             ...prv,
             homeType:item
         }))
+        
     }
+
+    useEffect(()=>{
+        if(hotelDetails.homeType!=''){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.homeType])
     console.log(hotelDetails);
     
   return (

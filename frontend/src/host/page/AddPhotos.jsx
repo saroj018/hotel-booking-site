@@ -1,10 +1,24 @@
 import { ImagePlus } from 'lucide-react'
-import React, { useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+import { Context } from '../context/HotelDetailContext'
 
 
 const AddPhotos = () => {
 
     const inputFile=useRef()
+
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
+
+    const changeHandler=(e)=>{
+        setHotelDetails((prv)=>({...prv,photos:[e.target.files]}))
+    }
+    console.log(hotelDetails);
+
+    useEffect(()=>{
+        if(hotelDetails.photos.length>0){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.photos])
     return (
         <>
             <div className=' w-full'>
@@ -17,7 +31,7 @@ const AddPhotos = () => {
                     <p className='text-3xl'>Drag your photos here</p>
                     <p className='text-xl my-3'>Choose at least 5 photos</p>
                     <p className='underline text-xl'>Upload from your device</p>
-                    <input ref={inputFile} type="file" hidden />
+                    <input onChange={changeHandler} multiple ref={inputFile} type="file" hidden />
                 </div>
             </div>
         </>

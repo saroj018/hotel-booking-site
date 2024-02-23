@@ -1,18 +1,24 @@
 import { Blinds, DoorClosed, Home } from 'lucide-react'
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import RoomType from '../component/RoomType'
 import { Context } from '../context/HotelDetailContext'
 
 
 const SelectRoomType = () => {
 
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const clickHandler = (item) => {
         console.log(item);
         setHotelDetails((prv)=>({...prv,roomType:item}))
     }
     console.log(hotelDetails);
+
+    useEffect(()=>{
+        if(hotelDetails.roomType!=''){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.roomType])
 
     const roomInfo = [
         {

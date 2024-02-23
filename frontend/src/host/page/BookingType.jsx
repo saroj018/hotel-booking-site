@@ -1,16 +1,22 @@
 import { ActivitySquare, MessageCircleMore } from 'lucide-react'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/HotelDetailContext'
 
 
 const BookingType = () => {
 
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const clickHandler=(text)=>{
         setHotelDetails((prv)=>({...prv,bookingType:text}))
     }
     console.log(hotelDetails);
+
+    useEffect(()=>{
+        if(hotelDetails.bookingType!=''){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.bookingType])
   return (
     <>
     <div className='w-1/2 mx-auto mt-20'>

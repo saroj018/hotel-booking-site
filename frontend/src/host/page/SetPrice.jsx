@@ -1,5 +1,5 @@
 import { ChevronUp, Pencil } from 'lucide-react'
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import PricePopup from '../popup/PricePopup'
 import Input from '../../component/common/Input'
 import { Context } from '../context/HotelDetailContext'
@@ -10,11 +10,17 @@ const SetPrice = () => {
     const [priceDrop, setPriceDrop] = useState(false)
     const [edit, setEdit] = useState(false)
     const[price,setPrice]=useState('50')
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     window.addEventListener('click', () => {
         setEdit(false)
     })
+
+    useEffect(()=>{
+        if(hotelDetails.price==100){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.price])
     console.log(hotelDetails);
     return (
         <>

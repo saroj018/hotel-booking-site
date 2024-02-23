@@ -1,5 +1,5 @@
 import { BringToFront, Contact, MapPin, Shell, ShieldHalf } from 'lucide-react'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/HotelDetailContext'
 
 
@@ -28,12 +28,18 @@ const HomeSummery = () => {
         }
     ]
 
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const clickHandler=(text)=>{
         setHotelDetails((prv)=>({...prv,aboutHome:text}))
     }
     console.log(hotelDetails);
+
+    useEffect(()=>{
+        if(hotelDetails.aboutHome!=''){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.aboutHome])
 
   return (
     <>

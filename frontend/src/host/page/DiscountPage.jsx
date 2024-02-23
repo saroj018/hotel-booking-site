@@ -1,14 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Input from '../../component/common/Input'
 import { Context } from '../context/HotelDetailContext'
 
 const DiscountPage = () => {
 
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const changeHandler=(e)=>{
         setHotelDetails((prv)=>({...prv,discount:e.target.value}))
     }
+
+    useEffect(()=>{
+            setBtnDisable(false)
+        
+    },[hotelDetails.discount])
+  
     console.log(hotelDetails);
     return (
        <>

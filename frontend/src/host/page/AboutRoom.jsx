@@ -1,10 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/HotelDetailContext'
 
 
 const AboutRoom = () => {
 
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
+
+    useEffect(()=>{
+        if(true){
+            setBtnDisable(false)
+        }
+    },[])
 
     const addHandler=(text)=>{
         
@@ -21,6 +27,8 @@ const AboutRoom = () => {
             }}))
         }
     }
+
+    
 
     return (
        <>

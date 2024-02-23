@@ -1,5 +1,5 @@
 import { ChefHat, Tv, Wifi, ParkingCircle, AirVent, Cross, Dumbbell, GlassWater, ShowerHead, FlameKindling, Refrigerator, Briefcase } from 'lucide-react'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/HotelDetailContext'
 
 
@@ -56,7 +56,7 @@ const OfferServices = () => {
         }
     ]
 
-    const{hotelDetails,setHotelDetails}=useContext(Context)
+    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const clickHandler=(text)=>{
        const result= hotelDetails.offerServices.find((item)=>item===text)
@@ -69,6 +69,12 @@ const OfferServices = () => {
         }
 
     }
+
+    useEffect(()=>{
+        if(hotelDetails.offerServices.length>0){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.offerServices])
     console.log(hotelDetails);
   return (
     <>
