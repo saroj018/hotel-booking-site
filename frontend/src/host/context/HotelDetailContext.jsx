@@ -8,7 +8,7 @@ const HotelDetailContext = ({ children }) => {
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
     roomType: '',
-    location: '123',
+    locatedPlace: [],
     customerNumber: {
       guest: 1,
       bed: 1,
@@ -48,8 +48,8 @@ const HotelDetailContext = ({ children }) => {
     }
   }
 
-  console.log(hotelInformantion);
-  console.table(hotelDetails.offerServices);
+  console.table('final: ',hotelInformantion);
+  console.table(hotelDetails);
   return (
     <Context.Provider value={{ hotelDetails, setHotelDetails,btnDisable,setBtnDisable }}>
       {children}
