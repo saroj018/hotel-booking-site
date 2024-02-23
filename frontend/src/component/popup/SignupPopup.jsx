@@ -29,6 +29,7 @@ const SignupPopup = () => {
         }
         toast.success(result.message,{autoClose:1000})
     }
+    
 
 
     return (
