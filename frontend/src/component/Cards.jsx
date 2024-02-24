@@ -7,7 +7,7 @@ const Cards = ({ name, imgDet, date,rating='4.2/5', price, img,optional=true }) 
   return (
     <div className='mt-8 relative'>
     <Link to={'/details'} >
-     {optional && <Heart onClick={(e)=>e.preventDefault()} enableBackground={true} color='white' size={30} className='absolute left-[90%] cursor-pointer top-3' />}
+     {optional && <Heart onClick={(e)=>e.preventDefault()} enableBackground={'true'} color='white' size={30} className='absolute left-[90%] cursor-pointer top-3' />}
       <img className='rounded-xl' src={img} alt="" />
       <div className='flex  justify-between items-end'>
         <h1 className='text-xl font-bold mt-5'>{name}</h1>

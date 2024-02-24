@@ -58,3 +58,8 @@
     left: 0;
     top: 0;
 }
+
+.leaflet-container{
+    height: 600px;
+    width: 100vw;
+}

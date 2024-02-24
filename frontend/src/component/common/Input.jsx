@@ -1,9 +1,9 @@
 import React from 'react'
 import {twMerge} from 'tailwind-merge'
 
-const Input = React.forwardRef(({type='text',inputRef,className,...props},ref) => {
+const Input = React.forwardRef(({type='text',value,inputRef,className,...props},ref) => {
   return (
-    <input ref={ref} type={type} className={twMerge('py-3 outline-none',className)} {...props} />
+    <input value={value} ref={ref} type={type} className={twMerge('py-3 outline-none',className)} {...props} />
   )
 })
 

@@ -1,4 +1,3 @@
-import Footer from '../bar/Footer'
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
 <<<<<<< Updated upstream
 import React from 'react'
@@ -10,7 +9,7 @@ import { Context, useFormData } from '../context/HotelDetailContext'
 
 const SelectHomeType = () => {
 
-    const homeType=[
+    const homeTypes=[
         {
             name:'House',
             icon:<Home />
@@ -40,22 +39,40 @@ const SelectHomeType = () => {
             icon:<Tractor />
         }
     ]
+
+    const {hotelDetails,setHotelDetails}=useContext(Context)
+    const{setBtnDisable}=useContext(Context)
     
-    const navigate=useNavigate()
+    
+    
+    const clickHandler=(item)=>{
+        setHotelDetails((prv)=>({
+            ...prv,
+            homeType:item
+        }))
+        
+    }
+
+    useEffect(()=>{
+        if(hotelDetails.homeType!=''){
+            setBtnDisable(false)
+        }
+    },[hotelDetails.homeType])
+    console.log(hotelDetails);
+    
   return (
     <>
         <h1 className='text-center text-4xl font-bold my-8'>Which of these best describes your place?</h1>
         <div className='grid grid-cols-3 w-[50%] gap-5 mx-auto'>
             {
-                homeType.map((ele,index)=>{
-                    return <div key={index+ele.name} className='p-4 border-2 border-neutral-600 cursor-pointer rounded-md shadow-sm'>
+                homeTypes.map((ele,index)=>{
+                    return <div  onClick={()=>clickHandler(ele.name.toLocaleLowerCase())} key={index+ele.name} className={`p-4 border-2 border-neutral-600 cursor-pointer rounded-md shadow-sm ${hotelDetails.homeType===ele.name.toLocaleLowerCase() ? 'bg-[#ff5a5f] text-white border-none':''}`}>
                         <span>{ele.icon}</span>
                         <p className='text-2xl font-bold'>{ele.name}</p>
                     </div>
                 })
             }
         </div>
-        <Footer back={'/host'} forward={'/host/roomtype'}/>
     </>
   )
 }

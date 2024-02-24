@@ -20,7 +20,6 @@ const SignupPopup = () => {
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
     const{register,formState:{errors},handleSubmit}=useForm({resolver:zodResolver(user)})
-    console.log(document.cookie);
 
     const onSubmit=async (data)=>{
         const result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/signup`,data)
@@ -30,6 +29,7 @@ const SignupPopup = () => {
         }
         toast.success(result.message,{autoClose:1000})
     }
+    
 
 
     return (
