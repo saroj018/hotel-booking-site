@@ -1,7 +1,11 @@
 import { Blinds, Building, CarTaxiFront, Home, Sailboat, Tractor, UtensilsCrossed } from 'lucide-react'
-import React, { useContext, useEffect } from 'react'
-import {Context } from '../context/HotelDetailContext'
-// import { Context, useFormData } from '../context/HotelDetailContext'
+<<<<<<< Updated upstream
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+=======
+import React, { useContext, useEffect, useState } from 'react'
+import { Context, useFormData } from '../context/HotelDetailContext'
+>>>>>>> Stashed changes
 
 const SelectHomeType = () => {
 
