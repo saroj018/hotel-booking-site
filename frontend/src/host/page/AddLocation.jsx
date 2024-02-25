@@ -41,6 +41,7 @@ useEffect(()=>{
       <div className='flex justify-between items-center flex-col'>
         <h1 className='text-3xl mb-3 font-bold text-center'>Where's your place located?</h1>
         <h1 className='text-xl text-red-500 mb-3 font-bold text-center'>Click On Map For Find Your Current Location and You Can Also Drag the Icon</h1>
+        <h1 className='text-xl text-red-500 mb-3 font-bold text-center'>Please wait few second it automatacally find your current location</h1>
         {done && <p className='text-center my-2 select-none text-xl text-green-500 font-bold'>Location Selected</p>}
         <div className='z-0'>
           <MapContainer center={[27.70169, 85.3206]} zoom={20} >

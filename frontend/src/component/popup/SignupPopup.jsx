@@ -8,8 +8,8 @@ import { usePostFetch } from '../../hooks/fetch-data'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { user } from '../../validation/userValidation'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+
 
 const SignupPopup = () => {
 
@@ -54,7 +54,7 @@ const SignupPopup = () => {
                     </form>
                 </div>
             </Popup>
-            <ToastContainer/>
+            
         </>
     )
 }

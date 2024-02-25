@@ -26,6 +26,7 @@ const LoginPopup = () => {
        if(!result.success){
         setServerError(result.message)
        }
+       localStorage.setItem('token',result.token)
        toast.success(result.message,{autoClose:1000})
     }
     return (

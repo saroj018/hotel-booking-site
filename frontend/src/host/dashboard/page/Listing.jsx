@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../../../component/common/Button'
 import Input from '../../../component/common/Input'
 import { Link } from 'react-router-dom'
+import { Context } from '../../context/HotelDetailContext'
 
 const Listing = () => {
+
+    const{hotelInfo}=useContext(Context)
   return (
     <div>
         <div className='flex justify-between mt-7'>
@@ -35,7 +38,7 @@ const Listing = () => {
                         </td>
                         <td className='p-3'>Pending</td>
                         <td className='p-3'>3</td>
-                        <td className='p-3'>6</td>
+                        <td className='p-3'>{hotelInfo?.customerNumber?.bed}</td>
                         <td className='p-3'>1</td>
                         <td className='p-3'>OFF</td>
                         <td className='p-3'>Ratnanagar</td>

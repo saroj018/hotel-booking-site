@@ -12,7 +12,7 @@ export const useGetFetch = async (url) => {
   }
 };
 
-export const usePostFetch = async (url,bodyData) => {
+export const usePostFetch = async (url,bodyData,header='application/json') => {
   console.log(bodyData);
   try {
     const resp = await fetch(url, {
@@ -20,7 +20,7 @@ export const usePostFetch = async (url,bodyData) => {
       // credentials: "include",
       body: JSON.stringify(bodyData),
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": header,
       },
     });
     if (!resp.ok) {
