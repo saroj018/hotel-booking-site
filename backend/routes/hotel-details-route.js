@@ -1,6 +1,7 @@
 import express from 'express'
-import { hotelDetailsController } from "../controllers/hotel-details-controller.js";
+import { getHotelDetailsController, hotelDetailsController } from "../controllers/hotel-details-controller.js";
 import multer from 'multer';
+import { authentication } from '../middleware/auth.js';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -16,6 +17,7 @@ const storage = multer.diskStorage({
 
 const hotelDetailRoute=express.Router()
 
-hotelDetailRoute.route('/addhoteldetails').post(upload.array('photo',10),hotelDetailsController)
+hotelDetailRoute.route('/addhoteldetails').post(authentication,upload.array('photo',10),hotelDetailsController)
+hotelDetailRoute.route('/gethoteldetails').get(getHotelDetailsController)
 
 export default hotelDetailRoute

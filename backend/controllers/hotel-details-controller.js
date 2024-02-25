@@ -62,8 +62,9 @@ export const hotelDetailsController=async(req,resp)=>{
     }
     let hotelImagesUrl=uploadImage.map((item)=>item.url)
     console.log(hotelImagesUrl);
+    const uploadedBy=req.user._id
     
-    const hotelDataOnDb=await hotelDetailsModel.create({hotelImagesUrl,homeType,roomType,houseTitle,aboutHome,offerServices,description,customerNumber,bookingType,price,discount,locatedPlace})
+    const hotelDataOnDb=await hotelDetailsModel.create({uploadedBy,hotelImagesUrl,homeType,roomType,houseTitle,aboutHome,offerServices,description,customerNumber,bookingType,price,discount,locatedPlace})
     if(!hotelDataOnDb){
         return resp.json({success:false,message:"Details are not store in db"})
     }
@@ -74,4 +75,9 @@ export const hotelDetailsController=async(req,resp)=>{
    }
     
     
+}
+
+
+export const getHotelDetailsController=async(req,resp)=>{
+    resp.json({success:true,details})
 }
