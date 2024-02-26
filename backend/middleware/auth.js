@@ -3,7 +3,8 @@ import { verifyToken } from "../utils/token.js";
 
 export const authentication = async (req, resp, next) => {
   try {
-    const token = req.header("Authorization");
+    const token = req.header("Authorization")?.split(" ")[1];
+    console.log(token);
 
     if (!token) {
       return resp.json({ success: false, message: "Token is required" });

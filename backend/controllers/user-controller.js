@@ -85,8 +85,8 @@ export const loginUser = async (req, resp) => {
     if (!comparePassword) {
       return resp.json({ success: false, message: "Incorrect Password" });
     }
-
-    return resp.json({ success: true, message: "Login Successfully" });
+    const token = genToken(email);
+    return resp.json({ success: true, message: "Login Successfully" ,token});
   } catch (error) {
     return resp.json({ success: false, message: error.message });
   }

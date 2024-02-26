@@ -49,6 +49,10 @@ export const hotelDetailsController=async(req,resp)=>{
     offerServices=JSON.parse(offerServices)
     customerNumber=JSON.parse(customerNumber)
     locatedPlace=JSON.parse(locatedPlace)
+    discount=JSON.parse(discount)
+    roomType=JSON.parse(roomType)
+    houseTitle=JSON.parse(houseTitle)
+    price=JSON.parse(price)
     const validateDetails=hotelDetailsValidation.safeParse({homeType,roomType,houseTitle,aboutHome,offerServices,description,customerNumber,bookingType,price,discount,locatedPlace})
    
     if(validateDetails.error){
@@ -56,6 +60,7 @@ export const hotelDetailsController=async(req,resp)=>{
     }
 
     const uploadImage=await uploadImageOnCloudinary(hotelImage,'hotelDetails')
+    console.log('see:  ',uploadImage);
     
     if(!uploadImage || uploadImage.length === 0){
         throw new Error("Image not uploaded")
@@ -79,5 +84,37 @@ export const hotelDetailsController=async(req,resp)=>{
 
 
 export const getHotelDetailsController=async(req,resp)=>{
-    resp.json({success:true,details})
+    try {
+        const hotelDetails=await hotelDetailsModel.find({uploadedBy:req.user._id})
+        
+        if(!hotelDetails){
+            return resp.json({success:false,message:"There is no hotel register by this user"})
+        }
+
+        console.log(hotelDetails);
+        return resp.json({success:true,detals:hotelDetails})
+    } catch (error) {
+        resp.json({success:false,message:"Error: "+error.message})
+    }
+}
+
+export const deleteHotelController=async(req,resp)=>{
+    const id=req.params.id
+    console.log('id: ',id);
+    try {
+        if(!id){
+            return resp.json({success:false,message:"Please provide id"})
+        }
+    
+        const result=await hotelDetailsModel.deleteMany({_id:{$in:id}})
+
+        if(!result){
+            return resp.json({success:false,message:"Details not found"})
+        }
+
+        console.log('deleted');
+        return resp.json({success:true,message:"Deleted Successfully",details:result})
+    } catch (error) {
+        return resp.json({success:false,message:"Error: "+error.message})
+    }
 }
