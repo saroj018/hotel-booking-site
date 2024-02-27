@@ -15,7 +15,7 @@ const AddPhotos = () => {
     console.log(hotelDetails.photos[0]?.length>4);
 
     useEffect(()=>{
-        if(hotelDetails.photos[0]?.length>4){
+        if(hotelDetails.photos[0]?.length>1){
             setBtnDisable(false)
         }
     },[hotelDetails.photos])

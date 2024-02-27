@@ -3,10 +3,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from './common/Button'
 
-const Cards = ({ name, imgDet, date,rating='4.2/5', price, img,optional=true }) => {
+const Cards = ({id, name, imgDet, date,rating='4.2/5', price, img,optional=true }) => {
   return (
     <div className='mt-8 relative'>
-    <Link to={'/details'} >
+    <Link to={`/details/${id}`} >
      {optional && <Heart onClick={(e)=>e.preventDefault()} enableBackground={'true'} color='white' size={30} className='absolute left-[90%] cursor-pointer top-3' />}
       <img className='rounded-xl' src={img} alt="" />
       <div className='flex  justify-between items-end'>

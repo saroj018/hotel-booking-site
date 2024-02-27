@@ -10,7 +10,6 @@ cloudinary.config({
 });
 
 export const uploadImageOnCloudinary = async (imageCollection, folder) => {
-  // console.log('filepath: ',filepath);
   if (!imageCollection) {
     throw new Error("Invalid Path");
   }
@@ -18,11 +17,10 @@ export const uploadImageOnCloudinary = async (imageCollection, folder) => {
   try {
     let imageInfo = await Promise.all(
       imageCollection.map((item) =>
-        cloudinary.uploader.upload(item.path, { folder })
+        cloudinary.uploader.upload(item.path, {resource_type:'image', folder })
       )
     );
 
-    console.log("File Upload Successfully");
     imageCollection.map((item) => fs.unlinkSync(item.path));
     return imageInfo;
   } catch (error) {
@@ -30,3 +28,23 @@ export const uploadImageOnCloudinary = async (imageCollection, folder) => {
     console.log("error:   ", error.message);
   }
 };
+
+export const deleteImageOnCloudinary=async(imagePath)=>{
+if(!imagePath) return null
+
+try {
+  const result=await Promise.all(
+    imagePath.map((item,index)=>{
+      item.idOfImage.map((item)=>{
+        return cloudinary.uploader.destroy(item.public_id,{
+           resource_type:'image'
+         })
+      })
+    })
+  )
+  
+  return result
+} catch (error) {
+  return error
+}
+}

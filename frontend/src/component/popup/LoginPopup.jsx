@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { user } from '../../validation/userValidation'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPopup = () => {
 
@@ -16,6 +17,7 @@ const LoginPopup = () => {
 
     const [isShow, setIsShow] = useState(false)
     const[serverError,setServerError]=useState()
+    const navigate=useNavigate()
 
     const{register,handleSubmit,formState:{errors}}=useForm({resolver:zodResolver(user)})
 
@@ -25,7 +27,8 @@ const LoginPopup = () => {
        console.log(result);
        if(!result.success){
         setServerError(result.message)
-       }
+    }
+    setIsShow(false)
        localStorage.setItem('token',result.token)
        toast.success(result.message,{autoClose:1000})
     }

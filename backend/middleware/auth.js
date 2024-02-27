@@ -4,7 +4,6 @@ import { verifyToken } from "../utils/token.js";
 export const authentication = async (req, resp, next) => {
   try {
     const token = req.header("Authorization")?.split(" ")[1];
-    console.log(token);
 
     if (!token) {
       return resp.json({ success: false, message: "Token is required" });
@@ -17,7 +16,6 @@ export const authentication = async (req, resp, next) => {
     }
 
     const user = await User.findOne({ email: tokenPayload });
-    console.log(user);
     if (!user) {
       return resp.json({ success: false, message: "User not found" });
     }

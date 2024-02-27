@@ -10,20 +10,21 @@ const HotelDetailContext = ({ children }) => {
   const [btnDisable, setBtnDisable] = useState(true)
   const[hotelInfo,setHotelInfo]=useState({})
   const [hotelDetails, setHotelDetails] = useState({
-    homeType: 'farm',
-    roomType: 'room',
+    homeType: '',
+    roomType: '',
     locatedPlace: {},
     customerNumber: {
       guest: 1,
       bed: 1,
-      bathroom: 1
+      bathroom: 1,
+      bedroom:1
     },
-    offerServices: ['wifi'],
+    offerServices: [],
     photos: [],
     houseTitle: dummyHouseTitle,
-    aboutHome: 'central',
+    aboutHome: '',
     description: dummyDescription,
-    bookingType: 'instant',
+    bookingType: '',
     price: 100,
     discount: 0,
   });
@@ -73,14 +74,13 @@ const HotelDetailContext = ({ children }) => {
       }
       else{
 
-        toast.error(result.message)
+        toast.error(result.error)
       }
     } catch (error) {
       toast.error(error.message)
     }
   }
 
-  console.log('finalk: ', hotelInformantion);
 
   return (
     <Context.Provider value={{ hotelDetails, setHotelDetails, btnDisable, setBtnDisable,hotelInfo }}>

@@ -76,7 +76,6 @@ export const loginUser = async (req, resp) => {
       return resp.json({ success: false, message: result.error.format() });
     }
     const findUser = await User.findOne({ email });
-    console.log(findUser);
     if (!findUser) {
       return resp.json({ success: false, message: "User not Found" });
     }

@@ -27,6 +27,7 @@ const SignupPopup = () => {
         if(!result.success){
             setServerError(result.message)
         }
+        setIsShow(false)
         toast.success(result.message,{autoClose:1000})
     }
     

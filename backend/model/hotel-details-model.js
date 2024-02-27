@@ -6,6 +6,12 @@ const commonOption={
     required:true
 }
 
+const imageSchema = Schema({
+    url: { type: String, required: true },
+    public_id: { type: String, required: true }
+  });
+  
+
 const hotelDetailsSchema=Schema({
     homeType:commonOption,
     roomType:commonOption,
@@ -19,11 +25,12 @@ const hotelDetailsSchema=Schema({
         type:Object,
         required:true
     },
+    offerServices:[String],
     locatedPlace:{
         type:Object,
         required:true
     },
-    hotelImagesUrl:[String],
+    idOfImage:[imageSchema],
     uploadedBy:{
         type:Schema.Types.ObjectId,
         ref:"User"

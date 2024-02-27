@@ -14,7 +14,9 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
 
     const [scrollValue, setScrollValue] = useState(false)
     const[showProfileModal,setShowProfileModal]=useState(false)
-
+    const[isAuth,setIsAuth]=useState(localStorage.getItem('token'))
+    
+console.log('auth: ',!isAuth);
     useEffect(()=>{
         window.addEventListener('click',()=>{
             if(showProfileModal==true){
@@ -61,8 +63,9 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
 
             <nav className='flex relative items-center gap-6'>
                 <Link to={'/host'} className='font-semibold text-black'>{accountSwitch}</Link>
-                {extraItem && <LoginPopup/>}
-                {extraItem && <SignupPopup/>}
+                {extraItem &&  !isAuth && <LoginPopup/>}
+                {extraItem &&  !isAuth && <SignupPopup/>}
+                {isAuth && <Button onClick={()=>setIsAuth(localStorage.removeItem('token'))}>Log Out</Button>}
                 <span className='cursor-pointer border-2 rounded-full p-1'>{icon}</span>
 
                 <div onClick={(e)=>{e.stopPropagation(), setShowProfileModal(!showProfileModal)}} className='flex items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
