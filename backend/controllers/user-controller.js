@@ -76,7 +76,6 @@ export const loginUser = async (req, resp) => {
       return resp.json({ success: false, message: result.error.format() });
     }
     const findUser = await User.findOne({ email });
-    console.log(findUser);
     if (!findUser) {
       return resp.json({ success: false, message: "User not Found" });
     }
@@ -85,8 +84,8 @@ export const loginUser = async (req, resp) => {
     if (!comparePassword) {
       return resp.json({ success: false, message: "Incorrect Password" });
     }
-
-    return resp.json({ success: true, message: "Login Successfully" });
+    const token = genToken(email);
+    return resp.json({ success: true, message: "Login Successfully" ,token});
   } catch (error) {
     return resp.json({ success: false, message: error.message });
   }

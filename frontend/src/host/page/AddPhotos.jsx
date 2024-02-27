@@ -12,10 +12,10 @@ const AddPhotos = () => {
     const changeHandler=(e)=>{
         setHotelDetails((prv)=>({...prv,photos:[e.target.files]}))
     }
-    console.log(hotelDetails);
+    console.log(hotelDetails.photos[0]?.length>4);
 
     useEffect(()=>{
-        if(hotelDetails.photos.length>0){
+        if(hotelDetails.photos[0]?.length>1){
             setBtnDisable(false)
         }
     },[hotelDetails.photos])

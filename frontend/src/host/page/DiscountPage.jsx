@@ -50,7 +50,7 @@ const DiscountPage = () => {
                             <p className='text-xl my-2'>For stays of 28 nights or more</p>
                         </div>
                     </div>
-                    <Input name={'discountPercent'} checked={hotelDetails.discount=='15'} value={'15'} onChange={changeHandler} className={'h-7 w-14'} type='radio' />
+                    <Input name={'discountPercent'} checked={hotelDetails.discount==15} value={15} onChange={changeHandler} className={'h-7 w-14'} type='radio' />
                 </div>
                 <div className='flex items-center py-6 mt-4 cursor-pointer justify-between border-2 border-neutral-300 rounded-md p-4 bg-neutral-100'>
                     <div className='flex items-center  gap-6'>

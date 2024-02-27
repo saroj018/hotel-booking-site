@@ -17,7 +17,7 @@ const SetPrice = () => {
     })
 
     useEffect(()=>{
-        if(hotelDetails.price==100){
+        if(hotelDetails.price>100){
             setBtnDisable(false)
         }
     },[hotelDetails.price])
