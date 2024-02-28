@@ -16,7 +16,7 @@ const Cards = ({id, name, imgDet, date,rating='4.2/5', price, img,optional=true 
       <p className='my-2 text-neutral-700 text-lg'>{imgDet}</p>
       <p className='text-neutral-800 text-lg'>{date}</p>
       <h1 className='text-xl font-extrabold mt-3 text-black'>{price} <span className='text-neutral-600 text-lg
-        '>night</span></h1>
+        '>per night</span></h1>
     </Link>
        {!optional && <Button onClick={(e)=>{e.stopPropagation()}} className={'w-full my-5'}>Remove</Button>}
     </div>

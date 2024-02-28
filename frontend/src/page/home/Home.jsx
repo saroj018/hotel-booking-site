@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import InputBar from '../../component/bar/InputBar'
 import FilterBar from '../../component/bar/FilterBar'
 import Cards from '../../component/Cards'
@@ -29,7 +29,7 @@ const Home = () => {
            {
             details?.map((item,index)=>{
               console.log(item);
-              return  <Cards key={index} id={item._id} price={item.price} name={item.houseTitle.slice(0,40)+'...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item.idOfImage[0].url}/>
+              return  <Cards key={index} id={item._id} price={item.price.adults} name={item.houseTitle.slice(0,40)+'...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item.idOfImage[0].url}/>
             })
            }
         </div>

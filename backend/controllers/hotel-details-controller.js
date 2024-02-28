@@ -21,8 +21,10 @@ const hotelDetailsValidation=z.object({
     bookingType:z.string({
         required_error:"BookingType is required"
     }).trim(),
-    price:z.number({
-        required_error:"Price is required"
+    price:z.object({
+        adults:z.string(),
+        childrens:z.string(),
+        infants:z.string()
     }),
     discount:z.number({
         required_error:"Discount is required"
@@ -51,7 +53,8 @@ export const hotelDetailsController=async(req,resp)=>{
     customerNumber=JSON.parse(customerNumber)
     locatedPlace=JSON.parse(locatedPlace)
     discount=JSON.parse(JSON.parse(discount))
-    price=JSON.parse(JSON.parse(price))
+    price=JSON.parse(price)
+    console.log(price);
     roomType=JSON.parse(roomType)
     houseTitle=JSON.parse(houseTitle)
     const validateDetails=hotelDetailsValidation.safeParse({homeType,roomType,houseTitle,aboutHome,offerServices,description,customerNumber,bookingType,price,discount,locatedPlace})

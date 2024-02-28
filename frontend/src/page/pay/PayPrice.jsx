@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../component/common/Button'
 import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'
 import Option from '../../component/common/Option'
 import PriceBox from '../../component/PriceBox'
+import { useGetFetch } from '../../hooks/fetch-data'
+import { useParams } from 'react-router-dom'
 
 const PayPrice = () => {
+    const[hotelData,setHotelData]=useState({})
+
+    const{id}=useParams()
+
+    const getDetails=async ()=>{
+        const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
+        setHotelData(result.data[0])
+      }
+    
+      useEffect(()=>{
+        getDetails()
+      },[])
     return (
         <div className='flex justify-between w-full pl-[10%] ' >
             <div >
@@ -68,7 +82,7 @@ const PayPrice = () => {
                     <Button className={'bg-[#E00B41] border-none outline-none py-5 px-14 my-7 float-right'}>Confirm and Pay</Button>
                 </div>
             </div>
-            <PriceBox />
+            <PriceBox hotelData={hotelData} />
         </div>
     )
 }

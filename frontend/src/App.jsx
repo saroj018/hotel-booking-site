@@ -39,7 +39,7 @@ const App = () => {
       <Route path='/' element={<Layout />}>
         <Route index element={<Home />} />
         <Route path='details/:id' element={<DetailPage />} />
-        <Route path='payprice' element={<PayPrice />} />
+        <Route path=':id/payprice' element={<PayPrice />} />
         <Route path='account' element={<Account />} />
         <Route path='wishlist' element={<WishList />} />
         <Route path='message' element={<Inbox />} />

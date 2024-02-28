@@ -4,11 +4,15 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import HotelDetailContext from './host/context/HotelDetailContext.jsx'
+import { Provider } from 'react-redux'
+import { store } from './redux/store/store.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <HotelDetailContext>
+  <Provider store={store}>
+    <HotelDetailContext>
     <Router>
       <App />
     </Router>
   </HotelDetailContext>
+  </Provider>
 )

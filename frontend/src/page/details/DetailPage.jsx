@@ -1,16 +1,18 @@
 import { AirVent, Bath, Building2, Droplets, Ship, Star, Tv, Wifi } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Checkout from '../../component/Checkout'
 import AboutPopup from '../../component/popup/AboutPopup'
 import HostDetail from '../../component/HostDetail'
 import OwnerProfile from '../../component/OwnerProfile'
 import { useParams } from 'react-router-dom'
 import { useGetFetch } from '../../hooks/fetch-data'
+import { Context } from '../../host/context/HotelDetailContext'
 
 
 const DetailPage = () => {
 
   const[details,setDetails]=useState({})
+  const{setHotelData}=useContext(Context)
 
   const {id}=useParams()
   console.log(id);
@@ -18,6 +20,7 @@ const DetailPage = () => {
   const getDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
     setDetails(result.data[0])
+    setHotelData(result.data[0])
   }
 
   useEffect(()=>{

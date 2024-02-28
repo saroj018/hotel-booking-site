@@ -82,7 +82,7 @@ const Listing = () => {
                         <th className='p-4'>Beds</th>
                         <th className='p-4'>Bath Rooms</th>
                         <th className='p-4'>Instant Book</th>
-                        <th className='p-4'>Price</th>
+                        <th colSpan={3} className='p-4'>Price</th>
                         <th className='p-4'>Discount</th>
                         <th className='p-4'>HouseType</th>
                     </thead>
@@ -101,7 +101,9 @@ const Listing = () => {
                                     <td className='p-3'>{item?.customerNumber?.bed}</td>
                                     <td className='p-3'>{item?.customerNumber?.bathroom}</td>
                                     <td className='p-3'>{item?.bookingType.includes('instant') ? 'ON' : "OFF"}</td>
-                                    <td className='p-3'>${item?.price}</td>
+                                    <td className='p-3'>${item?.price?.adults}</td>
+                                    <td className='p-3'>${item?.price?.childrens}</td>
+                                    <td className='p-3'>${item?.price?.infants}</td>
                                     <td className='p-3'>{item?.discount}%</td>
                                     <td className='p-3'>{item?.roomType}</td>
                                 </tr>
