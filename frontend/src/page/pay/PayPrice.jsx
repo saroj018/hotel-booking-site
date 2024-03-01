@@ -6,39 +6,67 @@ import Option from '../../component/common/Option'
 import PriceBox from '../../component/PriceBox'
 import { useGetFetch } from '../../hooks/fetch-data'
 import { useParams } from 'react-router-dom'
+import { Space, DatePicker } from 'antd'
+import ListPopup from '../../component/popup/ListPopup'
+import dayjs from 'dayjs'
+import { useSelector } from 'react-redux'
+import { nightCalculator } from '../../component/utlils/nightCalculator'
+import { data } from 'autoprefixer'
 
 const PayPrice = () => {
-    const[hotelData,setHotelData]=useState({})
+    const [hotelData, setHotelData] = useState({})
+    const [datePicker, setDatePicker] = useState(false)
+    const[guest,setGuest]=useState(false)
+    const[totalPrice,setTotalPrice]=useState()
+    const[nightCount,setNightCount]=useState()
 
-    const{id}=useParams()
+    const { id } = useParams()
+    const{RangePicker}=DatePicker
+    const dateRange=useSelector(state=>state.datePicker.date)
+    console.log(dateRange);
 
-    const getDetails=async ()=>{
-        const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
+    const getDetails = async () => {
+        const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
         setHotelData(result.data[0])
-      }
-    
-      useEffect(()=>{
+    }
+
+    const getDate=(_,date)=>{
+        if(data.length==0){
+            setNightCount(0)
+        }
+        else{
+
+            const totalNight=nightCalculator(date)
+            setNightCount(totalNight)
+        }
+    }
+
+    useEffect(() => {
         getDetails()
-      },[])
+    }, [])
     return (
         <div className='flex justify-between w-full pl-[10%] ' >
             <div >
                 <h1 className='text-5xl font-bold my-10'>Confirm and pay</h1>
                 <div >
                     <h1 className='text-4xl my-5'>Your Trip</h1>
-                    <div className='flex justify-between my-4 items-center'>
+                    <div className='flex relative justify-between my-4 items-center'>
                         <div>
                             <p className='text-xl font-bold'>Dates</p>
                             <p className='text-lg'>Jan 2-Jan 20</p>
                         </div>
-                        <Button className={'px-10'}>Edit</Button>
+                        <Button onClick={() => setDatePicker(!datePicker)} className={'px-10'}>Edit</Button>
+                        {datePicker && <Space className='w-[50%] my-1 absolute left-[50%] bottom-[100%] ' direction="vertical" size={100}>
+                            <RangePicker defaultValue={[dayjs(dateRange[0]),dayjs(dateRange[1])]} onChange={getDate} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
+                        </Space>}
                     </div>
-                    <div className='flex justify-between my-4 items-center'>
+                    <div className='flex relative justify-between my-4 items-center'>
                         <div >
                             <p className='text-xl font-bold'>Guests</p>
                             <p className='text-lg'>1 Guest</p>
                         </div>
-                        <Button className={'px-10'}>Edit</Button>
+                        <Button onClick={()=>setGuest(!guest)} className={'px-10'}>Edit</Button>
+                        {guest && <ListPopup className={'absolute top-full left-[35%] bg-white w-[70%]'} setTotalPrice={setTotalPrice}/>}
                     </div>
                 </div>
 
@@ -82,7 +110,7 @@ const PayPrice = () => {
                     <Button className={'bg-[#E00B41] border-none outline-none py-5 px-14 my-7 float-right'}>Confirm and Pay</Button>
                 </div>
             </div>
-            <PriceBox hotelData={hotelData} />
+            <PriceBox nightCount={nightCount} hotelData={hotelData} />
         </div>
     )
 }

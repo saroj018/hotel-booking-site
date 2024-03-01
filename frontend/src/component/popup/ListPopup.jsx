@@ -40,7 +40,6 @@ const ListPopup = ({ className,setTotalPrice }) => {
       let childrenPrice=count.Children*hotelData?.price?.childrens
       let infantPrice=count.Infants*hotelData?.price?.infants
       
-      const total=adultPrice+childrenPrice+infantPrice
       setTotalPrice({adultPrice,childrenPrice,infantPrice,count})
     },[count])
     return (

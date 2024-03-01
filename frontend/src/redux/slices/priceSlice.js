@@ -13,5 +13,5 @@ return action.payload
     }
 })
 
-export const{addPrice}=priceSlice.actions
+export const {addPrice}=priceSlice.actions
 export default priceSlice.reducer
