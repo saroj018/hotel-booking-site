@@ -49,12 +49,10 @@ export const hotelDetailsController=async(req,resp)=>{
     let hotelImage=req.files
 
     offerServices=JSON.parse(offerServices)
-    console.log(offerServices);
     customerNumber=JSON.parse(customerNumber)
     locatedPlace=JSON.parse(locatedPlace)
     discount=JSON.parse(JSON.parse(discount))
     price=JSON.parse(price)
-    console.log(price);
     roomType=JSON.parse(roomType)
     houseTitle=JSON.parse(houseTitle)
     const validateDetails=hotelDetailsValidation.safeParse({homeType,roomType,houseTitle,aboutHome,offerServices,description,customerNumber,bookingType,price,discount,locatedPlace})
@@ -68,7 +66,6 @@ export const hotelDetailsController=async(req,resp)=>{
     if(!resultOfUploadedImage || resultOfUploadedImage.length === 0){
         throw new Error("Image not uploaded")
     }
-    // const idOfImage=resultOfUploadedImage.map(({url,public_id})=>({url,public_id}))
     const idOfImage=resultOfUploadedImage.map((item)=>({url:item.url,public_id:item.public_id}))
     const uploadedBy=req.user._id
     
@@ -138,7 +135,6 @@ export const getSingleDetails=async(req,resp)=>{
   }
 
   const result=await hotelDetailsModel.find({_id:id})
-  console.log(result);
   if(!result){
     resp.json({success:false,message:"Details not found"})
   }

@@ -6,7 +6,6 @@ import { Context } from '../context/HotelDetailContext'
 const HouseTitle = () => {
 
   const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
-  console.log(hotelDetails);
 
   useEffect(()=>{
     if(hotelDetails.houseTitle.length>10){

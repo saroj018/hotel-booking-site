@@ -22,9 +22,7 @@ const LoginPopup = () => {
     const{register,handleSubmit,formState:{errors}}=useForm({resolver:zodResolver(user)})
 
     const onSubmit=async (data)=>{
-        console.log(data);
        let result= await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/login`,data)
-       console.log(result);
        if(!result.success){
         setServerError(result.message)
     }

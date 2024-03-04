@@ -3,113 +3,110 @@ import ListPopup from './popup/ListPopup'
 import { ChevronDown } from 'lucide-react'
 import Button from './common/Button'
 import { twMerge } from 'tailwind-merge'
-import DateRangePicker from './utlils/DateRange'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Space, DatePicker } from 'antd'
 import { Context } from '../host/context/HotelDetailContext'
-import { useDispatch } from 'react-redux'
-import { addPrice } from '../redux/slices/priceSlice'
-import { dateValidate } from '../validation/userValidation'
-import { getDateRange } from '../redux/slices/datePickerSlice'
 import { nightCalculator } from './utlils/nightCalculator'
+import { z } from 'zod'
+import dayjs from 'dayjs'
 
 const Checkout = ({ className }) => {
-
     const [list, setList] = useState(false)
-    const [dateRange, setDateRange] = useState([])
-    const [night, setNight] = useState(0)
-    const [totalPrice, setTotalPrice] = useState({
-        adultPrice: 0,
-        childrenPrice: 0,
-        infantPrice: 0,
-        count: {}
-    })
-    const [dateRangeValidate, setDateRangeValidate] = useState()
-    const dispatch = useDispatch()
+    const { RangePicker } = DatePicker
+    const [searchParams, setSearchParams] = useSearchParams()
+    const { hotelData } = useContext(Context)
+    const dateValidate = z.tuple([z.string(), z.string()]);
+    const [dateError, setDateError] = useState(false)
     const navigate = useNavigate()
     const { id } = useParams()
+    const Adults = Number(searchParams.get('Adults'))
+    const Children = Number(searchParams.get('Children'))
+    const Infants = Number(searchParams.get('Infants'))
+    const checkIn = searchParams.get('checkIn')
+    const checkOut = searchParams.get('checkOut')
+    const totalNight = nightCalculator([checkIn, checkOut])
+    const totalPrice = (Adults * hotelData.price.adults) * totalNight + (Children * hotelData.price.childrens) * totalNight + (Infants * hotelData.price.infants) * totalNight
+    
+    useEffect(()=>{
+        setSearchParams({
+            checkIn: checkIn==null ? dayjs().format('YYYY-MM-DD'):checkIn,
+            checkOut: checkOut==null ? dayjs().add(1,'d').format('YYYY-MM-DD'):checkOut,
+            Adults: Adults==null ? 1 :Adults,
+            Children: Children==null ? 0:Children,
+            Infants: Infants==null ?0:Infants
+        })
+    },[])
 
-    const { RangePicker } = DatePicker;
-    const { hotelData } = useContext(Context)
-    console.log(totalPrice.infantPrice);
-
-    const getDate = (_, date) => {
-        console.log(date);
-        setDateRange(date)
-        setDateRangeValidate(false)
-        dispatch(getDateRange(date))
+    const dateHandler = (_, date) => {
+        setSearchParams({
+            checkIn: date[0]==null ? "":date[0],
+            checkOut: date[1]==null ? "":date[1],
+            Adults: Adults,
+            Children: Children,
+            Infants: Infants
+        })
     }
 
-    useEffect(() => {
-        // let totalNight=new Date(dateRange[0]-dateRange[1]).getTime()
-        const totalNight = nightCalculator(dateRange)
-        setNight(totalNight)
-    }, [dateRange])
-
-    console.log(dateRange);
-
-    const clickHandler = () => {
+    const reserveHandler = () => {
         try {
-            const reserveDate = [new Date(dateRange[0]), new Date(dateRange[1])]
-            const validate = dateValidate.parse(reserveDate)
-            navigate(`/${id}/payprice`)
-
-            dispatch(addPrice({ night, totalPrice }))
-            setDateRangeValidate(false)
+            let result=dateValidate.parse([checkIn, checkOut])
+            console.log(result);
+            setDateError(false)
+            navigate(`/${id}/payprice?checkIn=${checkIn}&checkOut=${checkOut}&Adults=${Adults}&Children=${Children}&Infants=${Infants}`)
         } catch (error) {
-            setDateRangeValidate(true)
-
+            console.log(error);
+            setDateError(true)
         }
     }
 
     return (
         <div className={twMerge('w-[500px] rounded-xl shadow-xl p-5 border-2 relative', className)}>
-            <h1 className='text-2xl font-bold'>{'$' + hotelData.price.adults} <span>per night</span></h1>
+            <h1 className='text-2xl font-bold'>33 <span>per night</span></h1>
             <div className=' my-3'>
                 <Space className='w-full my-1' direction="vertical" size={100}>
-                    <RangePicker onChange={getDate} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
+                    <RangePicker defaultValue={[dayjs(),dayjs().add(1,'d')]} onChange={dateHandler} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
                 </Space>
-                {dateRangeValidate ? <p className='text-red-500 text-xl mb-2'>Invalid Date</p> : ''}
+                {dateError && <p className='text-red-500 text-xl mb-2'>Invalid Date</p>}
                 <div className='flex'>
                     <div className='border-2 px-4 py-1 grow text-xl'>
                         <p>CheckIn</p>
-                        <p className='text-lg font-black'>{dateRange[0]}</p>
+                        <p className='text-lg font-black'>{checkIn}</p>
                     </div>
                     <div className='border-2 px-4 py-1 text-xl grow'>
                         <p>CheckOut</p>
-                        <p className='text-lg font-black'>{dateRange[1]}</p>
+                        <p className='text-lg font-black'>{checkOut}</p>
                     </div>
                 </div>
                 <div onClick={() => setList(!list)} className='w-full my-2 flex justify-between items-center cursor-pointer h-[70px] px-4 py-2 text-xl border-2'>
                     <div>
                         <p className='font-bold'>Guest</p>
-                        <p>{totalPrice.count.Adults + totalPrice.count.Children + totalPrice.count.Infants} Guest</p>
+                        <p>{Adults + Children + Infants} Guest</p>
                     </div>
                     <ChevronDown className={!list ? 'rotate-180 duration-300' : 'rotate-0 duration-300'} />
                 </div>
             </div>
-            <ListPopup setTotalPrice={setTotalPrice} className={`${list ? 'hidden' : ''} absolute top-[46%] left-[4%] bg-white max-w-[92%] w-full`} />
+            <ListPopup setSearchParams={setSearchParams} searchParams={searchParams} className={`${list ? 'hidden' : ''} absolute top-[46%] left-[4%] bg-white max-w-[92%] w-full`} />
 
-            <Button onClick={clickHandler} className={'w-full my-5 bg-[#ff385c] outline-none border-none hover:bg-[#ff385c] hover:text-white'}>Reserve</Button>
+            <Button onClick={reserveHandler} className={'w-full my-5 bg-[#ff385c] outline-none border-none hover:bg-[#ff385c] hover:text-white'}>Reserve</Button>
 
             <p className='text-center text-xl'>You won't be Charged Yet</p>
             <div className='flex justify-between items-center my-4 text-2xl'>
                 <div>
-                    <p>{`$${hotelData?.price?.adults}*${night} night`}</p>
-                    <p className='text-lg text-green-500'>{`(${totalPrice.adultPrice / hotelData.price.adults} Adults ${totalPrice.childrenPrice / hotelData.price.adults} Childrens ${totalPrice.infantPrice / hotelData.price.adults} Infants)`}</p>
+                    <p>{totalNight} Night</p>
+                    <p className='text-lg text-green-500'>{`(${Adults} Adults ${Children} Childrens ${Infants} Infants)`}</p>
                 </div>
-                <p>{`$${(totalPrice.adultPrice + totalPrice.childrenPrice + totalPrice.infantPrice) * night}`}</p>
+                <p>{`$${totalPrice}`}</p>
             </div>
             <div className='flex justify-between items-center text-2xl  my-4'>
                 <p>Airbnb Service Fee</p>
-                <p>${`${night < 1 ? 0 : 500}`}</p>
+                <p>$100</p>
             </div>
 
             <hr />
 
             <div className='flex justify-between items-center my-5 text-2xl font-semibold'>
                 <p>Total </p>
-                <p>{`$${(totalPrice.adultPrice + totalPrice.childrenPrice + totalPrice.infantPrice) * night + (night < 1 ? 0 : 500)}`}</p>
+                <p>{totalPrice + 500}</p>
             </div>
         </div>
     )

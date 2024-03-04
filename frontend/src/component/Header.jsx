@@ -16,7 +16,6 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
     const[showProfileModal,setShowProfileModal]=useState(false)
     const[isAuth,setIsAuth]=useState(localStorage.getItem('token'))
     
-console.log('auth: ',!isAuth);
     useEffect(()=>{
         window.addEventListener('click',()=>{
             if(showProfileModal==true){

@@ -4,6 +4,7 @@ import FilterBar from '../../component/bar/FilterBar'
 import Cards from '../../component/Cards'
 import SignupPopup from '../../component/popup/SignupPopup'
 import { useGetFetch } from '../../hooks/fetch-data'
+import {v4 as uuid} from 'uuid'
 
 const Home = () => {
 
@@ -11,8 +12,6 @@ const Home = () => {
 
   const hotelDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/gethoteldetails`)
-    console.log(result);
-    console.log(result.detals[0].idOfImage[0].url);
     setDetails(result.detals)
   }
 
@@ -28,8 +27,7 @@ const Home = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 '>
            {
             details?.map((item,index)=>{
-              console.log(item);
-              return  <Cards key={index} id={item._id} price={item.price.adults} name={item.houseTitle.slice(0,40)+'...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item.idOfImage[0].url}/>
+              return  <Cards key={uuid()} id={item._id} price={item.price.adults} name={item.houseTitle.slice(0,40)+'...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item.idOfImage[0].url}/>
             })
            }
         </div>

@@ -17,7 +17,6 @@ const HomeDescription = () => {
         setBtnDisable(false)
     }
 },[hotelDetails.description])
-  console.log(hotelDetails);
   return (
     <>
     <div className='w-1/2 mx-auto relative'>

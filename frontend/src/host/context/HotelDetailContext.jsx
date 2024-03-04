@@ -3,6 +3,7 @@ import { dummyDescription, dummyHouseTitle } from '../../../DummyData';
 import { usePostFetch } from '../../hooks/fetch-data';
 import Button from '../../component/common/Button';
 import { toast } from 'react-toastify';
+import { useSearchParams } from 'react-router-dom';
 
 export const Context = createContext()
 
@@ -10,6 +11,8 @@ const HotelDetailContext = ({ children }) => {
   const [btnDisable, setBtnDisable] = useState(true)
   const [hotelData, setHotelData] = useState()
   const [hotelInfo, setHotelInfo] = useState({})
+  const[searchParams,setSearchParams]=useSearchParams()
+
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
     roomType: '',
@@ -72,7 +75,6 @@ const HotelDetailContext = ({ children }) => {
       })
       const result = await resp.json()
       setHotelInfo(result.hotelDetails)
-      console.log(result);
       if (result.success) {
 
         toast.success(result.message)
@@ -86,10 +88,9 @@ const HotelDetailContext = ({ children }) => {
     }
   }
 
-  console.log('last:  >>',hotelInformantion);
 
   return (
-    <Context.Provider value={{ hotelDetails, setHotelDetails, hotelData, setHotelData, btnDisable, setBtnDisable, hotelInfo }}>
+    <Context.Provider value={{ hotelDetails, setHotelDetails, hotelData, setHotelData, btnDisable,setSearchParams,searchParams, setBtnDisable, hotelInfo }}>
       {children}
       <Button onClick={clickHandler}>Send</Button>
     </Context.Provider>

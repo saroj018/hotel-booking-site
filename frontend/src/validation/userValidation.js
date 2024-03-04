@@ -13,4 +13,3 @@ import {z} from 'zod'
 })
 
 
-export const dateValidate = z.tuple([z.date(), z.date()]);

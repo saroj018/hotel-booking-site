@@ -10,7 +10,6 @@ const BookingType = () => {
     const clickHandler=(text)=>{
         setHotelDetails((prv)=>({...prv,bookingType:text}))
     }
-    console.log(hotelDetails);
 
     useEffect(()=>{
         if(hotelDetails.bookingType!=''){

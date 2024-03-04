@@ -22,7 +22,6 @@ const AddLocation = () => {
   })
   
  
-console.log(location);
 
 useEffect(()=>{
   setHotelDetails((prv)=>({...prv,locatedPlace:location}))

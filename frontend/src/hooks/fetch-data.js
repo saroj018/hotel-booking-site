@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export const useGetFetch = async (url) => {
   try {
     const resp = await fetch(url, {
@@ -10,10 +12,15 @@ export const useGetFetch = async (url) => {
     if (!resp.ok) {
       throw new Error("There is some error on fetchGet data");
     }
-    const data = resp.json();
-    return data;
+    const result = resp.json();
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error);
+    }
+    return result;
   } catch (error) {
-    console.log("fetchGet Error: ", error.message);
+    toast.error(error.error);
   }
 };
 
@@ -30,32 +37,42 @@ export const usePostFetch = async (
       body: JSON.stringify(bodyData),
       headers: {
         "Content-Type": header,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     if (!resp.ok) {
       throw new Error("There is some error on fetchPost data");
     }
-    const data = await resp.json();
-    return data;
+    const result = await resp.json();
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error);
+    }
+    return result;
   } catch (error) {
-    console.log("fetchPost Error: ", error.message);
+    toast.error(error.error);
   }
 };
 
-export const useDeleteFetch = async (url,id) => {
+export const useDeleteFetch = async (url, id) => {
   try {
     const resp = await fetch(url, {
       method: "DELETE",
-      body:JSON.stringify({id}),
+      body: JSON.stringify({ id }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(resp);
     const result = await resp.json();
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error);
+    }
     return result;
   } catch (error) {
-    console.log("fetchDelete Error: ", error.message);
+    toast.error(error.error);
   }
 };

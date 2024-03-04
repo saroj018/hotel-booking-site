@@ -54,7 +54,6 @@ const SelectHomeType = () => {
             setBtnDisable(false)
         }
     },[hotelDetails.homeType])
-    console.log(hotelDetails);
     
   return (
     <>

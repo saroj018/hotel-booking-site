@@ -7,15 +7,13 @@ import OwnerProfile from '../../component/OwnerProfile'
 import { useParams } from 'react-router-dom'
 import { useGetFetch } from '../../hooks/fetch-data'
 import { Context } from '../../host/context/HotelDetailContext'
-
+import {v4 as uuid} from 'uuid'
 
 const DetailPage = () => {
 
   const[details,setDetails]=useState({})
   const{setHotelData}=useContext(Context)
-
   const {id}=useParams()
-  console.log(id);
 
   const getDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
@@ -26,9 +24,7 @@ const DetailPage = () => {
   useEffect(()=>{
     getDetails()
   },[])
-  console.log('data>>>>>>>>>>>>>>>',details);
   
-
 
   const offerService = [
     {
@@ -73,7 +69,7 @@ const DetailPage = () => {
           {
             details?.idOfImage?.map((item,index)=>{
               if(index===4) return
-              return  <img key={index} className='h-[235px]' src={item?.url} alt="" />
+              return  <img key={uuid()} className='h-[235px]' src={item?.url} alt="" />
 
             })
           }
@@ -107,7 +103,7 @@ const DetailPage = () => {
         <div className='grid grid-cols-2 w-[50%] my-5'>
           {
             details?.offerServices?.map((ele, index) => {
-              return <div key={index + ele.name} className='flex items-center my-3 gap-4'>
+              return <div key={uuid()} className='flex items-center my-3 gap-4'>
                 <span>{ele.icon}</span>
                 <span className='text-2xl'>{ele}</span>
               </div>

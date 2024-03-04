@@ -1,14 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
-import { Context } from '../../host/context/HotelDetailContext';
+import React from 'react'
+import { useSearchParams } from 'react-router-dom';
 
-const ListPopup = ({ className,setTotalPrice }) => {
-    const [count, setCount] = useState({
-        Adults: 1,
-        Children: 0,
-        Infants: 0
-    })
-    console.log('price>>>>>>>>>>>',count);
-    const{hotelData}=useContext(Context)
+const ListPopup = ({ className}) => {
 
     const listItme = [
         {
@@ -25,23 +18,70 @@ const ListPopup = ({ className,setTotalPrice }) => {
         }
     ]
 
-    const clickHandler = (title, value) => {
-        if (value === 'add') {
-            setCount((prv) => ({ ...prv, [title]:prv[title]+1}))
+    const[searchParams,setSearchParams]=useSearchParams()
+
+    const clickHandler = (operation, title) => {
+        if (operation == 'add') {
+            if(title=='Adults'){
+                setSearchParams({
+                    checkIn: searchParams.get('checkIn'),
+                    checkOut: searchParams.get('checkOut'),
+                    Adults: Number(searchParams.get('Adults'))+1,
+                    Children: searchParams.get('Children'),
+                    Infants: searchParams.get('Infants')
+                })
+            }
+            else if(title=='Children'){
+                setSearchParams({
+                    checkIn: searchParams.get('checkIn'),
+                    checkOut: searchParams.get('checkOut'),
+                    Adults: searchParams.get('Adults'),
+                    Children: Number(searchParams.get('Children'))+1,
+                    Infants: searchParams.get('Infants')
+                })
+            }
+            else {
+                setSearchParams({
+                    checkIn: searchParams.get('checkIn'),
+                    checkOut: searchParams.get('checkOut'),
+                    Adults: searchParams.get('Adults'),
+                    Children: searchParams.get('Children'),
+                    Infants: Number(searchParams.get('Infants'))+1
+                })
+            }
         }
         else {
-            if (count[title] < 1) return
-            setCount((prv => ({ ...prv, [title]: prv[title] - 1 })))
+            if (Number(searchParams.get(title)) < 1) return
+            if(title=='Adults'){
+                setSearchParams({
+                    checkIn: searchParams.get('checkIn'),
+                    checkOut: searchParams.get('checkOut'),
+                    Adults: Number(searchParams.get('Adults'))-1,
+                    Children: searchParams.get('Children'),
+                    Infants: searchParams.get('Infants')
+                })
+            }
+            else if(title=='Children'){
+                setSearchParams({
+                    checkIn: searchParams.get('checkIn'),
+                    checkOut: searchParams.get('checkOut'),
+                    Adults: searchParams.get('Adults'),
+                    Children: Number(searchParams.get('Children'))-1,
+                    Infants: searchParams.get('Infants')
+                })
+            }
+            else {
+                setSearchParams({
+                    checkIn: searchParams.get('checkIn'),
+                    checkOut: searchParams.get('checkOut'),
+                    Adults: searchParams.get('Adults'),
+                    Children: searchParams.get('Children'),
+                    Infants: Number(searchParams.get('Infants'))-1
+                })
+            }
         }
     }
 
-    useEffect(()=>{
-      let adultPrice=count.Adults*hotelData?.price?.adults
-      let childrenPrice=count.Children*hotelData?.price?.childrens
-      let infantPrice=count.Infants*hotelData?.price?.infants
-      
-      setTotalPrice({adultPrice,childrenPrice,infantPrice,count})
-    },[count])
     return (
         <div className={className}>
             {
@@ -52,9 +92,9 @@ const ListPopup = ({ className,setTotalPrice }) => {
                             <p className='text-xl'>Age {ele.age}</p>
                         </div>
                         <div className='flex w-[40%]  justify-between'>
-                            <p onClick={() => clickHandler(ele.title, 'add')} className=' select-none rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
-                            <p className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>{count[ele.title]}</p>
-                            <p onClick={() => clickHandler(ele.title, 'less')} className=' select-none rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
+                            <p onClick={() => clickHandler('add', ele.title)} className=' select-none rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>+</p>
+                            <p className='rounded-full select-none cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>{searchParams.get(ele.title)}</p>
+                            <p onClick={() => clickHandler('less', ele.title)} className=' select-none rounded-full cursor-pointer border-2 text-2xl px-4 py-2 h-[50px] w-[50px]'>-</p>
                         </div>
                     </div>
                 })

@@ -25,7 +25,6 @@ export const uploadImageOnCloudinary = async (imageCollection, folder) => {
     return imageInfo;
   } catch (error) {
     imageCollection.map((item) => fs.unlinkSync(item.path));
-    console.log("error:   ", error.message);
   }
 };
 

@@ -23,7 +23,6 @@ const SignupPopup = () => {
 
     const onSubmit=async (data)=>{
         const result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/signup`,data)
-        console.log(result);
         if(!result.success){
             setServerError(result.message)
         }

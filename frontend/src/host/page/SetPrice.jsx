@@ -15,8 +15,6 @@ const SetPrice = () => {
     window.addEventListener('click', () => {
         setEdit(false)
     })
-    // {priceDrop && <PricePopup className={'absolute left-[7%] top-[105%] z-10 bg-white'} />}
-    console.log(hotelDetails.price);
     useEffect(() => {
         if (Number(hotelDetails.price.adults) > 500 && Number(hotelDetails.price.childrens) > 300 && Number(hotelDetails.price.infants) > 100){
         setBtnDisable(false)
@@ -25,12 +23,10 @@ const SetPrice = () => {
     setBtnDisable(true)
 }
     }, [hotelDetails.price])
-console.log(hotelDetails);
 
 const priceHandler = (para, e) => {
     setHotelDetails((prv) => ({ ...prv, price: { ...prv.price, [para]: e.target.value } }))
 }
-console.log(hotelDetails.price);
 return (
     <>
         <div className='w-1/2 mx-auto'>

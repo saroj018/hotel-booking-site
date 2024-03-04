@@ -9,10 +9,8 @@ const SelectRoomType = () => {
     const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const clickHandler = (item) => {
-        console.log(item);
         setHotelDetails((prv)=>({...prv,roomType:item}))
     }
-    console.log(hotelDetails);
 
     useEffect(()=>{
         if(hotelDetails.roomType!=''){

@@ -5,7 +5,6 @@ const DateRange = () => {
   const { RangePicker } = DatePicker;
 
   const getDate=(datearr,date)=>{
-    console.log(date);
   }
   return (
 

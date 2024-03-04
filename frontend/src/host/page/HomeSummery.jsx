@@ -33,7 +33,6 @@ const HomeSummery = () => {
     const clickHandler=(text)=>{
         setHotelDetails((prv)=>({...prv,aboutHome:text}))
     }
-    console.log(hotelDetails);
 
     useEffect(()=>{
         if(hotelDetails.aboutHome!=''){

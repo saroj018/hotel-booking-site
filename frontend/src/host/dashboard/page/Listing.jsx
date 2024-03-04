@@ -12,7 +12,6 @@ const Listing = () => {
     const [hotelDetails, setHotelDetails] = useState()
     const [id, setId] = useState([])
     const[state,setState]=useState(false)
-    console.log(id);
 
     const getHotelDetails = async () => {
         const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/gethoteldetails`)
@@ -21,7 +20,6 @@ const Listing = () => {
 
     const deleteHotelDetails = async () => {
         const result = await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/deletehoteldetails`,id)
-        console.log(result);
         if (result?.success) {
             toast.success(result?.message)
             getHotelDetails()
@@ -30,7 +28,6 @@ const Listing = () => {
             toast.error(result?.message)
         }
     }
-    console.log('data is : ', hotelDetails);
 
     useEffect(() => {
         getHotelDetails()
@@ -42,7 +39,6 @@ const Listing = () => {
         }else setState(false)
     },[id])
     const deleteHandler=()=>{
-        console.log('clc');
         deleteHotelDetails()
     }
 
@@ -60,7 +56,6 @@ const Listing = () => {
             
         })
     }
-    console.log(id);
     return (
         <div>
             <div className='flex justify-between mt-7'>
