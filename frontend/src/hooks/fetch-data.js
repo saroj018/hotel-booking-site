@@ -12,12 +12,13 @@ export const useGetFetch = async (url) => {
     if (!resp.ok) {
       throw new Error("There is some error on fetchGet data");
     }
-    const result = resp.json();
-    if (result.success) {
-      toast.success(result.message);
-    } else {
-      toast.error(result.error);
-    }
+    const result =await resp.json();
+    console.log(result);
+    // if (result.success) {
+    //   toast.success(result.message);
+    // } else {
+    //   toast.error(result.error);
+    // }
     return result;
   } catch (error) {
     toast.error(error.error);
@@ -29,24 +30,26 @@ export const usePostFetch = async (
   bodyData,
   header = "application/json"
 ) => {
+  console.log(JSON.stringify(bodyData));
   try {
     const resp = await fetch(url, {
       method: "POST",
       // credentials: "include",
-      body: JSON.stringify(bodyData),
       headers: {
         "Content-Type": header,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+      body: JSON.stringify(bodyData),
     });
     if (!resp.ok) {
       throw new Error("There is some error on fetchPost data");
     }
     const result = await resp.json();
+    console.log(result);
     if (result.success) {
-      toast.success(result.message);
+      toast.success(result.message,{autoClose:1000});
     } else {
-      toast.error(result.error);
+      toast.error(result.error,{autoClose:1000});
     }
     return result;
   } catch (error) {
@@ -66,12 +69,12 @@ export const useDeleteFetch = async (url, id) => {
     });
     const result = await resp.json();
     if (result.success) {
-      toast.success(result.message);
+      toast.success(result.message,{autoClose:1000});
     } else {
-      toast.error(result.error);
+      toast.error(result.error,{autoClose:1000});
     }
     return result;
   } catch (error) {
-    toast.error(error.error);
+    toast.error(error.error,{autoClose:1000});
   }
 };

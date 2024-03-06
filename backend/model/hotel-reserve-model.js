@@ -32,8 +32,23 @@ const hotelReserveSchema=new Schema({
     },
     reservedBy:{
         type:Schema.Types.ObjectId,
-        ref:"User"
+        ref:"users"
+    },
+    hotel:{
+        type:Schema.Types.ObjectId,
+        ref:"hoteldetails"
+    },
+    reserveDate:{
+        type:String,
+        required:true
+    },
+    reserveTime:{
+        type:String,
+        required:true
     }
+},
+{
+    timestamps:true
 })
 
 export const hotelReserveModel=new model('hotelreserve',hotelReserveSchema)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import Button from '../../component/common/Button'
 import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'
@@ -11,6 +11,7 @@ import dayjs from 'dayjs'
 import { usePostFetch } from '../../hooks/fetch-data'
 import Popup from 'reactjs-popup'
 import { XCircle } from 'lucide-react'
+import { Context } from '../../host/context/HotelDetailContext'
 
 const PayPrice = () => {
     const [datePicker, setDatePicker] = useState(false)
@@ -25,7 +26,8 @@ const PayPrice = () => {
         Children: 0,
         Infants: 0,
         payMethod: '',
-        payVia: ''
+        payVia: '',
+        hotel:''
     })
     const [searchParams, setSearchParams] = useSearchParams()
     const checkIn = searchParams.get('checkIn')
@@ -37,7 +39,7 @@ const PayPrice = () => {
     const partialRef = useRef()
     const fullRef = useRef()
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-
+    const{hotelData}=useContext(Context)
 
     const getDate = (_, date) => {
         setSearchParams({
@@ -75,13 +77,14 @@ const PayPrice = () => {
             Children,
             Infants,
             payMethod: payment,
-            payVia: paymentOption
+            payVia: paymentOption,
+            hotel:hotelData._id
         })
     }
 
 
     const sendDataHandler =async () => {
-        await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
+       await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
         setShow(false)
     }
 
@@ -160,7 +163,7 @@ const PayPrice = () => {
                 <div className='h-[300px] w-[400px] bg-white p-5 rounded-md shadow-md'>
                     <div className='mx-auto w-fit'><XCircle size={110} color='red' strokeWidth={1} /></div>
                     <h1 className='text-center text-4xl font-bold '>Are you sure?</h1>
-                    <h1 className='text-xl text-center my-4 font-extrabold text-red-500'>After exit your all details are delete!!</h1>
+                    <h1 className='text-xl text-center my-4 font-extrabold text-red-500'>View your reserve info from Trips page</h1>
                     <div className='flex h-[23%] items-end gap-x-3 justify-between'>
                         <Button onClick={sendDataHandler} className={'w-[200px] bg-red-500 border-none'}>Yes</Button>
                         <Button onClick={() => setShow(false)} className={'w-[200px] bg-green-500 border-none'}>No</Button>

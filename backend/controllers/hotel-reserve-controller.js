@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { hotelReserveModel } from "../model/hotel-reserve-model.js";
+import { hotelDetailsModel } from "../model/hotel-details-model.js";
+import { genToken } from "../utils/token.js";
 
 const reserveValidator = z.object({
   checkIn: z
@@ -28,21 +30,29 @@ const reserveValidator = z.object({
       required_error: "payMethod is required",
     })
     .trim()
-    .min(1),
+    .min(1, { message: "All field are required" }),
   payVia: z
     .string({
       required_error: "payVia is required",
     })
     .trim()
-    .min(1),
+    .min(1, { message: "All field are required" }),
 });
 
 export const hotelReserveController = async (req, resp) => {
   try {
-    const { checkIn, checkOut, Adults, Children, Infants, payMethod, payVia } =
-      req.body;
+    const {
+      checkIn,
+      checkOut,
+      Adults,
+      Children,
+      Infants,
+      payMethod,
+      payVia,
+      hotel,
+    } = req.body;
 
-    const validate = reserveValidator.parse({
+    reserveValidator.parse({
       checkIn,
       checkOut,
       Adults,
@@ -51,10 +61,15 @@ export const hotelReserveController = async (req, resp) => {
       payMethod,
       payVia,
     });
-    if (validate.error) {
-      return resp.json({ success: false, error: validate.error.format() });
-    }
+
     const reservedBy = req.user._id;
+
+    const currentDate = new Date();
+    
+    const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: true })
+    
+    const reserveDate=currentDate.toISOString().slice(0,10)
+    const reserveTime=currentTime
     const dbResult = await hotelReserveModel.create({
       checkIn,
       checkOut,
@@ -64,11 +79,15 @@ export const hotelReserveController = async (req, resp) => {
       payMethod,
       payVia,
       reservedBy,
+      hotel,
+      reserveDate,
+      reserveTime
     });
 
     if (!dbResult) {
       throw new Error("Reserve data not store on database");
     }
+
     return resp.json({
       success: true,
       message: "Reserved successfully",
@@ -79,3 +98,49 @@ export const hotelReserveController = async (req, resp) => {
     return resp.json({ success: false, error: error.message });
   }
 };
+
+// export const getReservedHotelDetails = async (req, resp) => {
+//   try {
+//     const { id } = req.user;
+//     console.log(id);
+//     const result = await hotelReserveModel.find({ reservedBy: id }).populate([
+//       { path: "hotel", select: "bookingType" },
+//       { path: "reservedBy", select: "-password" },
+//     ]);
+
+//     if (!result) {
+//       throw new Error("You don't have any reserved");
+//     }
+//     console.log(result);
+//     return resp.json({ success: true, data: result });
+//   } catch (error) {
+//     return resp.json({ success: false, error: error.message });
+//   }
+// };
+
+export const totalReservedHotel = async (req, resp) => {
+  try {
+    const myHotel = await hotelDetailsModel
+      .find({ uploadedBy: req.user._id })
+      .select("_id");
+    if (!myHotel) {
+      throw new Error("You haven't any hotel register");
+    }
+    const myReserved = await hotelReserveModel.find({
+      hotel: { $in: myHotel },
+    }).populate([
+      {path:'reservedBy',select:'fullname'},
+      {path:'hotel'}
+    ]);
+
+    if (!myReserved) {
+      throw new Error("You haven't any reserved hotel");
+    }
+
+    return resp.json({ success: true, data: myReserved });
+  } catch (error) {
+    return resp.json({ success: false, error: error.message });
+  }
+};
+
+

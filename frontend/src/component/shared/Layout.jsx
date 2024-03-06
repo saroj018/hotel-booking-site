@@ -13,7 +13,8 @@ const Layout = () => {
         url:'/message'
     },
     {
-        name:'Trips'
+        name:'Trips',
+        url:'mytrips'
     },
     {
         name:'WishList',

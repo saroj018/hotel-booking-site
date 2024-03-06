@@ -9,14 +9,14 @@ import { Context } from '../host/context/HotelDetailContext'
 import { nightCalculator } from './utlils/nightCalculator'
 import { z } from 'zod'
 import dayjs from 'dayjs'
+import { toast } from 'react-toastify'
 
 const Checkout = ({ className }) => {
     const [list, setList] = useState(false)
     const { RangePicker } = DatePicker
     const [searchParams, setSearchParams] = useSearchParams()
     const { hotelData } = useContext(Context)
-    const dateValidate = z.tuple([z.string(), z.string()]);
-    const [dateError, setDateError] = useState(false)
+    const dateValidate = z.tuple([z.string().min(3,{message:'Date is required'}), z.string().min(3,{message:'Date is required'})]);
     const navigate = useNavigate()
     const { id } = useParams()
     const Adults = Number(searchParams.get('Adults'))
@@ -25,15 +25,14 @@ const Checkout = ({ className }) => {
     const checkIn = searchParams.get('checkIn')
     const checkOut = searchParams.get('checkOut')
     const totalNight = nightCalculator([checkIn, checkOut])
-    const totalPrice = (Adults * hotelData.price.adults) * totalNight + (Children * hotelData.price.childrens) * totalNight + (Infants * hotelData.price.infants) * totalNight
-    
+    const totalPrice = (Adults * hotelData?.price.adults) * totalNight + (Children * hotelData?.price.childrens) * totalNight + (Infants * hotelData?.price.infants) * totalNight
     useEffect(()=>{
         setSearchParams({
             checkIn: checkIn==null ? dayjs().format('YYYY-MM-DD'):checkIn,
             checkOut: checkOut==null ? dayjs().add(1,'d').format('YYYY-MM-DD'):checkOut,
             Adults: Adults==null ? 1 :Adults,
             Children: Children==null ? 0:Children,
-            Infants: Infants==null ?0:Infants
+            Infants: Infants==null ?0:Infants,
         })
     },[])
 
@@ -43,19 +42,20 @@ const Checkout = ({ className }) => {
             checkOut: date[1]==null ? "":date[1],
             Adults: Adults,
             Children: Children,
-            Infants: Infants
+            Infants: Infants,
         })
     }
 
     const reserveHandler = () => {
         try {
-            let result=dateValidate.parse([checkIn, checkOut])
-            console.log(result);
-            setDateError(false)
+            dateValidate.parse([checkIn, checkOut])
+            if(Adults+Children+Infants<1){
+                toast.error("Atleast 1 guest required")
+                return
+            }
             navigate(`/${id}/payprice?checkIn=${checkIn}&checkOut=${checkOut}&Adults=${Adults}&Children=${Children}&Infants=${Infants}`)
         } catch (error) {
-            console.log(error);
-            setDateError(true)
+            toast.error(error.format()[0]._errors[0])
         }
     }
 
@@ -66,7 +66,6 @@ const Checkout = ({ className }) => {
                 <Space className='w-full my-1' direction="vertical" size={100}>
                     <RangePicker defaultValue={[dayjs(),dayjs().add(1,'d')]} onChange={dateHandler} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
                 </Space>
-                {dateError && <p className='text-red-500 text-xl mb-2'>Invalid Date</p>}
                 <div className='flex'>
                     <div className='border-2 px-4 py-1 grow text-xl'>
                         <p>CheckIn</p>

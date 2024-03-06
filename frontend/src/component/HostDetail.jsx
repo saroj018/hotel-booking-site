@@ -3,7 +3,7 @@ import React from 'react'
 import ChatPopup from './popup/ChatPopup'
 import OwnerProfile from './OwnerProfile'
 
-const HostDetail = () => {
+const HostDetail = ({owner}) => {
 
     const hostView = [
         {
@@ -22,7 +22,7 @@ const HostDetail = () => {
     return (
         <div className='my-8'>
             <div className='flex justify-between items-center pr-10'>
-                <OwnerProfile title={'Saroj Aryal'} subtitle={'Host'}/>
+                <OwnerProfile title={owner} subtitle={'Host'}/>
                 <ChatPopup/>
             </div>
             <div className='flex items-center gap-4 mt-5'>

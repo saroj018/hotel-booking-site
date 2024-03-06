@@ -6,7 +6,7 @@ export const authentication = async (req, resp, next) => {
     const token = req.header("Authorization")?.split(" ")[1];
 
     if (!token) {
-      return resp.json({ success: false, message: "Token is required" });
+     throw new Error("Pleas login first")
     }
 
     const tokenPayload = verifyToken(token);
@@ -19,7 +19,6 @@ export const authentication = async (req, resp, next) => {
     if (!user) {
       return resp.json({ success: false, message: "User not found" });
     }
-
     req.user = user;
     next();
   } catch (error) {

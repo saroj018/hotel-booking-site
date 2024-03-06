@@ -4,6 +4,7 @@ import { usePostFetch } from '../../hooks/fetch-data';
 import Button from '../../component/common/Button';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'react-router-dom';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const Context = createContext()
 
@@ -11,7 +12,8 @@ const HotelDetailContext = ({ children }) => {
   const [btnDisable, setBtnDisable] = useState(true)
   const [hotelData, setHotelData] = useState()
   const [hotelInfo, setHotelInfo] = useState({})
-  const[searchParams,setSearchParams]=useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'))
 
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
@@ -30,10 +32,11 @@ const HotelDetailContext = ({ children }) => {
     description: dummyDescription,
     bookingType: '',
     price: {
-      adults:500,
-      childrens:300,
-      infants:100
-,    },
+      adults: 500,
+      childrens: 300,
+      infants: 100
+      ,
+    },
     discount: 0,
   });
 
@@ -78,6 +81,7 @@ const HotelDetailContext = ({ children }) => {
       if (result.success) {
 
         toast.success(result.message)
+       useLocalStorage(result.token,'ownerToken','set')
       }
       else {
 
@@ -88,9 +92,8 @@ const HotelDetailContext = ({ children }) => {
     }
   }
 
-
   return (
-    <Context.Provider value={{ hotelDetails, setHotelDetails, hotelData, setHotelData, btnDisable,setSearchParams,searchParams, setBtnDisable, hotelInfo }}>
+    <Context.Provider value={{ hotelDetails, setHotelDetails, hotelData, isAuth, setIsAuth, setHotelData, btnDisable, setSearchParams, searchParams, setBtnDisable, hotelInfo }}>
       {children}
       <Button onClick={clickHandler}>Send</Button>
     </Context.Provider>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Input from '../common/Input'
 import Button from '../common/Button'
 import Popup from 'reactjs-popup'
@@ -10,25 +10,32 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { user } from '../../validation/userValidation'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { Context } from '../../host/context/HotelDetailContext'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 
 const LoginPopup = () => {
 
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
     const [isShow, setIsShow] = useState(false)
-    const[serverError,setServerError]=useState()
-    const navigate=useNavigate()
+    const { isAuth, setIsAuth,setName } = useContext(Context)
+    const navigate = useNavigate()
 
-    const{register,handleSubmit,formState:{errors}}=useForm({resolver:zodResolver(user)})
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(user),defaultValues:{email:'harry@gmail.com',password:'password'} })
 
-    const onSubmit=async (data)=>{
-       let result= await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/login`,data)
-       if(!result.success){
-        setServerError(result.message)
-    }
-    setIsShow(false)
-       localStorage.setItem('token',result.token)
-       toast.success(result.message,{autoClose:1000})
+    const onSubmit = async (data) => {
+        let result = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/login`, data)
+        if (!result.success) {
+            toast.error(result.message)
+        }
+        else{
+
+            setIsShow(false)
+            localStorage.setItem('token', result.token)
+            localStorage.setItem('user',result.user.fullname)
+            setIsAuth(true)
+            navigate('/')
+        }
     }
     return (
         <>
@@ -40,11 +47,11 @@ const LoginPopup = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Lable>Email</Lable>
                         <Input {...register("email")} className={'border-2 rounded-md px-3 w-full border-pink-400'} />
-                        <p className='text-red-500'>{errors?.email?.message || serverError?.email?._errors[0]}</p>
+                        <p className='text-red-500'>{errors?.email?.message }</p>
                         <Lable>Password</Lable>
                         <Input {...register("password")} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
-                        <p className='text-red-500'>{errors?.password?.message || serverError?.password?._errors[0]}</p>
-                        <Button  className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>Login</Button>
+                        <p className='text-red-500'>{errors?.password?.message}</p>
+                        <Button className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>Login</Button>
                         <p className='text-center text-xl'>Or</p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Google <span></span></p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Facebook</p>

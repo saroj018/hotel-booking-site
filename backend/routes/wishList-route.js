@@ -6,6 +6,6 @@ const wishListRoute=Router()
 
 wishListRoute.route('/addonwishlist').post(authentication,addWishlist)
 wishListRoute.route('/getwishlist').get(authentication,getWishlist)
-wishListRoute.route('/getwishlist').delete(removeFromWishlist)
+wishListRoute.route('/removewishlist').delete(removeFromWishlist)
 
 export default wishListRoute

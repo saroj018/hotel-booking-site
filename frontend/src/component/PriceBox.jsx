@@ -17,9 +17,8 @@ const {id}=useParams()
 
 const getDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
-    setHotelData(result.data[0])
+    setHotelData(result.data)
   }
-
 useEffect(()=>{
   getDetails()
 
@@ -27,7 +26,7 @@ useEffect(()=>{
     return (
         <div className='max-w-[40%] w-full border-2 border-neutral-400 rounded-md h-fit p-5 mt-10 shadow-md'>
             <div className='flex items-start gap-5 p-4'>
-                <img className='w-[30%] rounded-md' src={hotelData?.idOfImage?.[0].url} alt="" />
+                <img className='w-[30%] rounded-md' src={hotelData?.idOfImage?.[0]?.url} alt="" />
                 <div>
                     <p className='text-2xl'>{hotelData?.houseTitle?.slice(0,40)+'.....'}</p>
                 </div>

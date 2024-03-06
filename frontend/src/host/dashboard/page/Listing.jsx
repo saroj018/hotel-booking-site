@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Button from '../../../component/common/Button'
 import Input from '../../../component/common/Input'
 import { useNavigate } from 'react-router-dom'
@@ -27,6 +27,8 @@ const Listing = () => {
         else {
             toast.error(result?.message)
         }
+        
+
     }
 
     useEffect(() => {
@@ -55,18 +57,19 @@ const Listing = () => {
             else return prv.filter((item => item !== e.target.value))
             
         })
+
     }
     return (
         <div>
             <div className='flex justify-between mt-7'>
                 <p className='text-2xl font-bold'>{hotelDetails?.length} Listings</p>
-                <Button onClick={() => navigate('/host/hoteldetails')}>+ Create Listingh</Button>
+                <Button onClick={() => navigate('/host/hoteldetails')}>+ Create Listing</Button>
             </div>
             {state && <div className='w-fit mx-auto flex'>
                 <p className='border-2 px-8 py-2 border-neutral-600 rounded-full text-lg mx-2 cursor-pointer'>Edit</p>
                 <p onClick={deleteHandler} className='border-2 px-8 py-2 border-neutral-600 rounded-full text-lg mx-2 cursor-pointer'>Delete</p>
             </div>}
-            <div>
+            <div className={'overflow-scroll max-h-[600px]'}>
                 <table className='text-center text-xl mt-10'>
                     <thead className='border-2 border-neutral-700 border-l-0 border-r-0 '>
                         <th>Select</th>

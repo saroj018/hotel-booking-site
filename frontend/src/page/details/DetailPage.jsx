@@ -17,8 +17,9 @@ const DetailPage = () => {
 
   const getDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
-    setDetails(result.data[0])
-    setHotelData(result.data[0])
+    console.log(result);
+    setDetails(result?.data)
+    setHotelData(result?.data)
   }
 
   useEffect(()=>{
@@ -60,7 +61,6 @@ const DetailPage = () => {
     }
   ]
   return (
-    Object.keys(details).length>0 ?
     <div>
       <h1 className='text-4xl font-bold my-5'>{details?.houseTitle}</h1>
       <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl '>
@@ -88,10 +88,10 @@ const DetailPage = () => {
           </div>
 
           <hr />
-          <OwnerProfile title={'Saroj Aryal'} subtitle={'Joined in 2018'}/>
+          <OwnerProfile title={details?.uploadedBy?.fullname} subtitle={'Joined in 2018'}/>
 
           <div className='mt-6 w-1/2 border-2 rounded-md shadow-sm p-5'>
-        <p className='text-xl'>{details?.description.slice(0,300)+'...'}</p>
+        <p className='text-xl'>{details?.description?.slice(0,300)+'...'}</p>
         <AboutPopup/>
       </div>
         </div>
@@ -114,9 +114,9 @@ const DetailPage = () => {
         </div>
       </div>
       <hr />
-      <HostDetail/>
+      <HostDetail owner={details?.uploadedBy?.fullname}/>
 
-    </div>:<h1>Loading...........</h1>
+    </div>
   )
 }
 

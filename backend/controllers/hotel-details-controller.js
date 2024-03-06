@@ -3,7 +3,9 @@ import {
   deleteImageOnCloudinary,
   uploadImageOnCloudinary,
 } from "../utils/cloudinary.js";
-import { hotelDetailsModel } from "../model/hotel-details-model.js";
+import { hotelDetailsModel, wishListModel } from "../model/hotel-details-model.js";
+import { User } from "../model/user-model.js";
+import { genToken } from "../utils/token.js";
 
 const hotelDetailsValidation = z.object({
   homeType: z
@@ -58,7 +60,20 @@ const hotelDetailsValidation = z.object({
     lat: z.number(),
     lan: z.number(),
   }),
+  owner: z.string().trim().min(1).optional(),
 });
+
+export const getAllHotelController = async (req, resp) => {
+  try {
+    const result = await hotelDetailsModel.find();
+    if (!result) {
+      throw new Error("Hotel not found");
+    }
+    return resp.json({ success: true, details: result });
+  } catch (error) {
+    return resp.json({ success: false, error: error.message });
+  }
+};
 
 export const hotelDetailsController = async (req, resp) => {
   try {
@@ -137,11 +152,14 @@ export const hotelDetailsController = async (req, resp) => {
         message: "Details are not store in db",
       });
     }
-
+    const userId=req.user._id
+    const findHotel=await hotelDetailsModel.find({uploadedBy:userId}).select('_id')
+    const token=genToken({findHotel})
     return resp.json({
       success: true,
       message: "Hotel's details add successfully",
-      hotelDetails: hotelDataOnDb
+      hotelDetails: hotelDataOnDb,
+      token
     });
   } catch (error) {
     return resp.json({ success: false, error: error.message });
@@ -209,10 +227,17 @@ export const getSingleDetails = async (req, resp) => {
       return resp.json({ success: false, message: "Please provide id first" });
     }
 
-    const result = await hotelDetailsModel.find({ _id: id });
+    const result = await hotelDetailsModel
+      .findOne({ _id: id })
+      .populate({
+        path:'uploadedBy',
+        select:"fullname"
+      });
+      console.log(result);
     if (!result) {
       resp.json({ success: false, message: "Details not found" });
     }
+  
 
     return resp.json({
       success: true,

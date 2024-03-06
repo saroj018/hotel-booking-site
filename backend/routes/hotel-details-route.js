@@ -1,5 +1,5 @@
 import express from 'express'
-import {  deleteHotelController, getHotelDetailsController, getSingleDetails, hotelDetailsController } from "../controllers/hotel-details-controller.js";
+import { deleteHotelController, getAllHotelController, getHotelDetailsController, getSingleDetails, hotelDetailsController } from "../controllers/hotel-details-controller.js";
 import multer from 'multer';
 import { authentication } from '../middleware/auth.js';
 
@@ -18,8 +18,9 @@ const storage = multer.diskStorage({
 const hotelDetailRoute=express.Router()
 
 hotelDetailRoute.route('/addhoteldetails').post(authentication,upload.array('photo',10),hotelDetailsController)
+hotelDetailRoute.route('/getallhotel').get(getAllHotelController)
 hotelDetailRoute.route('/gethoteldetails').get(authentication,getHotelDetailsController)
 hotelDetailRoute.route('/deletehoteldetails').delete(authentication,deleteHotelController)
-hotelDetailRoute.route('/:id').get(authentication,getSingleDetails)
+hotelDetailRoute.route('/:id').get(getSingleDetails)
 
 export default hotelDetailRoute

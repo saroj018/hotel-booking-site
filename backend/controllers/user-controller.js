@@ -85,7 +85,7 @@ export const loginUser = async (req, resp) => {
       return resp.json({ success: false, message: "Incorrect Password" });
     }
     const token = genToken(email);
-    return resp.json({ success: true, message: "Login Successfully" ,token});
+    return resp.json({ success: true,user:findUser, message: "Login Successfully" ,token});
   } catch (error) {
     return resp.json({ success: false, message: error.message });
   }

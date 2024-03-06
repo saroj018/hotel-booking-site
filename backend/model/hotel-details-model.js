@@ -1,5 +1,4 @@
 import {Schema,model} from 'mongoose'
-import { User } from './user-model.js'
 
 const commonOption={
     type:String,
@@ -46,7 +45,7 @@ const hotelDetailsSchema=Schema({
     idOfImage:[imageSchema],
     uploadedBy:{
         type:Schema.Types.ObjectId,
-        ref:"User"
+        ref:'users'
     }
 })
 

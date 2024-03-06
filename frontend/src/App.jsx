@@ -31,6 +31,7 @@ import HotelDetails from './host/page/HotelDetails'
 import HotelDetailContext from './host/context/HotelDetailContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import MyTrip from './page/mytrip/MyTrip'
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
         <Route path='wishlist' element={<WishList />} />
         <Route path='message' element={<Inbox />} />
         <Route path='signup' element={<SignupPopup />} />
+        <Route path='mytrips' element={<MyTrip />} />
       </Route>
       <Route path='/host' element={<LayoutHost />}>
         <Route index element={<IntroPage />} />
