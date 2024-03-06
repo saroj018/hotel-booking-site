@@ -5,6 +5,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import hotelDetailRoute from './routes/hotel-details-route.js'
 import hotelReserveRouter from './routes/hotel-reserve-route.js'
+import wishListRoute from './routes/wishList-route.js'
 
 export const app=express()
 app.use(express.json())
@@ -15,3 +16,4 @@ app.use(cookieParser())
 app.use('/api/user',userRouter)
 app.use('/api/hotel',hotelDetailRoute)
 app.use('/api/reserve',hotelReserveRouter)
+app.use('/api/wishlist',wishListRoute)

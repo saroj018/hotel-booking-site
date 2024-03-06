@@ -1,5 +1,5 @@
 import express from 'express'
-import { deleteHotelController, getHotelDetailsController, getSingleDetails, hotelDetailsController } from "../controllers/hotel-details-controller.js";
+import {  deleteHotelController, getHotelDetailsController, getSingleDetails, hotelDetailsController } from "../controllers/hotel-details-controller.js";
 import multer from 'multer';
 import { authentication } from '../middleware/auth.js';
 

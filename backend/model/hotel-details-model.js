@@ -50,4 +50,17 @@ const hotelDetailsSchema=Schema({
     }
 })
 
-export const hotelDetailsModel=model('hoteldetails',hotelDetailsSchema)
+export const hotelDetailsModel=model("hoteldetails",hotelDetailsSchema)
+
+const wishListSchema=new Schema({
+    hotel:{
+        type:Schema.Types.ObjectId,
+        ref:'hoteldetails'
+    },
+    addedBy:{
+        type:Schema.Types.ObjectId,
+        ref:'users'
+    }
+})
+
+export const wishListModel=model('wishlist',wishListSchema)

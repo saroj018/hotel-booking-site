@@ -1,13 +1,20 @@
-import { Heart } from 'lucide-react'
-import React from 'react'
+import { BookHeart, Heart } from 'lucide-react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './common/Button'
+import { usePostFetch } from '../hooks/fetch-data'
 
 const Cards = ({id, name, imgDet, date,rating='4.2/5', price, img,optional=true }) => {
+
+  const clickHandler=async(e,ids)=>{
+    e.preventDefault()
+    await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/addonwishlist`,ids)
+  }
+  
   return (
-    <div className='mt-8 relative'>
+    <div className='mt-8 relative '>
     <Link to={`/details/${id}`} >
-     {optional && <Heart onClick={(e)=>e.preventDefault()} enableBackground={'true'} color='white' size={30} className='absolute left-[90%] cursor-pointer top-3' />}
+     {optional && <Heart onClick={(e)=>clickHandler(e,id)} enableBackground={'true'} color='white' size={30} className='absolute left-[90%] cursor-pointer top-3' />}
       <img className='rounded-xl' src={img} alt="" />
       <div className='flex  justify-between items-end'>
         <h1 className='text-xl font-bold mt-5'>{name}</h1>
