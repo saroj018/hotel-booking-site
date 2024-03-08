@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Button from '../../component/common/Button'
 import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'
@@ -19,6 +19,7 @@ const PayPrice = () => {
     const [payment, setPayment] = useState('')
     const [paymentOption, setPaymentOption] = useState('')
     const [show, setShow] = useState(false)
+    const[dateCollection,setDateCollection]=useState([])
     const [reserveInfo, setReserveInfo] = useState({
         checkIn: '',
         checkOut: '',
@@ -27,7 +28,8 @@ const PayPrice = () => {
         Infants: 0,
         payMethod: '',
         payVia: '',
-        hotel:''
+        hotel:'',
+        dateList:[]
     })
     const [searchParams, setSearchParams] = useSearchParams()
     const checkIn = searchParams.get('checkIn')
@@ -78,17 +80,34 @@ const PayPrice = () => {
             Infants,
             payMethod: payment,
             payVia: paymentOption,
-            hotel:hotelData._id
+            hotel:hotelData._id,
+            dateList:dateCollection
         })
+
     }
 
 
     const sendDataHandler =async () => {
+    console.log(reserveInfo);
+
        await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
         setShow(false)
     }
+    const reservedDateList = () => {
+        let startingDate = checkIn
+        let endingDate = checkOut
+        let dates = []
 
+        while (dates[dates.length - 1] != dayjs(endingDate).format('YYYY-MM-DD')) {
+            dates.push(dayjs(startingDate).format('YYYY-MM-DD'))
+            startingDate = dayjs(startingDate).add(1, 'd').format('YYYY-MM-DD')
+        }
 
+        setDateCollection([...dates])
+    }
+    useEffect(()=>{
+        reservedDateList()
+    },[payment])
 
     return (
         <div className='flex justify-between w-full pl-[10%] ' >

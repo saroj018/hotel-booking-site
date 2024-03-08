@@ -6,6 +6,7 @@ import {
 import { hotelDetailsModel, wishListModel } from "../model/hotel-details-model.js";
 import { User } from "../model/user-model.js";
 import { genToken } from "../utils/token.js";
+import { hotelReserveModel } from "../model/hotel-reserve-model.js";
 
 const hotelDetailsValidation = z.object({
   homeType: z
@@ -233,7 +234,11 @@ export const getSingleDetails = async (req, resp) => {
         path:'uploadedBy',
         select:"fullname"
       });
-      console.log(result);
+      const reservedDate=await hotelReserveModel.find({hotel:id}).select('dateList')
+      if(!reservedDate){
+        return resp.json({success:false,message:"reserve date is not found"})
+      }
+      
     if (!result) {
       resp.json({ success: false, message: "Details not found" });
     }
@@ -243,6 +248,7 @@ export const getSingleDetails = async (req, resp) => {
       success: true,
       message: "Detail find Successfully",
       data: result,
+      dates:reservedDate
     });
   } catch (error) {
     resp.json({ success: false, message: "Error: " + error.message });

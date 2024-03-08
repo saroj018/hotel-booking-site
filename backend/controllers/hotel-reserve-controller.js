@@ -50,8 +50,10 @@ export const hotelReserveController = async (req, resp) => {
       payMethod,
       payVia,
       hotel,
+      dateList
     } = req.body;
 
+    console.log(dateList);
     reserveValidator.parse({
       checkIn,
       checkOut,
@@ -81,7 +83,8 @@ export const hotelReserveController = async (req, resp) => {
       reservedBy,
       hotel,
       reserveDate,
-      reserveTime
+      reserveTime,
+      dateList
     });
 
     if (!dbResult) {
@@ -142,5 +145,4 @@ export const totalReservedHotel = async (req, resp) => {
     return resp.json({ success: false, error: error.message });
   }
 };
-
 

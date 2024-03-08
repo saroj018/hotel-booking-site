@@ -17,7 +17,10 @@ export const uploadImageOnCloudinary = async (imageCollection, folder) => {
   try {
     let imageInfo = await Promise.all(
       imageCollection.map((item) =>
-        cloudinary.uploader.upload(item.path, {resource_type:'image', folder })
+        cloudinary.uploader.upload(item.path, {
+          resource_type: "image",
+          folder,
+        })
       )
     );
 
@@ -28,22 +31,22 @@ export const uploadImageOnCloudinary = async (imageCollection, folder) => {
   }
 };
 
-export const deleteImageOnCloudinary=async(imagePath)=>{
-if(!imagePath) return null
+export const deleteImageOnCloudinary = async (imagePath) => {
+  if (!imagePath) return null;
 
-try {
-  const result=await Promise.all(
-    imagePath.map((item,index)=>{
-      item.idOfImage.map((item)=>{
-        return cloudinary.uploader.destroy(item.public_id,{
-           resource_type:'image'
-         })
+  try {
+    const result = await Promise.all(
+      imagePath.map((item, index) => {
+        item.idOfImage.map((item) => {
+          return cloudinary.uploader.destroy(item.public_id, {
+            resource_type: "image",
+          });
+        });
       })
-    })
-  )
-  
-  return result
-} catch (error) {
-  return error
-}
-}
+    );
+
+    return result;
+  } catch (error) {
+    return error;
+  }
+};

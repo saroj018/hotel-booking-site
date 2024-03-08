@@ -11,12 +11,13 @@ import { z } from 'zod'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 
-const Checkout = ({ className }) => {
+const Checkout = ({ className, dateCollection }) => {
     const [list, setList] = useState(false)
+    const [dateLists, setDateLists] = useState([])
     const { RangePicker } = DatePicker
     const [searchParams, setSearchParams] = useSearchParams()
     const { hotelData } = useContext(Context)
-    const dateValidate = z.tuple([z.string().min(3,{message:'Date is required'}), z.string().min(3,{message:'Date is required'})]);
+    const dateValidate = z.tuple([z.string().min(3, { message: 'Date is required' }), z.string().min(3, { message: 'Date is required' })]);
     const navigate = useNavigate()
     const { id } = useParams()
     const Adults = Number(searchParams.get('Adults'))
@@ -26,45 +27,78 @@ const Checkout = ({ className }) => {
     const checkOut = searchParams.get('checkOut')
     const totalNight = nightCalculator([checkIn, checkOut])
     const totalPrice = (Adults * hotelData?.price.adults) * totalNight + (Children * hotelData?.price.childrens) * totalNight + (Infants * hotelData?.price.infants) * totalNight
-    useEffect(()=>{
+    useEffect(() => {
         setSearchParams({
-            checkIn: checkIn==null ? dayjs().format('YYYY-MM-DD'):checkIn,
-            checkOut: checkOut==null ? dayjs().add(1,'d').format('YYYY-MM-DD'):checkOut,
-            Adults: Adults==null ? 1 :Adults,
-            Children: Children==null ? 0:Children,
-            Infants: Infants==null ?0:Infants,
+            checkIn: checkIn == null ? dayjs().format('YYYY-MM-DD') : checkIn,
+            checkOut: checkOut == null ? dayjs().add(1, 'd').format('YYYY-MM-DD') : checkOut,
+            Adults: Adults == null ? 1 : Adults,
+            Children: Children == null ? 0 : Children,
+            Infants: Infants == null ? 0 : Infants,
         })
-    },[])
+    }, [])
 
     const dateHandler = (_, date) => {
         setSearchParams({
-            checkIn: date[0]==null ? "":date[0],
-            checkOut: date[1]==null ? "":date[1],
+            checkIn: date[0] == null ? "" : date[0],
+            checkOut: date[1] == null ? "" : date[1],
             Adults: Adults,
             Children: Children,
             Infants: Infants,
         })
     }
 
+ 
+
+
     const reserveHandler = () => {
+        let startingDate = searchParams.get('checkIn')
+        let endingDate = searchParams.get('checkOut')
+        let dates = []
+
+        while (dates[dates.length - 1] != dayjs(endingDate).format('YYYY-MM-DD')) {
+            dates.push(dayjs(startingDate).format('YYYY-MM-DD'))
+            startingDate = dayjs(startingDate).add(1, 'd').format('YYYY-MM-DD')
+        }
+
         try {
             dateValidate.parse([checkIn, checkOut])
-            if(Adults+Children+Infants<1){
+            if (Adults + Children + Infants < 1) {
                 toast.error("Atleast 1 guest required")
                 return
             }
-            navigate(`/${id}/payprice?checkIn=${checkIn}&checkOut=${checkOut}&Adults=${Adults}&Children=${Children}&Infants=${Infants}`)
+
+          let result= dateCollection?.some((ele)=>{
+            return ele?.dateList?.some((item)=>{
+              return  dates.includes(item)
+            })
+           })
+
+            if (result) {
+                toast.error("Selected date is unavilable")
+                return
+            }
+
+            navigate(`/${id}/payprice?checkIn=${checkIn}&checkOut=${checkOut}&Adults=${Adults}&Children=${Children}&Infants=${Infants}`) 
         } catch (error) {
             toast.error(error.format()[0]._errors[0])
         }
     }
+
+    const disableDateHandler = (current) => {
+        let data= dateCollection?.some((ele) => {
+            let particularDate= ele?.dateList?.some((item) => current.isSame(item)) 
+            return particularDate 
+        })
+        return current && current < dayjs().endOf('day') || data
+    }
+
 
     return (
         <div className={twMerge('w-[500px] rounded-xl shadow-xl p-5 border-2 relative', className)}>
             <h1 className='text-2xl font-bold'>33 <span>per night</span></h1>
             <div className=' my-3'>
                 <Space className='w-full my-1' direction="vertical" size={100}>
-                    <RangePicker defaultValue={[dayjs(),dayjs().add(1,'d')]} onChange={dateHandler} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
+                    <RangePicker disabledDate={disableDateHandler} format={'YYYY-MM-DD'} defaultValue={[dayjs(), dayjs().add(1, 'd')]} onChange={dateHandler} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
                 </Space>
                 <div className='flex'>
                     <div className='border-2 px-4 py-1 grow text-xl'>

@@ -12,20 +12,20 @@ import {v4 as uuid} from 'uuid'
 const DetailPage = () => {
 
   const[details,setDetails]=useState({})
+  const[dateCollection,setDateCollection]=useState()
   const{setHotelData}=useContext(Context)
   const {id}=useParams()
 
   const getDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
-    console.log(result);
     setDetails(result?.data)
     setHotelData(result?.data)
+    setDateCollection(result?.dates)
   }
 
   useEffect(()=>{
     getDetails()
   },[])
-  
 
   const offerService = [
     {
@@ -95,7 +95,7 @@ const DetailPage = () => {
         <AboutPopup/>
       </div>
         </div>
-        <Checkout className={'float-right sticky '} />
+        <Checkout dateCollection={dateCollection} className={'float-right sticky '} />
       </div>
       <hr />
       <div className='mt-7 '>

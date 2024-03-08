@@ -25,8 +25,11 @@ const SignupPopup = () => {
         const result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/signup`,data)
         if(!result.success){
             setServerError(result.message)
+            
+        }else{
+
+            setIsShow(false)
         }
-        setIsShow(false)
     }
     
 

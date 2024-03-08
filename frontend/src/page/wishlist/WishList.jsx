@@ -23,7 +23,7 @@ const WishList = () => {
       <div className='grid grid-cols-4 gap-5'>
         {
           wishList?.length > 0 && wishList?.map((item) => {
-            return <Cards setRef={setRef} refe={refe} id={item?.hotel?._id} key={item?._id} removeId={item?._id} optional={false} rating={'Remove'} price={'$120'} name={item?.hotel?.houseTitle.slice(0, 40) + '...'} imgDet={item?.hotel?.homeType} date={'14th April-28 May'} img={item?.hotel?.idOfImage[0].url} />
+            return <Cards setRef={setRef} refe={refe} id={item?.hotel?._id} key={item?._id} removeId={item?._id} optional={false} rating={'4.3/5'} price={'$120'} name={item?.hotel?.houseTitle.slice(0, 40) + '...'} imgDet={item?.hotel?.homeType} date={'14th April-28 May'} img={item?.hotel?.idOfImage[0].url} />
           })
         }
       </div>

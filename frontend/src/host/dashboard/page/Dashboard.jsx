@@ -40,7 +40,7 @@ const Dashboard = () => {
         <div className='flex items-center mt-4'>
           {
             itemList.map((ele, index) => {
-              return <p key={index} onClick={() => setParams(ele.name)} className={`border-2 p-2 border-neutral-600  rounded-full text-lg mx-2 cursor-pointer ${params.includes(ele.name) ? 'bg-red-500 border-none text-white' : ''}`}>{ele.name}</p>
+              return <p key={index} onClick={() => setParams(ele.name)} className={`border-2 p-2 border-neutral-600  rounded-full text-lg mx-2 cursor-pointer ${params.includes(ele.name.split(' ')[1]) ? 'bg-red-500 border-none text-white' : ''}`}>{ele.name}</p>
             })
           }
         </div>

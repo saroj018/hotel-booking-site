@@ -36,7 +36,7 @@ export const signupUser = async (req, resp) => {
 
     const findUser = await User.findOne({ email });
     if (findUser) {
-      return resp.json({ success: false, message: "User already exists" });
+      return resp.json({ success: false, error: "User already exists" });
     }
 
     const encryptPassword = await hashPassword(password);
