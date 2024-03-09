@@ -3,7 +3,10 @@ import {
   deleteImageOnCloudinary,
   uploadImageOnCloudinary,
 } from "../utils/cloudinary.js";
-import { hotelDetailsModel, wishListModel } from "../model/hotel-details-model.js";
+import {
+  hotelDetailsModel,
+  wishListModel,
+} from "../model/hotel-details-model.js";
 import { User } from "../model/user-model.js";
 import { genToken } from "../utils/token.js";
 import { hotelReserveModel } from "../model/hotel-reserve-model.js";
@@ -153,14 +156,16 @@ export const hotelDetailsController = async (req, resp) => {
         message: "Details are not store in db",
       });
     }
-    const userId=req.user._id
-    const findHotel=await hotelDetailsModel.find({uploadedBy:userId}).select('_id')
-    const token=genToken({findHotel})
+    const userId = req.user._id;
+    const findHotel = await hotelDetailsModel
+      .find({ uploadedBy: userId })
+      .select("_id");
+    const token = genToken({ findHotel });
     return resp.json({
       success: true,
       message: "Hotel's details add successfully",
       hotelDetails: hotelDataOnDb,
-      token
+      token,
     });
   } catch (error) {
     return resp.json({ success: false, error: error.message });
@@ -228,29 +233,53 @@ export const getSingleDetails = async (req, resp) => {
       return resp.json({ success: false, message: "Please provide id first" });
     }
 
-    const result = await hotelDetailsModel
-      .findOne({ _id: id })
-      .populate({
-        path:'uploadedBy',
-        select:"fullname"
+    const result = await hotelDetailsModel.findOne({ _id: id }).populate({
+      path: "uploadedBy",
+      select: "fullname",
+    });
+    const reservedDate = await hotelReserveModel
+      .find({ hotel: id })
+      .select("dateList");
+    if (!reservedDate) {
+      return resp.json({
+        success: false,
+        message: "reserve date is not found",
       });
-      const reservedDate=await hotelReserveModel.find({hotel:id}).select('dateList')
-      if(!reservedDate){
-        return resp.json({success:false,message:"reserve date is not found"})
-      }
-      
+    }
+
     if (!result) {
       resp.json({ success: false, message: "Details not found" });
     }
-  
 
     return resp.json({
       success: true,
       message: "Detail find Successfully",
       data: result,
-      dates:reservedDate
+      dates: reservedDate,
     });
   } catch (error) {
     resp.json({ success: false, message: "Error: " + error.message });
+  }
+};
+
+export const getDetailOfParticularDate = async (req, resp) => {
+  try {
+    const user = req.user._id;
+    const date = req.body.date;
+    const hotelId = req.body.hotelId;
+
+    const result = await hotelReserveModel.find({ hotel: hotelId }).populate('reservedBy hotel');
+   const filterResult= result.filter((ele)=>{
+      return ele.dateList.includes(date)
+    })
+    console.log(filterResult);
+
+    if (!result) {
+      throw new Error("Hotel not found");
+    }
+
+    return resp.json({ success: true, hotel: filterResult });
+  } catch (error) {
+    return resp.json({ success: false, error: error.message });
   }
 };

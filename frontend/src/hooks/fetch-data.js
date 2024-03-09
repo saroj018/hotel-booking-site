@@ -30,7 +30,6 @@ export const usePostFetch = async (
   bodyData,
   header = "application/json"
 ) => {
-  console.log(JSON.stringify(bodyData));
   try {
     const resp = await fetch(url, {
       method: "POST",
@@ -45,7 +44,6 @@ export const usePostFetch = async (
       throw new Error("There is some error on fetchPost data");
     }
     const result = await resp.json();
-    console.log(result);
     if (result.success) {
       toast.success(result.message,{autoClose:1000});
     } else {

@@ -4,14 +4,16 @@ import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'
 import Option from '../../component/common/Option'
 import PriceBox from '../../component/PriceBox'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { Space, DatePicker } from 'antd'
 import ListPopup from '../../component/popup/ListPopup'
 import dayjs from 'dayjs'
-import { usePostFetch } from '../../hooks/fetch-data'
+import { useGetFetch, usePostFetch } from '../../hooks/fetch-data'
 import Popup from 'reactjs-popup'
 import { XCircle } from 'lucide-react'
 import { Context } from '../../host/context/HotelDetailContext'
+import { useDateListMaker } from '../../hooks/useDateListMaker'
+import { toast } from 'react-toastify'
 
 const PayPrice = () => {
     const [datePicker, setDatePicker] = useState(false)
@@ -19,7 +21,7 @@ const PayPrice = () => {
     const [payment, setPayment] = useState('')
     const [paymentOption, setPaymentOption] = useState('')
     const [show, setShow] = useState(false)
-    const[dateCollection,setDateCollection]=useState([])
+    const [dateCollection, setDateCollection] = useState([])
     const [reserveInfo, setReserveInfo] = useState({
         checkIn: '',
         checkOut: '',
@@ -28,10 +30,11 @@ const PayPrice = () => {
         Infants: 0,
         payMethod: '',
         payVia: '',
-        hotel:'',
-        dateList:[]
+        hotel: '',
+        dateList: []
     })
     const [searchParams, setSearchParams] = useSearchParams()
+    const [reservedDateList, setReservedDateList] = useState()
     const checkIn = searchParams.get('checkIn')
     const checkOut = searchParams.get('checkOut')
     const Adults = Number(searchParams.get('Adults'))
@@ -41,7 +44,14 @@ const PayPrice = () => {
     const partialRef = useRef()
     const fullRef = useRef()
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-    const{hotelData}=useContext(Context)
+    const { hotelData } = useContext(Context)
+    const { id } = useParams()
+
+    const getDates = async () => {
+        let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
+        console.log(result?.dates);
+        setReservedDateList(result?.dates)
+    }
 
     const getDate = (_, date) => {
         setSearchParams({
@@ -71,6 +81,20 @@ const PayPrice = () => {
     }
 
     const reserveHandler = () => {
+        let startingDate = searchParams.get('checkIn')
+        let endingDate = searchParams.get('checkOut')
+        const dates = useDateListMaker(startingDate, endingDate)
+
+        let result = reservedDateList?.some((ele) => {
+            return ele?.dateList?.some((item) => {
+                return dates.includes(item)
+            })
+        })
+
+        if (result) {
+            toast.error("Selected date is unavilable")
+            return
+        }
         setShow(true)
         setReserveInfo({
             checkIn,
@@ -80,34 +104,40 @@ const PayPrice = () => {
             Infants,
             payMethod: payment,
             payVia: paymentOption,
-            hotel:hotelData._id,
-            dateList:dateCollection
+            hotel: hotelData._id,
+            dateList: dateCollection
         })
 
+
     }
 
 
-    const sendDataHandler =async () => {
-    console.log(reserveInfo);
+    const sendDataHandler = async () => {
+        console.log(reserveInfo);
 
-       await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
+        await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
         setShow(false)
     }
-    const reservedDateList = () => {
-        let startingDate = checkIn
-        let endingDate = checkOut
-        let dates = []
 
-        while (dates[dates.length - 1] != dayjs(endingDate).format('YYYY-MM-DD')) {
-            dates.push(dayjs(startingDate).format('YYYY-MM-DD'))
-            startingDate = dayjs(startingDate).add(1, 'd').format('YYYY-MM-DD')
-        }
+    useEffect(() => {
+        getDates()
 
+    }, [])
+
+    useEffect(() => {
+        let startingDate = searchParams.get('checkIn')
+        let endingDate = searchParams.get('checkOut')
+        let dates = useDateListMaker(startingDate, endingDate)
         setDateCollection([...dates])
+    }, [payment])
+
+    const disableDateHandler = (current) => {
+        let data = reservedDateList?.some((ele) => {
+            let particularDate = ele?.dateList?.some((item) => current.isSame(item))
+            return particularDate
+        })
+        return current && current < dayjs().endOf('day') || data
     }
-    useEffect(()=>{
-        reservedDateList()
-    },[payment])
 
     return (
         <div className='flex justify-between w-full pl-[10%] ' >
@@ -122,7 +152,7 @@ const PayPrice = () => {
                         </div>
                         <Button onClick={() => setDatePicker(!datePicker)} className={'px-10'}>Edit</Button>
                         {datePicker && <Space className='w-[50%] my-1 absolute left-[50%] bottom-[100%] ' direction="vertical" size={100}>
-                            <RangePicker defaultValue={[dayjs(checkIn), dayjs(checkOut)]} onChange={getDate} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
+                            <RangePicker disabledDate={disableDateHandler} defaultValue={[dayjs(checkIn), dayjs(checkOut)]} onChange={getDate} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />
                         </Space>}
                     </div>
                     <div className='flex relative justify-between my-4 items-center'>
@@ -165,8 +195,8 @@ const PayPrice = () => {
                         </div>
                     </div>
                     <div>
-                        <Select onChange={paymentOptionHandler} className={'w-full h-14 rounded-md px-6 text-2xl'}>
-                            <Option name={'paymentoption'} disabled >Select Payment Method</Option>
+                        <Select onChange={paymentOptionHandler}  className={'w-full h-14 rounded-md px-6 text-2xl'}>
+                            <Option name={'paymentoption'} value="" >Select Payment Method</Option>
                             <Option name={'paymentoption'} value={'esewa'}>Esewa</Option>
                             <Option name={'paymentoption'} value={'khalti'}>Khalti</Option>
                             <Option name={'paymentoption'} value={'imepay'}>IME Pay</Option>

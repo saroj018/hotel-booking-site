@@ -10,6 +10,7 @@ import { nightCalculator } from './utlils/nightCalculator'
 import { z } from 'zod'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
+import { useDateListMaker } from '../hooks/useDateListMaker'
 
 const Checkout = ({ className, dateCollection }) => {
     const [list, setList] = useState(false)
@@ -53,12 +54,7 @@ const Checkout = ({ className, dateCollection }) => {
     const reserveHandler = () => {
         let startingDate = searchParams.get('checkIn')
         let endingDate = searchParams.get('checkOut')
-        let dates = []
-
-        while (dates[dates.length - 1] != dayjs(endingDate).format('YYYY-MM-DD')) {
-            dates.push(dayjs(startingDate).format('YYYY-MM-DD'))
-            startingDate = dayjs(startingDate).add(1, 'd').format('YYYY-MM-DD')
-        }
+        const dates=useDateListMaker(startingDate,endingDate)
 
         try {
             dateValidate.parse([checkIn, checkOut])
@@ -67,11 +63,17 @@ const Checkout = ({ className, dateCollection }) => {
                 return
             }
 
-          let result= dateCollection?.some((ele)=>{
-            return ele?.dateList?.some((item)=>{
-              return  dates.includes(item)
+        //   let result= dateCollection?.some((ele)=>{
+        //     return ele?.dateList?.some((item)=>{
+        //       return  dates.includes(item)
+        //     })
+        //    })
+
+        let result=dateCollection.find((ele)=>{
+            return ele.dateList.find((item)=>{
+                return dates.includes(item)
             })
-           })
+        })
 
             if (result) {
                 toast.error("Selected date is unavilable")
