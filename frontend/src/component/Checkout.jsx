@@ -69,9 +69,9 @@ const Checkout = ({ className, dateCollection }) => {
         //     })
         //    })
 
-        let result=dateCollection.find((ele)=>{
-            return ele.dateList.find((item)=>{
-                return dates.includes(item)
+        let result=dateCollection?.find((ele)=>{
+            return ele?.dateList?.find((item)=>{
+                return dates?.includes(item)
             })
         })
 

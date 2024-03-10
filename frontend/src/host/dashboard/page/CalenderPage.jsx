@@ -4,48 +4,63 @@ import CalendarPopup from '../../popup/CalendarPopup'
 import dayjs from 'dayjs'
 import { useGetFetch, usePostFetch } from '../../../hooks/fetch-data'
 import { getListData } from '../../../component/utlils/ListData'
+import { v4 as uuid } from 'uuid'
 
 const CalenderPage = () => {
-  const[id,setId]=useState('')
-  const[hotelInfo,setHotelInfo]=useState()
+  const [id, setId] = useState('')
+  const [hotelInfo, setHotelInfo] = useState()
+  const [reserveDate, setReserveDate] = useState([])
 
-  const changeHandler=async(e)=>{
-    const result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/getsingledetails`,{hotelId:id,date:dayjs(e).format('YYYY-MM-DD')})
+  const changeHandler = async (e) => {
+    const result = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/getsingledetails`, { hotelId: id, date: dayjs(e).format('YYYY-MM-DD') })
     setHotelInfo(result.hotel)
   }
-  console.log(id);
-  const getHotel=async()=>{
-    const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
+  const getHotel = async () => {
+    setReserveDate([])
+    const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
     console.log(result);
+    result?.dates?.forEach((ele) => {
+      ele?.dateList?.forEach((item) => {
+        setReserveDate((prv) => {
+          let data=[...prv]
+          if (!data.includes(item)) {
+            data=[...prv,item]
+          }
+          return data
+        })
+      })
+    })
   }
+  console.log(hotelInfo);
+  console.log(reserveDate);
 
-  useEffect(()=>{
+  useEffect(() => {
     getHotel()
-  },[])
+  }, [id])
 
-  const dateCellRender=(value)=>{
-    const listData = getListData(value);
+  const dateCellRender = (value) => {
+    const listData = getListData(value, reserveDate);
     return (
       <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type } text={item.content} />
+        {listData?.map((item, index) => (
+          <li key={uuid()}>
+            <Badge style={{ fontWeight: 'bold',color:'red'}} status={item.type} text={item.content} />
           </li>
         ))}
       </ul>
     );
   }
-  
-  const cellRender=(current,info)=>{
+
+  const cellRender = (current, info) => {
     if (info.type === 'date') return dateCellRender(current);
     return info.originNode;
   }
   return (
     <div>
-        <div className='w-full flex gap-5 mt-5 border-2 h-screen'>
-            <Calendar cellRender={cellRender} onChange={changeHandler} className='text-center max-w-[72%] text-xl'/>
-            <CalendarPopup hotelInfo={hotelInfo} id={id} setId={setId}/>
-        </div>
+      <div className='w-full flex gap-5 mt-5 border-2 max-h-screen'>
+        <Calendar cellRender={cellRender} onChange={changeHandler} className='text-center max-w-[72%] text-xl' />
+        <CalendarPopup hotelInfo={hotelInfo} id={id} setId={setId} />
+      </div>
     </div>
   )
 }
