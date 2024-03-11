@@ -14,6 +14,7 @@ const HotelDetailContext = ({ children }) => {
   const [hotelInfo, setHotelInfo] = useState({})
   const [searchParams, setSearchParams] = useSearchParams()
   const [isAuth, setIsAuth] = useState(localStorage.getItem('token'))
+  const[photo,setPhoto]=useState([])
 
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
@@ -26,7 +27,6 @@ const HotelDetailContext = ({ children }) => {
       bedroom: 1
     },
     offerServices: [],
-    photos: [],
     houseTitle: dummyHouseTitle,
     aboutHome: '',
     description: dummyDescription,
@@ -41,31 +41,12 @@ const HotelDetailContext = ({ children }) => {
   });
 
   const hotelInformantion = new FormData()
-
-  for (let hotel in hotelDetails) {
-    if (Array.isArray(hotelDetails[hotel])) {
-      if (typeof hotelDetails[hotel][0] === 'string') {
-        hotelInformantion.append(hotel, JSON.stringify(hotelDetails[hotel]))
-      }
-      hotelDetails[hotel].forEach((item) => {
-        if (typeof item === 'object') {
-          for (let newObj of item) {
-            hotelInformantion.append('photo', newObj)
-          }
-        }
-
-      })
-    }
-    // else if (typeof hotelDetails[hotel] === 'object' && !Array.isArray(hotelDetails[hotel])) {
-
-    //   hotelInformantion.append(hotel, JSON.stringify(hotelDetails[hotel]))
-
-    // }
-    else {
-      hotelInformantion.append(hotel, JSON.stringify(hotelDetails[hotel]))
-    }
-
-  }
+  const infoOfHotel=JSON.stringify(hotelDetails)
+  hotelInformantion.append('details',infoOfHotel)
+  photo?.forEach((item) => {
+    hotelInformantion.append('photo', item)
+  })
+console.log(photo);
 
   const clickHandler = async () => {
     try {
@@ -93,7 +74,7 @@ const HotelDetailContext = ({ children }) => {
   }
 
   return (
-    <Context.Provider value={{ hotelDetails, setHotelDetails, hotelData, isAuth, setIsAuth, setHotelData, btnDisable, setSearchParams, searchParams, setBtnDisable, hotelInfo }}>
+    <Context.Provider value={{ hotelDetails,photo,setPhoto, setHotelDetails, hotelData, isAuth, setIsAuth, setHotelData, btnDisable, setSearchParams, searchParams, setBtnDisable, hotelInfo }}>
       {children}
       <Button onClick={clickHandler}>Send</Button>
     </Context.Provider>

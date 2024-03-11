@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react'
 
 const ControlBox = ({ title, value }) => {
@@ -8,12 +9,12 @@ const ControlBox = ({ title, value }) => {
 }
 
 const BookSummery = ({hotelInfo}) => {
-  console.log(hotelInfo);
   return (
     <div>
-        <ControlBox key={hotelInfo?.[0]?._id} title={'Booked By:'} value={hotelInfo?.[0]?.reservedBy?.fullname}/>
+        <ControlBox  title={'Booked By:'} value={hotelInfo?.[0]?.reservedBy?.fullname}/>
         <ControlBox title={'CheckIn:'} value={hotelInfo?.[0]?.checkIn}/>
         <ControlBox title={'CheckOut:'} value={hotelInfo?.[0]?.checkOut}/>
+        <ControlBox title={'Total Nights:'} value={dayjs(hotelInfo?.[0]?.checkOut).diff(dayjs(hotelInfo?.[0]?.checkIn),'day')}/>
         <ControlBox title={'Guest'} value={`${hotelInfo?.[0]?.Adults || 0} Adults ${hotelInfo?.[0]?.Children || 0} Children ${hotelInfo?.[0]?.Infants || 0} Infants`}/>
         <ControlBox title={'Price:'} value={`${hotelInfo?.[0]?.hotel?.price?.adults || 0} (Adults) ${hotelInfo?.[0]?.hotel?.price?.childrens || 0} (Childrens) ${hotelInfo?.[0]?.hotel?.price?.infants || 0} (Infants)`}/>
         <ControlBox title={'Discount:'} value={hotelInfo?.[0]?.hotel?.discount ||0+'%'}/>

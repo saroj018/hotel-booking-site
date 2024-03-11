@@ -81,6 +81,7 @@ export const getAllHotelController = async (req, resp) => {
 
 export const hotelDetailsController = async (req, resp) => {
   try {
+    let hotelInfo=JSON.parse(req.body.details)
     let {
       homeType,
       roomType,
@@ -93,16 +94,11 @@ export const hotelDetailsController = async (req, resp) => {
       price,
       discount,
       locatedPlace,
-    } = req.body;
+    } = hotelInfo
     let hotelImage = req.files;
+    console.log(homeType);
 
-    offerServices = JSON.parse(offerServices);
-    customerNumber = JSON.parse(customerNumber);
-    locatedPlace = JSON.parse(locatedPlace);
-    discount = JSON.parse(JSON.parse(discount));
-    price = JSON.parse(price);
-    roomType = JSON.parse(roomType);
-    houseTitle = JSON.parse(houseTitle);
+  
     const validateDetails = hotelDetailsValidation.safeParse({
       homeType,
       roomType,

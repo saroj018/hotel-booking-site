@@ -7,17 +7,18 @@ const AddPhotos = () => {
 
     const inputFile=useRef()
 
-    const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
+    const{photo,setPhoto,setBtnDisable}=useContext(Context)
 
     const changeHandler=(e)=>{
-        setHotelDetails((prv)=>({...prv,photos:[e.target.files]}))
+        setPhoto([...e.target.files])
     }
+    console.log(photo);
 
     useEffect(()=>{
-        if(hotelDetails.photos[0]?.length>1){
+        if(photo?.length>1){
             setBtnDisable(false)
         }
-    },[hotelDetails.photos])
+    },[photo])
     return (
         <>
             <div className=' w-full'>
