@@ -181,7 +181,7 @@ const Dashboard = () => {
                       <td className='border-2 border-gray-500'>{item.Infants}</td>
                       <td className='border-2 border-gray-500'>{Number(item.hotel.price.adults)+Number(item.hotel.price.childrens)+Number(item.hotel.price.infants)}</td>
                       <td className='border-2 border-gray-500'>{nightCalculator([item.checkIn, item.checkOut])}</td>
-                      <td className={`border-2 border-gray-500 font-bold p-2  `}>{ !update.success && <p onClick={()=>clickHandler(item._id)} className={` border-2 p-2 bg-red-500 text-white rounded-md cursor-pointer`}>Approve</p>}</td>
+                      <td className={`border-2 border-gray-500 font-bold p-2  `}><p onClick={()=>clickHandler(item._id)} className={` border-2 p-2 bg-red-500 text-white rounded-md cursor-pointer`}>Approve</p></td>
                     </tr>
                   })
                 }

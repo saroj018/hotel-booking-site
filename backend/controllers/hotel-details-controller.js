@@ -81,7 +81,7 @@ export const getAllHotelController = async (req, resp) => {
 
 export const hotelDetailsController = async (req, resp) => {
   try {
-    let hotelInfo=JSON.parse(req.body.details)
+    let hotelInfo = JSON.parse(req.body.details);
     let {
       homeType,
       roomType,
@@ -94,10 +94,9 @@ export const hotelDetailsController = async (req, resp) => {
       price,
       discount,
       locatedPlace,
-    } = hotelInfo
+    } = hotelInfo;
     let hotelImage = req.files;
 
-  
     const validateDetails = hotelDetailsValidation.safeParse({
       homeType,
       roomType,
@@ -263,10 +262,12 @@ export const getDetailOfParticularDate = async (req, resp) => {
     const date = req.body.date;
     const hotelId = req.body.hotelId;
 
-    const result = await hotelReserveModel.find({ hotel: hotelId }).populate('reservedBy hotel');
-   const filterResult= result.filter((ele)=>{
-      return ele.dateList.includes(date)
-    })
+    const result = await hotelReserveModel
+      .find({ hotel: hotelId })
+      .populate("reservedBy hotel");
+    const filterResult = result.filter((ele) => {
+      return ele.dateList.includes(date);
+    });
     console.log(filterResult);
 
     if (!result) {
@@ -274,6 +275,63 @@ export const getDetailOfParticularDate = async (req, resp) => {
     }
 
     return resp.json({ success: true, hotel: filterResult });
+  } catch (error) {
+    return resp.json({ success: false, error: error.message });
+  }
+};
+
+export const filterViaHouseType = async (req, resp) => {
+  try {
+    const { type } = req.body;
+    console.log(type);
+
+    if (!type) {
+      throw new Error("Please provide type");
+    }
+    if (type === "all") {
+      const result = await hotelDetailsModel.find();
+      if (!result) {
+        throw new Error("Not Found");
+      }
+      return resp.json({ success: true, data: result });
+    }
+
+    const result = await hotelDetailsModel.find({ homeType: type });
+    if (!result) {
+      throw new Error("Not Found");
+    }
+    console.log(result);
+
+    return resp.json({ success: true, data: result });
+  } catch (error) {
+    return resp.json({ success: false, error: error.message });
+  }
+};
+
+export const filterHotels = async (req, resp) => {
+  try {
+    const { filterParams } = req.body;
+
+    if (!filterHotels) {
+      throw new Error("Please provide filterparams");
+    }
+
+    const result = await hotelDetailsModel.find({
+      roomType: filterParams.place,
+      aboutHome: filterParams.about,
+      "customerNumber.bed": filterParams.BRB.Beds,
+      "customerNumber.bathroom": filterParams.BRB.Bathrooms,
+      "customerNumber.bedroom": filterParams.BRB.Rooms,
+      "price.adults": {
+        $gte: filterParams.price.min,
+        $lte: filterParams.price.max,
+      },
+    });
+
+    if(!result){
+      throw new Error("Hotel not found")
+    }
+    return resp.json({ success: true, data: result });
   } catch (error) {
     return resp.json({ success: false, error: error.message });
   }

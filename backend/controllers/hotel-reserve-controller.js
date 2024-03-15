@@ -163,7 +163,6 @@ export const approveReserve=async(req,resp)=>{
 
   
   const result=await hotelReserveModel.findByIdAndUpdate({_id:id},{reserveType:'instant'},{new:true})
-  console.log('>>>>',result);
 
 
   return resp.json({success:true,updated:result})

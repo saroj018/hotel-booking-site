@@ -1,5 +1,5 @@
 import express from 'express'
-import { deleteHotelController, getAllHotelController, getDetailOfParticularDate, getHotelDetailsController, getSingleDetails, hotelDetailsController } from "../controllers/hotel-details-controller.js";
+import { deleteHotelController, filterHotels, filterViaHouseType, getAllHotelController, getDetailOfParticularDate, getHotelDetailsController, getSingleDetails, hotelDetailsController } from "../controllers/hotel-details-controller.js";
 import multer from 'multer';
 import { authentication } from '../middleware/auth.js';
 
@@ -23,5 +23,7 @@ hotelDetailRoute.route('/gethoteldetails').get(authentication,getHotelDetailsCon
 hotelDetailRoute.route('/deletehoteldetails').delete(authentication,deleteHotelController)
 hotelDetailRoute.route('/:id').get(getSingleDetails)
 hotelDetailRoute.route('/getsingledetails').post(authentication,getDetailOfParticularDate)
+hotelDetailRoute.route('/houseType').post(authentication,filterViaHouseType)
+hotelDetailRoute.route('/filterhotels').post(filterHotels)
 
 export default hotelDetailRoute
