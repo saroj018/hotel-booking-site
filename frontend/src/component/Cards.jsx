@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Button from './common/Button'
 import { useDeleteFetch, usePostFetch } from '../hooks/fetch-data'
 
-const Cards = ({id,removeId, name, imgDet, date,rating='4.2/5', price, img,optional=true,setRef,refe }) => {
+const Cards = ({id,removeId, name,heart=true, imgDet, date,rating='4.2/5', price, img,optional=true,setRef,refe }) => {
   const[resp,setResp]=useState(false)
   const clickHandler=async(e,ids)=>{
     e.preventDefault()
@@ -20,7 +20,7 @@ const Cards = ({id,removeId, name, imgDet, date,rating='4.2/5', price, img,optio
   return (
     <div className='mt-8 relative '>
     <Link to={`/details/${id}`} >
-     {optional && <Heart onClick={(e)=>clickHandler(e,id)} enableBackground={'true'} fill={resp ? 'red':'transparent'} color={resp ? 'red':'white'} size={35} strokeWidth={1} className='absolute left-[90%] cursor-pointer top-3' />}
+     {heart && <Heart onClick={(e)=>clickHandler(e,id)} enableBackground={'true'} fill={resp ? 'red':'transparent'} color={resp ? 'red':'white'} size={35} strokeWidth={1} className='absolute left-[90%] cursor-pointer top-3' />}
       <img className='rounded-xl' src={img} alt="" />
       <div className='flex  justify-between items-end'>
         <h1 className='text-xl font-bold mt-5'>{name}</h1>

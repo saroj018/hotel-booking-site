@@ -14,7 +14,7 @@ const HotelDetailContext = ({ children }) => {
   const [hotelInfo, setHotelInfo] = useState({})
   const [searchParams, setSearchParams] = useSearchParams()
   const [isAuth, setIsAuth] = useState(localStorage.getItem('token'))
-  const[photo,setPhoto]=useState([])
+  const [photo, setPhoto] = useState([])
 
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
@@ -41,14 +41,14 @@ const HotelDetailContext = ({ children }) => {
   });
 
   const hotelInformantion = new FormData()
-  const infoOfHotel=JSON.stringify(hotelDetails)
-  hotelInformantion.append('details',infoOfHotel)
+  const infoOfHotel = JSON.stringify(hotelDetails)
+  hotelInformantion.append('details', infoOfHotel)
   photo?.forEach((item) => {
     hotelInformantion.append('photo', item)
   })
-console.log(photo);
 
   const clickHandler = async () => {
+    console.log(hotelInformantion);
     try {
       const resp = await fetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/addhoteldetails`, {
         method: "POST",
@@ -58,11 +58,12 @@ console.log(photo);
         }
       })
       const result = await resp.json()
+      console.log(result);
       setHotelInfo(result.hotelDetails)
       if (result.success) {
 
         toast.success(result.message)
-       useLocalStorage(result.token,'ownerToken','set')
+        useLocalStorage(result.token, 'ownerToken', 'set')
       }
       else {
 
@@ -73,8 +74,24 @@ console.log(photo);
     }
   }
 
+  const contextValue = {
+    hotelDetails,
+    photo,
+    setPhoto,
+    setHotelDetails,
+    hotelData,
+    isAuth,
+    setIsAuth,
+    setHotelData,
+    btnDisable,
+    setSearchParams,
+    searchParams,
+    setBtnDisable,
+    hotelInfo
+  }
+
   return (
-    <Context.Provider value={{ hotelDetails,photo,setPhoto, setHotelDetails, hotelData, isAuth, setIsAuth, setHotelData, btnDisable, setSearchParams, searchParams, setBtnDisable, hotelInfo }}>
+    <Context.Provider value={contextValue}>
       {children}
       <Button onClick={clickHandler}>Send</Button>
     </Context.Provider>

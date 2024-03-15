@@ -49,6 +49,10 @@ const hotelReserveSchema=new Schema({
     dateList:{
         type:[String],
         required:true
+    },
+    reserveType:{
+        type:String,
+        required:true
     }
 },
 {

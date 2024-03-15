@@ -1,34 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../../../component/common/Button'
-import { useGetFetch } from '../../../hooks/fetch-data'
+import { useGetFetch, usePostFetch } from '../../../hooks/fetch-data'
 import { nightCalculator } from '../../../component/utlils/nightCalculator'
 
 const Dashboard = () => {
   const [params, setParams] = useState('All reservations')
   const [details, setDetails] = useState()
+  const[update,setUpdate]=useState({
+    success:false,
+    upadted:[]
+  })
 
   const itemList = [
     {
       name: `All reservations (${details?.length})`
     },
     {
-      name: `Currently Hosting (${details?.filter((ele)=>ele.hotel.bookingType.includes('"instant"')).length})`
+      name: `Currently Hosting (${details?.filter((ele)=>ele.reserveType.includes('instant')).length})`
     },
     {
-      name: `Wait for Approval (${ details?.filter((ele)=>ele.hotel.bookingType=='"approve"').length})`
+      name: `Wait for Approval (${details?.filter((ele)=>ele.reserveType.includes('approve')).length})`
     },
   ]
 
   const getReserved = async () => {
     const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/totalreservehotel`)
+    console.log(result);
     setDetails(result.data)
   }
 
 
   useEffect(() => {
     getReserved()
-  }, [])
-  console.log(details);
+  }, [update])
+  
+  const clickHandler=async(id)=>{
+    console.log(id);
+    const result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/approve`,{id})
+    console.log(result);
+    setUpdate(result)
+  }
 
   return (
     <>
@@ -83,8 +94,8 @@ const Dashboard = () => {
                       <td className='border-2 border-gray-500'>{item.Infants}</td>
                       <td className='border-2 border-gray-500'>{Number(item.hotel.price.adults)+Number(item.hotel.price.childrens)+Number(item.hotel.price.infants)}</td>
                       <td className='border-2 border-gray-500'>{nightCalculator([item.checkIn, item.checkOut])}</td>
-                      <td className={`border-2 border-gray-500 font-bold ${item.hotel.bookingType == '"instant"' ? 'text-red-500' : 'text-green-500'}`}>{item.hotel.bookingType == '"instant"' ? 'Booked' : 'Pending'}</td>
-                      <td className={`border-2 border-gray-500 font-bold p-2  `}><p className={`${item.hotel.bookingType == '"instant"' ? 'hidden' : ''} border-2 p-2 bg-red-500 text-white rounded-md cursor-pointer`}>Approve</p></td>
+                      <td className={`border-2 border-gray-500 font-bold ${item.reserveType.includes('instant') ? 'text-red-500' : 'text-green-500'}`}>{item.reserveType.includes('instant') ? 'Booked' : 'Pending'}</td>
+                      <td className={`border-2 border-gray-500 font-bold p-2  `}>{!item.reserveType.includes('instant') && <p onClick={()=>clickHandler(item._id)} className={`${item.hotel.bookingType == '"instant"' ? 'hidden' : ''} border-2 p-2 bg-red-500 text-white rounded-md cursor-pointer`}>Approve</p>}</td>
                     </tr>
                   })
                 }
@@ -112,7 +123,7 @@ const Dashboard = () => {
               </thead>
               <tbody className='border-2 border-gray-500 text-center uppercase'>
                 {
-                  details.filter((ele)=>ele.hotel.bookingType=='"instant"')?.map((item) => {
+                  details.filter((ele)=>ele.reserveType.includes('instant'))?.map((item) => {
                     return <tr key={item._id} className='border-2 border-gray-500'>
                       <td className='border-2 border-gray-500 w-[10%] '><img className='p-1 rounded-md' src={item.hotel.idOfImage[0].url} alt="" /></td>
                       <td className='border-2 border-gray-500'>{item.hotel.houseTitle.slice(0, 35)}</td>
@@ -155,7 +166,7 @@ const Dashboard = () => {
               </thead>
               <tbody className='border-2 border-gray-500 text-center uppercase'>
                 {
-                  details.filter((ele)=>ele.hotel.bookingType=='"approve"')?.map((item) => {
+                  details.filter((ele)=>ele.reserveType.includes('approve'))?.map((item) => {
                     return <tr key={item._id} className='border-2 border-gray-500'>
                       <td className='border-2 border-gray-500 w-[10%] '><img className='p-1 rounded-md' src={item.hotel.idOfImage[0].url} alt="" /></td>
                       <td className='border-2 border-gray-500'>{item.hotel.houseTitle.slice(0, 35)}</td>
@@ -170,7 +181,7 @@ const Dashboard = () => {
                       <td className='border-2 border-gray-500'>{item.Infants}</td>
                       <td className='border-2 border-gray-500'>{Number(item.hotel.price.adults)+Number(item.hotel.price.childrens)+Number(item.hotel.price.infants)}</td>
                       <td className='border-2 border-gray-500'>{nightCalculator([item.checkIn, item.checkOut])}</td>
-                      <td className={`border-2 border-gray-500 font-bold p-2  `}><p className={` border-2 p-2 bg-red-500 text-white rounded-md cursor-pointer`}>Approve</p></td>
+                      <td className={`border-2 border-gray-500 font-bold p-2  `}>{ !update.success && <p onClick={()=>clickHandler(item._id)} className={` border-2 p-2 bg-red-500 text-white rounded-md cursor-pointer`}>Approve</p>}</td>
                     </tr>
                   })
                 }

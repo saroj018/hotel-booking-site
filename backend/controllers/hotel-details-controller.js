@@ -96,7 +96,6 @@ export const hotelDetailsController = async (req, resp) => {
       locatedPlace,
     } = hotelInfo
     let hotelImage = req.files;
-    console.log(homeType);
 
   
     const validateDetails = hotelDetailsValidation.safeParse({

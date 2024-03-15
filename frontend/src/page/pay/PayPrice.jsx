@@ -115,7 +115,8 @@ const PayPrice = () => {
     const sendDataHandler = async () => {
         console.log(reserveInfo);
 
-        await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
+        let res=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
+        console.log(res);
         setShow(false)
     }
 

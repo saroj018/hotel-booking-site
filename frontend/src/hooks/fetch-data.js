@@ -13,7 +13,6 @@ export const useGetFetch = async (url) => {
       throw new Error("There is some error on fetchGet data");
     }
     const result =await resp.json();
-    console.log(result);
     // if (result.success) {
     //   toast.success(result.message);
     // } else {
