@@ -5,6 +5,7 @@ export const hashPassword = async (myPassword) => {
     const password = await bcrypt.hash(myPassword, 10);
     return password;
   } catch (error) {
+    throw new Error(error.message)
   }
 };
 
@@ -13,5 +14,6 @@ export const checkPassword = async (myPassword, hashedPassword) => {
     const password = await bcrypt.compare(myPassword, hashedPassword);
     return password;
   } catch (error) {
+    throw new Error(error.message)
   }
 };

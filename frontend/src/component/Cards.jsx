@@ -4,34 +4,34 @@ import { Link } from 'react-router-dom'
 import Button from './common/Button'
 import { useDeleteFetch, usePostFetch } from '../hooks/fetch-data'
 
-const Cards = ({id,removeId, name,heart=true, imgDet, date,rating='4.2/5', price, img,optional=true,setRef,refe }) => {
-  const[resp,setResp]=useState(false)
-  const clickHandler=async(e,ids)=>{
+const Cards = ({ id, removeId, btn, name, heart = true, imgDet, date, rating = '4.2/5', price, img, optional = true, setRef, refe }) => {
+  const [resp, setResp] = useState(false)
+  const clickHandler = async (e, ids) => {
     e.preventDefault()
-   let result= await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/addonwishlist`,{ids})
-   setResp(result.success)
+    let result = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/addonwishlist`, { ids })
+    setResp(result.success)
   }
 
-  const removeHandler=async(e,id)=>{
+  const removeHandler = async (e, id) => {
     e.preventDefault()
-    await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/removewishlist`,id)
+    await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/removewishlist`, id)
     setRef(!refe)
   }
   return (
     <div className='mt-8 relative '>
-    <Link to={`/details/${id}`} >
-     {heart && <Heart onClick={(e)=>clickHandler(e,id)} enableBackground={'true'} fill={resp ? 'red':'transparent'} color={resp ? 'red':'white'} size={35} strokeWidth={1} className='absolute left-[90%] cursor-pointer top-3' />}
-      <img className='rounded-xl' src={img} alt="" />
-      <div className='flex  justify-between items-end'>
-        <h1 className='text-xl font-bold mt-5'>{name}</h1>
-        <p className='text-lg text-black font-bold'>{rating}</p>
-      </div>
-      <p className='my-2 text-neutral-700 text-lg'>{imgDet}</p>
-      <p className='text-neutral-800 text-lg'>{date}</p>
-      <h1 className='text-xl font-extrabold mt-3 text-black'>{price} <span className='text-neutral-600 text-lg
+      <Link to={`/details/${id}`} >
+        {heart && <Heart onClick={(e) => clickHandler(e, id)} enableBackground={'true'} fill={resp ? 'red' : 'transparent'} color={resp ? 'red' : 'white'} size={35} strokeWidth={1} className='absolute left-[90%] cursor-pointer top-3' />}
+        <img className='rounded-xl' src={img} alt="" />
+        <div className='flex  justify-between items-end'>
+          <h1 className='text-xl font-bold mt-5'>{name}</h1>
+          <p className='text-lg text-black font-bold'>{rating}</p>
+        </div>
+        <p className='my-2 text-neutral-700 text-lg'>{imgDet}</p>
+        <p className='text-neutral-800 text-lg'>{date}</p>
+        <h1 className='text-xl font-extrabold mt-3 text-black'>{price} <span className='text-neutral-600 text-lg
         '>per night</span></h1>
-    </Link>
-       {!optional && <Button onClick={(e)=>removeHandler(e,removeId)} className={'w-full my-5'}>Remove</Button>}
+      </Link>
+      {!optional && <Button onClick={(e) => removeHandler(e, removeId)} className={'w-full my-5'}>{btn}</Button>}
     </div>
   )
 }

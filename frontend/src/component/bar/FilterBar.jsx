@@ -4,7 +4,7 @@ import '../CSS/style.css'
 import FilterPopup from '../popup/FilterPopup'
 import { usePostFetch } from '../../hooks/fetch-data'
 
-const FilterBar = ({setDetails}) => {
+const FilterBar = ({ setDetails }) => {
 
     const filterOption = [
         {
@@ -50,8 +50,8 @@ const FilterBar = ({setDetails}) => {
         setHouse(item.toLocaleLowerCase())
     }
     return (
-        <div className='filterbar flex gap-5 px-2 mt-8 items-center justify-between sticky border-2 rounded-md  top-[15%] bg-white'>
-            <div className='flex gap-2 rounded-xl cursor-pointer max-w-[70%]  overflow-x-scroll px-5'>
+        <div className='filterbar flex gap-5 px-2 mt-8 items-center justify-between sticky border-2 rounded-md  top-[17%] bg-white'>
+            <div className='flex gap-2 rounded-xl cursor-pointer max-w-[85%]  overflow-x-scroll px-5'>
                 {
                     filterOption.map((item, index) => {
                         return (
@@ -63,14 +63,8 @@ const FilterBar = ({setDetails}) => {
                     })
                 }
             </div>
-            <div className='flex gap-7 text-lg'>
                 <FilterPopup setDetails={setDetails} />
 
-                <div className='p-2 border-2 gap-3 flex border-neutral-200 items-center '>
-                    <p>Display total before taxes</p>
-                    <div className="toggle border-2 border-green-500 "></div>
-                </div>
-            </div>
         </div>
     )
 }

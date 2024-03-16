@@ -13,3 +13,29 @@ import {z} from 'zod'
 })
 
 
+export const verifyFormValidation=z.object({
+    firstname:z.string({
+        required_error:"Firstname is required"
+    }).trim().min(1),
+    lastname:z.string({
+        required_error:'Lastname is required'
+    }).trim().min(1),
+    address:z.string({
+        invalid_type_error:'Address is required'
+    }).trim().min(1),
+    email:z.string({
+        required_error:'Email is required'
+    }).email(),
+    cemail:z.string({
+        required_error:'Confirm email is required'
+    }).email(),
+    gender:z.string({
+        required_error:'Gender is required'
+    }).trim().min(1).optional(),
+    dob:z.date({
+        required_error:'DOB is required'
+    }),
+    phone:z.number({
+        required_error:"Phone is required"
+    }).min(10)
+})

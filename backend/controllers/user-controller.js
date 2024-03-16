@@ -90,3 +90,46 @@ export const loginUser = async (req, resp) => {
     return resp.json({ success: false, message: error.message });
   }
 };
+
+
+export const chagePassword=async(req,resp)=>{
+  try {
+    const{oldpassword,newpassword,cpassword}=req.body
+    
+
+  if(!oldpassword || !newpassword || !cpassword){
+    throw new Error("Please provide required password")
+  }
+
+  if(!(newpassword==cpassword)){
+    throw new Error("new password and confirm password must be same")
+  }
+  const id=req.user._id
+
+  const findPassword=await User.findOne({_id:id}).select('password')
+  console.log(findPassword.password);
+
+  if(!findPassword){
+    throw new Error("User not found")
+  }
+
+  const comparePassword=await checkPassword(oldpassword,findPassword.password)
+  console.log(comparePassword);
+
+  if(!comparePassword){
+    throw new Error("Your Old password is incorrect")
+  }
+  const encryptPassword=await hashPassword(newpassword)
+
+  const updatePassword=await User.findByIdAndUpdate({_id:id},{password:encryptPassword})
+
+  if(!updatePassword){
+    throw new Error("Failed to update password")
+  }
+
+  return resp.json({success:true,message:'Password update successfully'})
+
+  } catch (error) {
+    return resp.json({success:false,error:error.message})
+  }
+}

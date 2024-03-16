@@ -47,32 +47,7 @@ const HotelDetailContext = ({ children }) => {
     hotelInformantion.append('photo', item)
   })
 
-  const clickHandler = async () => {
-    console.log(hotelInformantion);
-    try {
-      const resp = await fetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/addhoteldetails`, {
-        method: "POST",
-        body: hotelInformantion,
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      })
-      const result = await resp.json()
-      console.log(result);
-      setHotelInfo(result.hotelDetails)
-      if (result.success) {
-
-        toast.success(result.message)
-        useLocalStorage(result.token, 'ownerToken', 'set')
-      }
-      else {
-
-        toast.error(result.error)
-      }
-    } catch (error) {
-      toast.error(error.message)
-    }
-  }
+  
 
   const contextValue = {
     hotelDetails,
@@ -87,13 +62,14 @@ const HotelDetailContext = ({ children }) => {
     setSearchParams,
     searchParams,
     setBtnDisable,
-    hotelInfo
+    hotelInfo,
+    hotelInformantion,
+    setHotelInfo
   }
 
   return (
     <Context.Provider value={contextValue}>
       {children}
-      <Button onClick={clickHandler}>Send</Button>
     </Context.Provider>
   );
 }

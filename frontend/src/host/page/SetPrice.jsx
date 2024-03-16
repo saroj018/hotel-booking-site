@@ -16,7 +16,7 @@ const SetPrice = () => {
         setEdit(false)
     })
     useEffect(() => {
-        if (Number(hotelDetails.price.adults) > 500 && Number(hotelDetails.price.childrens) > 300 && Number(hotelDetails.price.infants) > 100){
+        if (Number(hotelDetails.price.adults) >= 500 && Number(hotelDetails.price.childrens) >= 300 && Number(hotelDetails.price.infants) >= 100){
         setBtnDisable(false)
     }
         else {

@@ -13,19 +13,19 @@
     border-radius: 50%;
     top: 0;
 } */
-.inpdiv:hover{
+.inpdiv:hover {
     background-color: rgba(212 212 212);
 }
 
-.inpdiv:hover .input{
+.inpdiv:hover .input {
     background-color: rgba(212 212 212);
 }
 
-.filterbar{
+.filterbar {
     z-index: 1;
 }
 
-.profilemodal{
+.profilemodal {
     position: relative;
     z-index: 9;
 }
@@ -41,15 +41,15 @@
     transform: rotate(45deg);
 } */
 
-.bodycolor{
+.bodycolor {
     background-color: red;
 }
 
-.footer{
+.footer {
     position: relative;
 }
 
-.footer::after{
+.footer::after {
     content: '';
     width: 10%;
     height: 10px;
@@ -59,7 +59,41 @@
     top: 0;
 }
 
-.leaflet-container{
+.leaflet-container {
     height: 600px;
     width: 100vw;
+}
+
+.skeloten {
+    height: 200px;
+    background-color: rgb(173, 167, 167);
+    border-radius: 10px;
+    position: relative;
+}
+
+.shimmer {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    border-radius: 8px;
+}
+
+.shimmer::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    height: 200%;
+    animation: shim 1s infinite linear alternate;
+}
+
+@keyframes shim {
+    0% {
+        background-color: hsl(100, 7%, 70%);
+    }
+
+    100% {
+        background-color: hsl(100, 7%, 95%);
+    }
 }

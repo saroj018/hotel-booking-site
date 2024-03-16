@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Select = ({children,className,...props}) => {
-  return <select className={className} {...props} name="" id="">{children}</select>
-}
+const Select = React.forwardRef(({children,className,...props},ref) => {
+  return <select className={className} {...props} >{children}</select>
+})
 
 export default Select

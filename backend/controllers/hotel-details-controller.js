@@ -47,9 +47,9 @@ const hotelDetailsValidation = z.object({
     })
     .trim(),
   price: z.object({
-    adults: z.string(),
-    childrens: z.string(),
-    infants: z.string(),
+    adults: z.number(),
+    childrens: z.number(),
+    infants: z.number(),
   }),
   discount: z.number({
     required_error: "Discount is required",
@@ -315,7 +315,7 @@ export const filterHotels = async (req, resp) => {
     if (!filterHotels) {
       throw new Error("Please provide filterparams");
     }
-
+console.log(filterParams);
     const result = await hotelDetailsModel.find({
       roomType: filterParams.place,
       aboutHome: filterParams.about,
@@ -327,6 +327,7 @@ export const filterHotels = async (req, resp) => {
         $lte: filterParams.price.max,
       },
     });
+    console.log(result);
 
     if(!result){
       throw new Error("Hotel not found")

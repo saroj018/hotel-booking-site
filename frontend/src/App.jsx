@@ -32,45 +32,48 @@ import HotelDetailContext from './host/context/HotelDetailContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import MyTrip from './page/mytrip/MyTrip'
+import EditForm from './page/account/EditForm'
 
 const App = () => {
   return (
     <>
-    <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path='details/:id' element={<DetailPage />} />
-        <Route path=':id/payprice' element={<PayPrice />} />
-        <Route path='account' element={<Account />} />
-        <Route path='wishlist' element={<WishList />} />
-        <Route path='message' element={<Inbox />} />
-        <Route path='signup' element={<SignupPopup />} />
-        <Route path='mytrips' element={<MyTrip />} />
-      </Route>
-      <Route path='/host' element={<LayoutHost />}>
-        <Route index element={<IntroPage />} />
-        <Route path='hoteldetails' element={<HotelDetails />} />
-        <Route path='roomtype' element={<SelectRoomType />} />
-        <Route path='addlocation' element={<AddLocation />} />
-        <Route path='aboutroom' element={<AboutRoom />} />
-        <Route path='offerservice' element={<OfferServices />} />
-        <Route path='addphotos' element={<AddPhotos />} />
-        <Route path='housename' element={<HouseTitle />} />
-        <Route path='homesummery' element={<HomeSummery />} />
-        <Route path='description' element={<HomeDescription />} />
-        <Route path='bookingtype' element={<BookingType />} />
-        <Route path='setprice' element={<SetPrice />} />
-        <Route path='discount' element={<DiscountPage />} />
-      </Route>
-      <Route path='/host/finalpage' element={<FinalPage />} />
-      <Route path='/host/dashboard' element={<HostDashboardLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path='listing' element={<Listing />} />
-        <Route path='calender' element={<CalenderPage />} />
-        <Route path='inbox' element={<Inbox/>} />
-      </Route>
-    </Routes>
-      <ToastContainer/>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='details/:id' element={<DetailPage />} />
+          <Route path=':id/payprice' element={<PayPrice />} />
+          <Route path='account' element={<Account />}/>
+            <Route path='account/info' element={<EditForm />} />
+
+          <Route path='wishlist' element={<WishList />} />
+          <Route path='message' element={<Inbox />} />
+          <Route path='signup' element={<SignupPopup />} />
+          <Route path='mytrips' element={<MyTrip />} />
+        </Route>
+        <Route path='/host' element={<LayoutHost />}>
+          <Route index element={<IntroPage />} />
+          <Route path='hoteldetails' element={<HotelDetails />} />
+          <Route path='roomtype' element={<SelectRoomType />} />
+          <Route path='addlocation' element={<AddLocation />} />
+          <Route path='aboutroom' element={<AboutRoom />} />
+          <Route path='offerservice' element={<OfferServices />} />
+          <Route path='addphotos' element={<AddPhotos />} />
+          <Route path='housename' element={<HouseTitle />} />
+          <Route path='homesummery' element={<HomeSummery />} />
+          <Route path='description' element={<HomeDescription />} />
+          <Route path='bookingtype' element={<BookingType />} />
+          <Route path='setprice' element={<SetPrice />} />
+          <Route path='discount' element={<DiscountPage />} />
+        </Route>
+        <Route path='/host/finalpage' element={<FinalPage />} />
+        <Route path='/host/dashboard' element={<HostDashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path='listing' element={<Listing />} />
+          <Route path='calender' element={<CalenderPage />} />
+          <Route path='inbox' element={<Inbox />} />
+        </Route>
+      </Routes>
+      <ToastContainer />
     </>
   )
 }

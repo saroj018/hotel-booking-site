@@ -54,7 +54,7 @@ const FilterPopup = ({setDetails}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [filterParams, setFilterParams] = useState({
     about: '',
-    place: 'anytype',
+    place: '',
     price: {
       min: 2000,
       max: 5000
@@ -113,7 +113,7 @@ const FilterPopup = ({setDetails}) => {
             <p className='text-xl my-4'>A home all to yourself</p>
           </div>
           <div className='flex px-9 text-center my-5'>
-            <div onClick={() => setFilterParams((prv) => ({ ...prv, place: 'anytype' }))} className={`grow p-3 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold ${filterParams.place === 'anytype' ? 'bg-black text-white' : ''} `}>Any Type</div>
+            <div onClick={() => setFilterParams((prv) => ({ ...prv, place: 'entire-place' }))} className={`grow p-3 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold ${filterParams.place === 'entire-place' ? 'bg-black text-white' : ''} `}>Entire Place</div>
             <div onClick={() => setFilterParams((prv) => ({ ...prv, place: 'room' }))} className={`grow p-3 mx-2 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold ${filterParams.place === 'room' ? 'bg-black text-white' : ''} `}>Room</div>
             <div onClick={() => setFilterParams((prv) => ({ ...prv, place: 'entirehome' }))} className={`grow p-3 border-2 border-neutral-500 rounded-md cursor-pointer text-xl hover:bg-black hover:text-white font-bold ${filterParams.place === 'entirehome' ? 'bg-black text-white' : ''} `}>Entire Home</div>
           </div>

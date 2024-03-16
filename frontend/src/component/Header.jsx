@@ -64,8 +64,8 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
                         })
                     }
                 </nav>
-                {scrollValue && extraItem && <Input className={' border-2 border-neutral-600 min-w-[800px] rounded-full pl-4 '} placeholder={'Search your destinations...'} />}
-                {scrollValue && extraItem && <Search className='absolute left-[95%] top-4 ' />}
+                {scrollValue && extraItem && <Input className={' border-2 border-neutral-600 min-w-[600px] rounded-full pl-4 '} placeholder={'Search your destinations...'} />}
+                {scrollValue && extraItem && <Search className='absolute left-[93%] top-4 ' />}
             </div>
 
 
