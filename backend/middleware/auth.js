@@ -12,12 +12,12 @@ export const authentication = async (req, resp, next) => {
     const tokenPayload = verifyToken(token);
 
     if (!tokenPayload) {
-      return resp.json({ success: false, message: "Invalid Token" });
+      throw new Error("Invalid Token")
     }
 
     const user = await User.findOne({ email: tokenPayload });
     if (!user) {
-      return resp.json({ success: false, message: "User not found" });
+      throw new Error("User not found")
     }
     req.user = user;
     next();

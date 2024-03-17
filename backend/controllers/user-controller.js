@@ -24,6 +24,63 @@ const userValidation = z.object({
     .min(4, { message: "Password must be minimum 4 character" }),
 });
 
+const verifyUserValidation = z
+  .object({
+    firstname: z
+      .string({
+        required_error: "firstname is required",
+      })
+      .trim()
+      .min(1),
+    lastname: z
+      .string({
+        required_error: "lastname is required",
+      })
+      .trim()
+      .min(1),
+    address: z
+      .string({
+        required_error: "address is required",
+      })
+      .trim()
+      .min(1),
+    phone: z
+      .number({
+        required_error: "phone is required",
+      })
+      .min(1),
+    email: z
+      .string({
+        required_error: "email is required",
+      })
+      .trim()
+      .email()
+      .min(1),
+    cemail: z
+      .string({
+        required_error: "confirm email is required",
+      })
+      .trim()
+      .email()
+      .min(1),
+    gender: z
+      .string({
+        required_error: "gender is required",
+      })
+      .trim()
+      .min(1)
+      .optional(),
+    dob: z
+      .string({
+        required_error: "dob is required",
+      })
+      .trim()
+      .min(1),
+  })
+  .refine((data) => data.email === data.cemail, {
+    message: "email and confirm email must be same",
+  });
+
 //Signup User
 
 export const signupUser = async (req, resp) => {
@@ -48,16 +105,16 @@ export const signupUser = async (req, resp) => {
     });
     if (dbResponse) {
       const token = genToken(email);
-    //   const expirationTime = new Date();
-    //   expirationTime.setTime(expirationTime.getTime() + 10 * 60 * 1000);
-    //   resp.cookie("token", token, {
-    //     sameSite: "none",
-    //     expires: expirationTime,
-    //     secure: true,
-    //   });
+      //   const expirationTime = new Date();
+      //   expirationTime.setTime(expirationTime.getTime() + 10 * 60 * 1000);
+      //   resp.cookie("token", token, {
+      //     sameSite: "none",
+      //     expires: expirationTime,
+      //     secure: true,
+      //   });
       return resp
         .status(200)
-        .json({ success: true,token:token, message: "Signup Successfully" });
+        .json({ success: true, token: token, message: "Signup Successfully" });
     }
   } catch (error) {
     return resp.json({ success: false, message: error.message });
@@ -85,51 +142,80 @@ export const loginUser = async (req, resp) => {
       return resp.json({ success: false, message: "Incorrect Password" });
     }
     const token = genToken(email);
-    return resp.json({ success: true,user:findUser, message: "Login Successfully" ,token});
+    return resp.json({
+      success: true,
+      user: findUser,
+      message: "Login Successfully",
+      token,
+    });
   } catch (error) {
     return resp.json({ success: false, message: error.message });
   }
 };
 
-
-export const chagePassword=async(req,resp)=>{
+export const chagePassword = async (req, resp) => {
   try {
-    const{oldpassword,newpassword,cpassword}=req.body
-    
+    const { oldpassword, newpassword, cpassword } = req.body;
 
-  if(!oldpassword || !newpassword || !cpassword){
-    throw new Error("Please provide required password")
-  }
+    if (!oldpassword || !newpassword || !cpassword) {
+      throw new Error("Please provide required password");
+    }
 
-  if(!(newpassword==cpassword)){
-    throw new Error("new password and confirm password must be same")
-  }
-  const id=req.user._id
+    if (!(newpassword == cpassword)) {
+      throw new Error("new password and confirm password must be same");
+    }
+    const id = req.user._id;
 
-  const findPassword=await User.findOne({_id:id}).select('password')
-  console.log(findPassword.password);
+    const findPassword = await User.findOne({ _id: id }).select("password");
+    console.log(findPassword.password);
 
-  if(!findPassword){
-    throw new Error("User not found")
-  }
+    if (!findPassword) {
+      throw new Error("User not found");
+    }
 
-  const comparePassword=await checkPassword(oldpassword,findPassword.password)
-  console.log(comparePassword);
+    const comparePassword = await checkPassword(
+      oldpassword,
+      findPassword.password
+    );
+    console.log(comparePassword);
 
-  if(!comparePassword){
-    throw new Error("Your Old password is incorrect")
-  }
-  const encryptPassword=await hashPassword(newpassword)
+    if (!comparePassword) {
+      throw new Error("Your Old password is incorrect");
+    }
+    const encryptPassword = await hashPassword(newpassword);
 
-  const updatePassword=await User.findByIdAndUpdate({_id:id},{password:encryptPassword})
+    const updatePassword = await User.findByIdAndUpdate(
+      { _id: id },
+      { password: encryptPassword }
+    );
 
-  if(!updatePassword){
-    throw new Error("Failed to update password")
-  }
+    if (!updatePassword) {
+      throw new Error("Failed to update password");
+    }
 
-  return resp.json({success:true,message:'Password update successfully'})
-
+    return resp.json({
+      success: true,
+      message: "Password update successfully",
+    });
   } catch (error) {
-    return resp.json({success:false,error:error.message})
+    return resp.json({ success: false, error: error.message });
   }
-}
+};
+
+export const verifyUser = async (req, resp, next) => {
+  try {
+    const getOtp = req.body;
+    if (getOtp.otp) {
+      req.otp=getOtp.otp
+     return next();
+    }
+    const data = verifyUserValidation.parse(req.body);
+
+    if (data) {
+      req.verifyUser = data;
+      next();
+    }
+  } catch (error) {
+    return resp.json({ success: false, error: error.format() });
+  }
+};

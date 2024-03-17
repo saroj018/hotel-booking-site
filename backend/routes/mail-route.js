@@ -1,6 +1,10 @@
-// import {Route} from 'express'
-// import { sendMail } from '../controllers/mailController.js'
+import {Router} from 'express'
+import { sendMail } from '../controllers/mailController.js'
+import { authentication } from '../middleware/auth.js'
+import { verifyUser } from '../controllers/user-controller.js'
 
-// export const emailRouter=Route()
+ const emailRouter=Router()
 
-// emailRouter.route('/sendmail').post(sendMail)
+emailRouter.route('/sendmail').post(authentication,verifyUser,sendMail)
+
+export default emailRouter

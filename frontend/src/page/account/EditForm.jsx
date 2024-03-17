@@ -8,9 +8,12 @@ import {useForm} from 'react-hook-form'
 import { verifyFormValidation } from '../../validation/userValidation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import OtpPopup from '../../component/popup/OtpPopup'
+import dayjs from 'dayjs'
+import {usePostFetch} from '../../hooks/fetch-data'
 
 const EditForm = () => {
     const[isOpen,setIsOpen]=useState(false)
+    const[timer,setTimer]=useState({min:0,sec:0})
     const{register,watch,handleSubmit,formState:{errors}}=useForm({resolver:zodResolver(verifyFormValidation),defaultValues:{
         firstname:'Saroj',
         lastname:'Aryal',
@@ -18,11 +21,14 @@ const EditForm = () => {
         email:'abc@gmail.com',
         cemail:'abc@gmail.com',
         phone:982345324,
-        dob:new Date().toLocaleDateString()
+        dob:dayjs().format('YYYY-MM-DD'),
+        gender:'male'
     }})
 
-    const onSubmit=(data)=>{
+    const onSubmit=async(data)=>{
+        await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/sendmail`,data)
        setIsOpen(true)
+       setTimer({min:0,sec:0})
     }
    
 
@@ -51,7 +57,7 @@ const EditForm = () => {
                     </div>
                     <div className='grow'>
                         <Lable className={'text-lg'}>Phone</Lable>
-                        <Input {...register('phone',{valueAsNumber:true})} type='tel'  className={'border-2 border-neutral-500  rounded-md w-full'} />
+                        <Input {...register('phone',{valueAsNumber:true})}  className={'border-2 border-neutral-500  rounded-md w-full'} />
                         <p className='text-red-500'>{errors?.phone?.message}</p>
                     </div>
                 </div>
@@ -59,9 +65,9 @@ const EditForm = () => {
                     <div className='grow'>
                         <Lable className={'text-lg'}>Gender</Lable>
                         <Select {...register('gender')} className={'w-full h-[50px] px-2 text-lg rounded-md border-2 bg-white border-neutral-500'}>
-                            <Option name={'gender'} value={'male'}>Male</Option>
-                            <Option name={'gender'} value={'female'}>Female</Option>
-                            <Option name={'gender'} value={'other'}>Other</Option>
+                            <Option value={'male'} >Male</Option>
+                            <Option value={'female'} >Female</Option>
+                            <Option value={'other'} >Other</Option>
                         </Select>
                         <p className='text-red-500'>{errors?.gender?.message}</p>
                     </div>
@@ -85,7 +91,7 @@ const EditForm = () => {
                 </div>
                 <Button type='submit' className='w-full my-5'>Submit</Button>
             </form>
-            <OtpPopup isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <OtpPopup timer={timer} setTimer={setTimer} isOpen={isOpen} setIsOpen={setIsOpen}/>
         </div>
     )
 }

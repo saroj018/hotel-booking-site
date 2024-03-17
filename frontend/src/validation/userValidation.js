@@ -38,4 +38,7 @@ export const verifyFormValidation=z.object({
     phone:z.number({
         required_error:"Phone is required"
     }).min(10)
+}).refine(data=>data.email===data.cemail,{
+    message:'email and confirm email must be same',
+    path:['cemail']
 })
