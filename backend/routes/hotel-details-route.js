@@ -20,7 +20,7 @@ const hotelDetailRoute=express.Router()
 
 hotelDetailRoute.route('/addhoteldetails').post(authentication,checkVerifyUser,upload.array('photo',10),hotelDetailsController)
 hotelDetailRoute.route('/getallhotel').get(getAllHotelController)
-hotelDetailRoute.route('/gethoteldetails').get(authentication,getHotelDetailsController)
+hotelDetailRoute.route('/gethoteldetails').get(authentication,checkVerifyUser,getHotelDetailsController)
 hotelDetailRoute.route('/deletehoteldetails').delete(authentication,checkVerifyUser,deleteHotelController)
 hotelDetailRoute.route('/:id').get(getSingleDetails)
 hotelDetailRoute.route('/getsingledetails').post(authentication,getDetailOfParticularDate)
