@@ -2,6 +2,7 @@ import { z } from "zod";
 import { genToken } from "../utils/token.js";
 import { checkPassword, hashPassword } from "../utils/encrypt-password.js";
 import { User } from "../model/user-model.js";
+import { userVerifyModel } from "../model/user-verify-model.js";
 
 const userValidation = z.object({
   fullname: z
@@ -206,16 +207,23 @@ export const verifyUser = async (req, resp, next) => {
   try {
     const getOtp = req.body;
     if (getOtp.otp) {
-      req.otp=getOtp.otp
-     return next();
+      req.otp = getOtp.otp;
+      return next();
     }
     const data = verifyUserValidation.parse(req.body);
 
+    const findUser = await userVerifyModel.findOne({
+      logindetails: req.user._id,
+    });
+
     if (data) {
+      if (findUser?.email == data.email && findUser?.verified==true) {
+        throw new Error("This email is already verified");
+      }
       req.verifyUser = data;
       next();
     }
   } catch (error) {
-    return resp.json({ success: false, error: error.format() });
+    return resp.json({ success: false, error: error.message });
   }
 };

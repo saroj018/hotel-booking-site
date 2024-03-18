@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { dummyDescription, dummyHouseTitle } from '../../../DummyData'
 
 const ReadyToSend = () => {
-    const { hotelDetails, setHotelInfo, hotelInformantion,setHotelDetails } = useContext(Context)
+    const { hotelDetails, setHotelInfo, hotelInformantion, setHotelDetails, setVerify } = useContext(Context)
     const navigate = useNavigate()
 
     const clickHandler = async () => {
@@ -21,7 +21,6 @@ const ReadyToSend = () => {
                 }
             })
             const result = await resp.json()
-            console.log(result);
             setHotelInfo(result.hotelDetails)
             if (result.success) {
 
@@ -30,36 +29,36 @@ const ReadyToSend = () => {
                 navigate('/host/finalpage')
             }
             else {
-
+                setVerify(true)
                 toast.error(result.error)
             }
         } catch (error) {
             toast.error(error.message)
         }
 
-        setHotelDetails({
-            homeType: '',
-            roomType: '',
-            locatedPlace: {},
-            customerNumber: {
-              guest: 1,
-              bed: 1,
-              bathroom: 1,
-              bedroom: 1
-            },
-            offerServices: [],
-            houseTitle: dummyHouseTitle,
-            aboutHome: '',
-            description: dummyDescription,
-            bookingType: '',
-            price: {
-              adults: 500,
-              childrens: 300,
-              infants: 100
-              ,
-            },
-            discount: 0,
-        })
+        // setHotelDetails({
+        //     homeType: '',
+        //     roomType: '',
+        //     locatedPlace: {},
+        //     customerNumber: {
+        //       guest: 1,
+        //       bed: 1,
+        //       bathroom: 1,
+        //       bedroom: 1
+        //     },
+        //     offerServices: [],
+        //     houseTitle: dummyHouseTitle,
+        //     aboutHome: '',
+        //     description: dummyDescription,
+        //     bookingType: '',
+        //     price: {
+        //       adults: 500,
+        //       childrens: 300,
+        //       infants: 100
+        //       ,
+        //     },
+        //     discount: 0,
+        // })
     }
 
 

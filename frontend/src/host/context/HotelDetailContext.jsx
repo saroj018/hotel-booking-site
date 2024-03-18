@@ -5,6 +5,7 @@ import Button from '../../component/common/Button';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'react-router-dom';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import VerifyPopup from '../../component/popup/VerifyPopup';
 
 export const Context = createContext()
 
@@ -15,6 +16,7 @@ const HotelDetailContext = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isAuth, setIsAuth] = useState(localStorage.getItem('token'))
   const [photo, setPhoto] = useState([])
+  const[verify,setVerify]=useState(false)
 
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
@@ -64,12 +66,15 @@ const HotelDetailContext = ({ children }) => {
     setBtnDisable,
     hotelInfo,
     hotelInformantion,
-    setHotelInfo
+    setHotelInfo,
+    verify,
+    setVerify
   }
 
   return (
     <Context.Provider value={contextValue}>
       {children}
+      <VerifyPopup/>
     </Context.Provider>
   );
 }

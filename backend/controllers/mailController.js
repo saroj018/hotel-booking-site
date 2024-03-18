@@ -3,24 +3,30 @@ import { userVerifyModel } from "../model/user-verify-model.js";
 import { createTransport } from "../utils/email-config.js";
 import { getOtp } from "../utils/genOtp.js";
 
+
+let otpCollection =new Map()
 export const sendMail = async (req, resp) => {
   try {
-    const otpNumber = getOtp();
+    if (!req.otp) {
+       let otpNumber=getOtp(true);
+       otpCollection.set('otpNum',otpNumber)
+      setTimeout(() => {
+        otpCollection.set('otpNum',null)
+        console.log('time out');
+      }, 230000);
+    }
+    console.log(otpCollection.get('otpNum'));
     const finalOtp = req.otp;
-
+    let { _id } = req.user;
     if (finalOtp) {
-      if (finalOtp == otpNumber) {
-        let user = await userVerifyModel.find({ logindetails: req.user._id });
-        if (user) {
-          return resp.json({ success: true, message: "user verified" });
-        } else {
-          await userVerifyModel;
-        }
+      if (finalOtp == otpCollection.get('otpNum')) {
+        let user = await userVerifyModel.updateOne(
+          { logindetails: _id },
+          { $set: { verified: true } }
+        );
+        console.log(user);
+        return resp.json({ success: true, message: "verified successfully" });
       } else {
-        let user = await userVerifyModel.find({ logindetails: req.user._id });
-        if (user) {
-          await userVerifyModel.deleteOne({ _id: user._id });
-        }
         throw new Error("otp not matched");
       }
     }
@@ -32,11 +38,12 @@ export const sendMail = async (req, resp) => {
       firstname,
       lastname,
       address,
-      email,
       cemail,
       gender,
       dob,
       phone,
+      verified: false,
+      logindetails: _id,
     });
 
     let user = await User.find({ _id: req.user._id });
@@ -50,7 +57,7 @@ export const sendMail = async (req, resp) => {
         Thank you for choosing us. Use the following OTP to complete
         your verify process. OTP is valid for 2 minutes
       </p>
-      <h1>${otpNumber}</h1>
+      <h1>${otpCollection.get('otpNum')}</h1>
       <p>Regards,</p>
       <p>Airbnb-Clone</p>`,
     });

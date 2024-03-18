@@ -4,6 +4,7 @@ import Input from '../common/Input'
 import Button from '../common/Button'
 import dayjs from 'dayjs';
 import { usePostFetch } from '../../hooks/fetch-data';
+import { useNavigate } from 'react-router-dom';
 
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
@@ -13,6 +14,7 @@ const OtpPopup = ({ isOpen, setIsOpen,timer,setTimer }) => {
 
 const[active,setActive]=useState(false)
 const[otp,setOtp]=useState('')
+const navigate=useNavigate()
 
   useEffect(() => {
     let id = setInterval(() => {
@@ -49,7 +51,12 @@ const[otp,setOtp]=useState('')
     console.log(result);
     if(result.success){
       setIsOpen(false)
+      navigate('/host/dashboard')
     }
+  }
+
+  const resendHandler=()=>{
+    setTimer({min:0,sec:0})
   }
 
   return (
@@ -59,7 +66,7 @@ const[otp,setOtp]=useState('')
         <h1 className='text-center text-lg'>Please checck your email.You can receive a otp on yoyr email.This otp is valid for 2 min</h1>
         <Input onChange={changeHandler} value={otp} className={'border-2 border-neutral-500 rounded-md'} />
         <p>{`${timer.min}:${timer.sec}`}</p>
-        {active && <p onClick={()=>setTimer({min:0,sec:0})} className='cursor-pointer text-blue-500 font-bold underline'>Resend it</p>}
+        {active && <p onClick={resendHandler} className='cursor-pointer text-blue-500 font-bold underline'>Resend it</p>}
         <Button onClick={clickHandler} className={'bg-pink-500 border-none outline-none '}>Submit</Button>
       </div>
     </Popup>

@@ -26,8 +26,10 @@ const EditForm = () => {
     }})
 
     const onSubmit=async(data)=>{
-        await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/sendmail`,data)
-       setIsOpen(true)
+       const result= await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/sendmail`,data)
+       if(result.success){
+        setIsOpen(true)
+       }
        setTimer({min:0,sec:0})
     }
    

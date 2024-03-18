@@ -145,7 +145,7 @@ const FilterPopup = ({setDetails}) => {
                 inputNumber.map((ele, index) => {
                   return <div key={index + ele.name}>
                     <p className='text-xl my-3 text-black font-bold'>{ele.name}</p>
-                    <Input min={0} value={filterParams?.BRB?.[ele.name]} className={'border-2 border-neutral-600 rounded-md p-2'} type={ele.type} />
+                    <Input min={0} value={filterParams?.BRB?.[ele.name]} readOnly className={'border-2 border-neutral-600 rounded-md p-2'} type={ele.type} />
                   </div>
                 })
               }
