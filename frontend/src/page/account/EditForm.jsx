@@ -27,6 +27,7 @@ const EditForm = () => {
 
     const onSubmit=async(data)=>{
        const result= await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/sendmail`,data)
+       console.log(result);
        if(result.success){
         setIsOpen(true)
        }

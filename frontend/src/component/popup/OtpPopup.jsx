@@ -49,8 +49,8 @@ const navigate=useNavigate()
   const clickHandler=async()=>{
     let result=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/sendmail`,{otp})
     console.log(result);
+    setIsOpen(result.success)
     if(result.success){
-      setIsOpen(false)
       navigate('/host/dashboard')
     }
   }

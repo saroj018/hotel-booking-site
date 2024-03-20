@@ -32,7 +32,7 @@ const Home = () => {
       <FilterBar setDetails={setDetails} />
 
       {
-        details.length < 1 ?
+        details?.length < 1 ?
           <div className='grid grid-cols-4 mt-6 gap-4'>
             <Skeloten/>
             <Skeloten/>

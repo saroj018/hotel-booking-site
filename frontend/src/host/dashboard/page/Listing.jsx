@@ -8,14 +8,15 @@ import { toast } from 'react-toastify'
 
 const Listing = () => {
 
-    const { hotelInfo,setVerify } = useContext(Context)
+    const { setVerify } = useContext(Context)
     const [hotelDetails, setHotelDetails] = useState()
     const [id, setId] = useState([])
     const[state,setState]=useState(false)
 
     const getHotelDetails = async () => {
-        setVerify(true)
         const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/gethoteldetails`)
+        console.log(result.success);
+        setVerify(!result.success)
         setHotelDetails(result.detals)
     }
 
