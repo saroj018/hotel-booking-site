@@ -34,14 +34,14 @@ const Home = () => {
       {
         details?.length < 1 ?
           <div className='grid grid-cols-4 mt-6 gap-4'>
-            <Skeloten/>
-            <Skeloten/>
-            <Skeloten/>
-            <Skeloten/>
-            <Skeloten/>
-            <Skeloten/>
-            <Skeloten/>
-            <Skeloten/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
+            <Skeloten height={'250px'}/>
           </div>
           :
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 '>

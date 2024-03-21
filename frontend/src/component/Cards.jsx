@@ -21,7 +21,7 @@ const Cards = ({ id, removeId, btn, name, heart = true, imgDet, date, rating = '
     <div className='mt-8 relative '>
       <Link to={`/details/${id}`} >
         {heart && <Heart onClick={(e) => clickHandler(e, id)} enableBackground={'true'} fill={resp ? 'red' : 'transparent'} color={resp ? 'red' : 'white'} size={35} strokeWidth={1} className='absolute left-[90%] cursor-pointer top-3' />}
-        <img className='rounded-xl' src={img} alt="" />
+        <img className='rounded-xl h-[50%] w-[100%]' src={img} alt="" />
         <div className='flex  justify-between items-end'>
           <h1 className='text-xl font-bold mt-5'>{name}</h1>
           <p className='text-lg text-black font-bold'>{rating}</p>

@@ -74,7 +74,6 @@
 .shimmer {
     position: relative;
     overflow: hidden;
-    height: 250px;
     border-radius: 8px;
 }
 

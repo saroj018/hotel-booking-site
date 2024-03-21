@@ -4,10 +4,11 @@ import Checkout from '../../component/Checkout'
 import AboutPopup from '../../component/popup/AboutPopup'
 import HostDetail from '../../component/HostDetail'
 import OwnerProfile from '../../component/OwnerProfile'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useGetFetch } from '../../hooks/fetch-data'
 import { Context } from '../../host/context/HotelDetailContext'
 import {v4 as uuid} from 'uuid'
+import Skeloten from '../../component/utlils/Skeloten'
 
 const DetailPage = () => {
 
@@ -15,6 +16,7 @@ const DetailPage = () => {
   const[dateCollection,setDateCollection]=useState()
   const{setHotelData}=useContext(Context)
   const {id}=useParams()
+  const {pathname}=useLocation()
 
   const getDetails=async ()=>{
     const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
@@ -26,6 +28,10 @@ const DetailPage = () => {
   useEffect(()=>{
     getDetails()
   },[])
+
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[pathname])
 
   const offerService = [
     {
@@ -63,18 +69,30 @@ const DetailPage = () => {
   return (
     <div>
       <h1 className='text-4xl font-bold my-5'>{details?.houseTitle}</h1>
-      <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl '>
-        <img className='w-[60%]' src={details?.idOfImage?.[0]?.url} alt="" />
-        <div className='grid grid-cols-2 gap-3'>
+     {
+     Object.keys(details).length<1 ?
+     <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl'>
+      <Skeloten height={'100%'} width='60%'/>
+      <div className='grid grid-cols-2 gap-3 h-full '>
+        <Skeloten height={'100%'} width='300px'/>
+        <Skeloten height={'100%'} width='300px'/>
+        <Skeloten height={'100%'} width='300px'/>
+        <Skeloten height={'100%'} width='300px'/>
+      </div>
+     </div>
+     :
+     <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl'>
+        <img className='max-w-[60%] h-[100%]' src={details?.idOfImage?.[0]?.url} alt="" />
+        <div className='grid grid-cols-2 gap-3 h-full '>
           {
             details?.idOfImage?.map((item,index)=>{
               if(index===4) return
-              return  <img key={uuid()} className='h-[235px]' src={item?.url} alt="" />
+              return  <img key={uuid()} className='h-[100%] ' src={item?.url} alt="" />
 
             })
           }
         </div>
-      </div>
+      </div>}
 
       <div className='mt-10 '>
         <div className='inline-block my-7 '>
