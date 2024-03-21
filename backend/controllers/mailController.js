@@ -1,25 +1,24 @@
 import { User } from "../model/user-model.js";
 import { userVerifyModel } from "../model/user-verify-model.js";
 import { createTransport } from "../utils/email-config.js";
+import { emailSender } from "../utils/userVerified-email-sender.js";
 import { getOtp } from "../utils/genOtp.js";
+import { passwordResetEmailSender } from "../utils/passwordChange-email-sennder.js";
 
-
-let otpCollection =new Map()
+let otpCollection = new Map();
 export const sendMail = async (req, resp) => {
   try {
     if (!req.otp) {
-       let otpNumber=getOtp(true);
-       otpCollection.set('otpNum',otpNumber)
+      let otpNumber = getOtp();
+      otpCollection.set("otpNum", otpNumber);
       setTimeout(() => {
-        otpCollection.set('otpNum',null)
-        console.log('time out');
+        otpCollection.set("otpNum", null);
       }, 230000);
     }
-    console.log(otpCollection.get('otpNum'));
     const finalOtp = req.otp;
     let { _id } = req.user;
     if (finalOtp) {
-      if (finalOtp == otpCollection.get('otpNum')) {
+      if (finalOtp == otpCollection.get("otpNum")) {
         let user = await userVerifyModel.updateOne(
           { logindetails: _id },
           { $set: { verified: true } }
@@ -46,24 +45,48 @@ export const sendMail = async (req, resp) => {
       logindetails: _id,
     });
 
+    const newOtp = otpCollection.get("otpNum");
     let user = await User.find({ _id: req.user._id });
-    let result = await createTransport.sendMail({
-      from: "",
-      to: email,
-      subject: "Account verification",
-      html: ` <h1 id="name"></h1>
-      <p>Hi,${user[0].fullname}</p>
-      <p>
-        Thank you for choosing us. Use the following OTP to complete
-        your verify process. OTP is valid for 2 minutes
-      </p>
-      <h1>${otpCollection.get('otpNum')}</h1>
-      <p>Regards,</p>
-      <p>Airbnb-Clone</p>`,
-    });
+    const fullname = user[0].fullname;
+    let result = emailSender(email, fullname, newOtp);
     return resp.json({ success: true, message: result });
   } catch (error) {
     console.log(error.message);
+    return resp.json({ success: false, error: error.message });
+  }
+};
+
+export const passwordResetOtp = async (req, resp) => {
+  try {
+    const otp = req.body;
+    if (!otp.resetOtp) {
+      let otp = getOtp();
+      otpCollection.set("resetPassword", otp);
+      setTimeout(() => {
+        otpCollection.set("resetPassword", null);
+      }, 230000);
+      const user = await userVerifyModel.findOne({
+        logindetails: req.user._id,
+      });
+      const result = await passwordResetEmailSender(
+        user.email,
+        user.firstname,
+        otpCollection.get("resetPassword")
+      );
+      if (!result) {
+        throw new Error("Failed to send otp");
+      }
+    }
+
+    if (otp.resetOtp) {
+      if (otpCollection.get("resetPassword") == otp.resetOtp) {
+        return resp.json({ success: true });
+      } else {
+        throw new Error("Invalid otp");
+      }
+    }
+    return resp.json({ success: true });
+  } catch (error) {
     return resp.json({ success: false, error: error.message });
   }
 };

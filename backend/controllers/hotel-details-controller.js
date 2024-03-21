@@ -172,7 +172,8 @@ export const getHotelDetailsController = async (req, resp) => {
       uploadedBy: req.user._id,
     });
 
-    if (!hotelDetails) {
+    if (!hotelDetails || hotelDetails.length<1) {
+      console.log(hotelDetails);
       return resp.json({
         success: false,
         message: "There is no hotel register by this user",

@@ -217,12 +217,33 @@ export const verifyUser = async (req, resp, next) => {
     });
 
     if (data) {
-      if (findUser?.email == data.email && findUser?.verified==true) {
+      if (findUser?.email == data.email || findUser?.verified == true) {
         throw new Error("This email is already verified");
       }
       req.verifyUser = data;
       next();
     }
+  } catch (error) {
+    return resp.json({ success: false, error: error.message });
+  }
+};
+
+export const resetPassword = async (req, resp) => {
+  try {
+    const { resetPassword } = req.body;
+    if (!resetPassword && resetPassword.length < 8) {
+      throw new Error("invalid password");
+    }
+
+    const result = await User.findByIdAndUpdate(
+      { _id: req.user._id },
+      { password: resetPassword },
+      { new: true }
+    );
+    if (!result) {
+      throw new Error("Failed to change password");
+    }
+    return resp.json({ success: true, message: "password reset successfully" });
   } catch (error) {
     return resp.json({ success: false, error: error.message });
   }
