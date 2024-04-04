@@ -58,7 +58,7 @@ hotelDetailRoute.route("/:id").get(getSingleDetails);
 hotelDetailRoute
   .route("/getsingledetails")
   .post(authentication, getDetailOfParticularDate);
-hotelDetailRoute.route("/houseType").post(authentication, filterViaHouseType);
+hotelDetailRoute.route("/houseType").post( filterViaHouseType);
 hotelDetailRoute.route("/filterhotels").post(filterHotels);
 
 export default hotelDetailRoute;

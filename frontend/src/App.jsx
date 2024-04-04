@@ -33,7 +33,6 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import MyTrip from './page/mytrip/MyTrip'
 import EditForm from './page/account/EditForm'
-import ScrollToTop from './component/ScrollToTop'
 
 const App = () => {
   return (

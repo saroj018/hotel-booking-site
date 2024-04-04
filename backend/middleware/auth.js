@@ -5,7 +5,7 @@ export const authentication = async (req, resp, next) => {
   try {
     const token = req.header("Authorization")?.split(" ")[1];
 
-    if (!token) {
+    if (token==='null') {
      throw new Error("Pleas login first")
     }
 

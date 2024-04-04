@@ -72,7 +72,7 @@ const DetailPage = () => {
      {
      Object.keys(details).length<1 ?
      <div className='flex gap-2 items-center w-full h-[500px] overflow-hidden rounded-xl'>
-      <Skeloten height={'100%'} width='60%'/>
+      <Skeloten height={'100%'} width='50%'/>
       <div className='grid grid-cols-2 gap-3 h-full '>
         <Skeloten height={'100%'} width='300px'/>
         <Skeloten height={'100%'} width='300px'/>

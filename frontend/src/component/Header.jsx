@@ -77,7 +77,7 @@ const Header = ({className,navlinks,accountSwitch,icon,profileItem,extraItem=tru
                 <span className='cursor-pointer border-2 rounded-full p-1'>{icon}</span>
 
                 <div onClick={(e)=>{e.stopPropagation(), setShowProfileModal(!showProfileModal)}} className='flex  items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
-                    {isAuth ? <p className='text-lg select-none font-black  uppercase'>{localStorage.getItem('user').split(' ')[0]}</p> : <Menu />}
+                    {isAuth ? <p className='text-lg select-none font-black  uppercase'>{localStorage.getItem('user')?.split(' ')[0]}</p> : <Menu />}
                     <img className='h-10 w-10 rounded-full' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
                 </div>
                {showProfileModal &&  <ProfilePopup closePopup={closePopup} profileItem={profileItem} onClick={(e)=>e.stopPropagation()} className={'absolute  w-[300px] left-[60%] top-[120%]'}/>}

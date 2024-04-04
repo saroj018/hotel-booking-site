@@ -59,18 +59,19 @@ export const sendMail = async (req, resp) => {
 export const passwordResetOtp = async (req, resp) => {
   try {
     const otp = req.body;
-    if (!otp.resetOtp) {
-      let otp = getOtp();
-      otpCollection.set("resetPassword", otp);
+    if (!otp?.resetOtp) {
+      let otpNum = getOtp();
+      otpCollection.set("resetPassword", otpNum);
       setTimeout(() => {
         otpCollection.set("resetPassword", null);
       }, 230000);
-      const user = await userVerifyModel.findOne({
-        logindetails: req.user._id,
+      const user = await User.findOne({
+        email: otp.email,
       });
+      console.log(user);
       const result = await passwordResetEmailSender(
         user.email,
-        user.firstname,
+        user.fullname,
         otpCollection.get("resetPassword")
       );
       if (!result) {

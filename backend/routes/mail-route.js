@@ -6,7 +6,7 @@ import { checkVerifyUser } from '../middleware/verifiedAuth.js'
 
  const emailRouter=Router()
 
-emailRouter.route('/sendmail').post(authentication,verifyUser,sendMail)
-emailRouter.route('/forgotpassword').post(authentication,checkVerifyUser,passwordResetOtp)
+emailRouter.route('/sendmail').post(sendMail)
+emailRouter.route('/forgotpassword').post(passwordResetOtp)
 
 export default emailRouter

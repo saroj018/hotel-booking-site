@@ -59,6 +59,7 @@ const OfferServices = () => {
     const { hotelDetails, setHotelDetails, setBtnDisable } = useContext(Context)
 
     const clickHandler = (text) => {
+        console.log(text);
         const result = hotelDetails.offerServices.find((item) => item === text)
         if (!result) {
             
@@ -83,7 +84,7 @@ const OfferServices = () => {
                 <div className='grid grid-cols-3 gap-3'>
                     {
                         servicesOffer.map((ele, index) => {
-                            return <div onClick={() => clickHandler(ele.name)} key={index + ele.name} className={`border-2 select-none cursor-pointer z-10 bg-white border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col ${hotelDetails.offerServices.find((item) => item === ele.name) ? 'bg-gray-500 text-white border-none' : ''}`}>
+                            return <div onClick={() => clickHandler(ele.name)} key={index + ele.name} className={`border-2 select-none cursor-pointer z-10 border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col ${hotelDetails.offerServices.find((item) => item == ele.name) ? 'bg-red-500 text-white border-none' : ''}`}>
                                 <span>{ele.icon}</span>
                                 <p className='text-2xl font-bold'>{ele.name}</p>
                             </div>

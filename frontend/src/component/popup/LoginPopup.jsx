@@ -11,7 +11,7 @@ import { user } from '../../validation/userValidation'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { Context } from '../../host/context/HotelDetailContext'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import ChangePasswordPopup from './ChangePasswordPopup'
 
 const LoginPopup = () => {
 
@@ -20,6 +20,8 @@ const LoginPopup = () => {
     const [isShow, setIsShow] = useState(false)
     const { isAuth, setIsAuth,setName } = useContext(Context)
     const navigate = useNavigate()
+    const[isOpen,setIsOpen]=useState(false)
+    const[emailPopup,setEmailPopup]=useState(false)
 
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(user),defaultValues:{email:'harry@gmail.com',password:'password'} })
 
@@ -38,7 +40,7 @@ const LoginPopup = () => {
         }
     }
     return (
-        <>
+        <div>
             <Button className={'rounded-full bg-pink-500 outline-none border-none'} onClick={() => setIsShow(true)}>Login</Button>
             <Popup lockScroll={true} open={isShow} onClose={() => setIsShow(false)} {...{ overlayStyle }}>
                 <div className=' border-2 w-[500px] bg-white p-4 rounded-md relative '>
@@ -51,6 +53,7 @@ const LoginPopup = () => {
                         <Lable>Password</Lable>
                         <Input {...register("password")} className={'border-2 rounded-md px-3 w-full border-pink-400'} type='password' />
                         <p className='text-red-500'>{errors?.password?.message}</p>
+                        <p onClick={()=>setIsOpen(true)} className='text-blue-500 cursor-pointer mt-3'>Forgot password</p>
                         <Button className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>Login</Button>
                         <p className='text-center text-xl'>Or</p>
                         <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Google <span></span></p>
@@ -58,7 +61,8 @@ const LoginPopup = () => {
                     </form>
                 </div>
             </Popup>
-        </>
+                        <ChangePasswordPopup isOpen={isOpen} setIsOpen={setIsOpen}/>
+        </div>
     )
 }
 

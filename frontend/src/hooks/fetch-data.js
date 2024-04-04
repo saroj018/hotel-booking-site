@@ -50,6 +50,7 @@ export const usePostFetch = async (
     }
     return result;
   } catch (error) {
+    console.log(error);
     toast.error(error.error);
   }
 };

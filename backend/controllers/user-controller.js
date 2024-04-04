@@ -139,6 +139,7 @@ export const loginUser = async (req, resp) => {
     }
 
     const comparePassword = await checkPassword(password, findUser.password);
+    console.log(comparePassword);
     if (!comparePassword) {
       return resp.json({ success: false, message: "Incorrect Password" });
     }
@@ -230,13 +231,18 @@ export const verifyUser = async (req, resp, next) => {
 
 export const resetPassword = async (req, resp) => {
   try {
-    const { resetPassword } = req.body;
+    let { resetPassword, email } = req.body;
+    console.log(email);
+    console.log(resetPassword);
+    if (!email) {
+      throw new Error("this email is not register");
+    }
     if (!resetPassword && resetPassword.length < 8) {
       throw new Error("invalid password");
     }
-
-    const result = await User.findByIdAndUpdate(
-      { _id: req.user._id },
+    resetPassword = await hashPassword(resetPassword);
+    const result = await User.findOneAndUpdate(
+      { email },
       { password: resetPassword },
       { new: true }
     );
