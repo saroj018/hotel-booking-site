@@ -7,7 +7,9 @@ const DiscountPage = () => {
     const{hotelDetails,setHotelDetails,setBtnDisable}=useContext(Context)
 
     const changeHandler=(e)=>{
-        setHotelDetails((prv)=>({...prv,discount:e.target.value}))
+        let discountPer=Number(e.target.value)
+        console.log(typeof discountPer);
+        setHotelDetails((prv)=>({...prv,discount:discountPer}))
     }
 
     useEffect(()=>{

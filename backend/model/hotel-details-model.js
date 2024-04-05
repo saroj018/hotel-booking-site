@@ -20,15 +20,15 @@ const hotelDetailsSchema=Schema({
     bookingType:commonOption,
     price:{
         adults:{
-            type:String,
+            type:Number,
             required:true
         },
         childrens:{
-            type:String,
+            type:Number,
             required:true
         },
         infants:{
-            type:String,
+            type:Number,
             required:true
         },
     },

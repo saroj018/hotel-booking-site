@@ -128,6 +128,7 @@ export const hotelDetailsController = async (req, resp) => {
       public_id: item.public_id,
     }));
     const uploadedBy = req.user._id;
+    console.log('price'>>price);
 
     const hotelDataOnDb = await hotelDetailsModel.create({
       uploadedBy,
@@ -316,7 +317,8 @@ export const filterHotels = async (req, resp) => {
     if (!filterHotels) {
       throw new Error("Please provide filterparams");
     }
-console.log(filterParams);
+    
+
     const result = await hotelDetailsModel.find({
       roomType: filterParams.place,
       aboutHome: filterParams.about,
@@ -325,10 +327,10 @@ console.log(filterParams);
       "customerNumber.bedroom": filterParams.BRB.Rooms,
       "price.adults": {
         $gte: filterParams.price.min,
-        $lte: filterParams.price.max,
-      },
+        $lte: filterParams.price.max
+      }
     });
-    console.log(result);
+    // console.log(result);
 
     if(!result){
       throw new Error("Hotel not found")
