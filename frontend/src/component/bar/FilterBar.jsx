@@ -4,7 +4,7 @@ import '../CSS/style.css'
 import FilterPopup from '../popup/FilterPopup'
 import { usePostFetch } from '../../hooks/fetch-data'
 
-const FilterBar = ({ setDetails }) => {
+const FilterBar = ({ setDetails,setTimeUp }) => {
 
     const filterOption = [
         {
@@ -42,12 +42,13 @@ const FilterBar = ({ setDetails }) => {
     ]
 
     const [house, setHouse] = useState('all')
-    console.log(house);
 
     const clickHandler = async (item) => {
+        setTimeUp(false)
         const result = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/houseType`, { type: item.toLocaleLowerCase() })
         setDetails(result.data)
         setHouse(item.toLocaleLowerCase())
+        
     }
     return (
         <div className='filterbar flex gap-5 px-2 mt-8 items-center justify-between sticky border-2 rounded-md  top-[17%] bg-white'>
@@ -63,7 +64,7 @@ const FilterBar = ({ setDetails }) => {
                     })
                 }
             </div>
-                <FilterPopup setDetails={setDetails} />
+                <FilterPopup setTimeUp={setTimeUp} setDetails={setDetails} />
 
         </div>
     )

@@ -17,6 +17,7 @@ const HotelDetailContext = ({ children }) => {
   const [isAuth, setIsAuth] = useState(localStorage.getItem('token'))
   const [photo, setPhoto] = useState([])
   const[verify,setVerify]=useState(false)
+  const[details,setDetails]=useState([])
 
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
@@ -68,7 +69,9 @@ const HotelDetailContext = ({ children }) => {
     hotelInformantion,
     setHotelInfo,
     verify,
-    setVerify
+    setVerify,
+    details,
+    setDetails
   }
 
   return (

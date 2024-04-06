@@ -9,7 +9,7 @@ import Button from '../common/Button';
 import { usePostFetch } from '../../hooks/fetch-data';
 
 
-const FilterPopup = ({setDetails}) => {
+const FilterPopup = ({setDetails,setTimeUp}) => {
 
   const inputNumber = [
     {
@@ -90,7 +90,7 @@ const FilterPopup = ({setDetails}) => {
   }
 
   const filterHandler = async () => {
-    console.log(filterParams);
+    setTimeUp(false)
     const result = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/filterhotels`, { filterParams })
     
     if(result.success){
@@ -98,6 +98,12 @@ const FilterPopup = ({setDetails}) => {
       setDetails(result.data)
     }
   }
+
+  const changeHandler=(e)=>{
+    let num=Number(e.target.value)
+setFilterParams((prv)=>({...prv,BRB:{...prv.BRB,[e.target.name]:Number(num)}}))
+  }
+
 
   return (
     <div>
@@ -145,7 +151,7 @@ const FilterPopup = ({setDetails}) => {
                 inputNumber.map((ele, index) => {
                   return <div key={index + ele.name}>
                     <p className='text-xl my-3 text-black font-bold'>{ele.name}</p>
-                    <Input min={0} value={filterParams?.BRB?.[ele.name]} readOnly className={'border-2 border-neutral-600 rounded-md p-2'} type={ele.type} />
+                    <Input onChange={changeHandler} name={ele.name} value={filterParams?.BRB?.[ele.name]} className={'border-2 border-neutral-600 rounded-md p-2'} type='text' />
                   </div>
                 })
               }

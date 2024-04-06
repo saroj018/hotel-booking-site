@@ -8,6 +8,7 @@ import {
   getHotelDetailsController,
   getSingleDetails,
   hotelDetailsController,
+  searchHotels,
 } from "../controllers/hotel-details-controller.js";
 import multer from "multer";
 import { authentication } from "../middleware/auth.js";
@@ -54,7 +55,8 @@ hotelDetailRoute
 hotelDetailRoute
   .route("/deletehoteldetails")
   .delete(authentication, checkVerifyUser, deleteHotelController);
-hotelDetailRoute.route("/:id").get(getSingleDetails);
+  hotelDetailRoute.route("/searchhotels").get(searchHotels);
+  hotelDetailRoute.route("/:id").get(getSingleDetails);
 hotelDetailRoute
   .route("/getsingledetails")
   .post(authentication, getDetailOfParticularDate);

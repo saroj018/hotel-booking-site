@@ -128,7 +128,7 @@ export const hotelDetailsController = async (req, resp) => {
       public_id: item.public_id,
     }));
     const uploadedBy = req.user._id;
-    console.log('price'>>price);
+    console.log("price" >> price);
 
     const hotelDataOnDb = await hotelDetailsModel.create({
       uploadedBy,
@@ -173,7 +173,7 @@ export const getHotelDetailsController = async (req, resp) => {
       uploadedBy: req.user._id,
     });
 
-    if (!hotelDetails || hotelDetails.length<1) {
+    if (!hotelDetails || hotelDetails.length < 1) {
       console.log(hotelDetails);
       return resp.json({
         success: false,
@@ -313,11 +313,11 @@ export const filterViaHouseType = async (req, resp) => {
 export const filterHotels = async (req, resp) => {
   try {
     const { filterParams } = req.body;
+    console.log('filter>>>>>>>>',filterParams);
 
     if (!filterHotels) {
       throw new Error("Please provide filterparams");
     }
-    
 
     const result = await hotelDetailsModel.find({
       roomType: filterParams.place,
@@ -325,18 +325,39 @@ export const filterHotels = async (req, resp) => {
       "customerNumber.bed": filterParams.BRB.Beds,
       "customerNumber.bathroom": filterParams.BRB.Bathrooms,
       "customerNumber.bedroom": filterParams.BRB.Rooms,
-      "price.adults": {
-        $gte: filterParams.price.min,
-        $lte: filterParams.price.max
-      }
+      // "price.adults": {
+      //   $gte: filterParams.price.min,
+      //   $lte: filterParams.price.max,
+      // },
     });
-    // console.log(result);
 
-    if(!result){
-      throw new Error("Hotel not found")
+    if (!result) {
+      throw new Error("Hotel not found");
     }
     return resp.json({ success: true, data: result });
   } catch (error) {
     return resp.json({ success: false, error: error.message });
+  }
+};
+
+export const searchHotels = async (req, resp) => {
+  try {
+    const { payload } = req.query;
+    if(payload==''){
+      let result=await hotelDetailsModel.find()
+      return resp.json({success:true,data:result})
+    }
+
+ const regex=new RegExp(payload,'i')
+ let result=await hotelDetailsModel.find({aboutHome:regex})
+
+    if (!result) {
+      throw new Error("hotel not found");
+    }
+
+    return resp.json({ success: true, data: result });
+  } catch (err) {
+    console.log(err);
+    resp.json({ success: false, error: err.message });
   }
 };
