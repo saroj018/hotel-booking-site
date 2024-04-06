@@ -5,22 +5,27 @@ import dayjs from 'dayjs'
 
 const MyTrip = () => {
     const [reserveInfo, setReserveInfo] = useState([])
+    const [refe, setRef] = useState(false)
     const reserveInfoData = async () => {
         let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/getreservehoteldetails`)
-        console.log(result);
         setReserveInfo(result.data)
     }
     useEffect(() => {
         reserveInfoData()
-    }, [])
+    }, [refe])
     return (
         <>
-            <h1 className='text-4xl font-black text-center my-3 underline text-red-500'>Wait for Approve</h1>
+            {
+                reserveInfo.length>0?
+                <h1 className='text-4xl font-black text-center my-3 underline text-red-500'>Your Trip</h1>
+            :
+            <h1 className='text-4xl font-black text-center my-3 underline text-red-500'>There is not any reserve</h1>
+            }
             <hr />
-            <div className='grid grid-cols-4 gap-5'>
+            <div className='grid grid-cols-4 gap-5 overflow-y-scroll'>
                 {
                     reserveInfo.length > 0 && reserveInfo?.map((item) => {
-                        return <Cards btn={'Cancel'} id={item?.hotel?._id} key={item?._id} trip={false} optional={false} heart={false} rating={'4.3/5'} price={'$120'} name={item?.hotel?.houseTitle.slice(0, 40) + '...'} imgDet={item?.hotel?.homeType} date={dayjs(item.checkIn).format('MM-DD') + ' to ' + dayjs(item.checkOut).format('MM-DD')} img={item?.hotel?.idOfImage[0].url} />
+                        return <Cards refe={refe} setRef={setRef} params={'mytrip'} removeId={item._id} btn={'Cancel'} id={item?.hotel?._id} key={item?._id} trip={false} optional={false} heart={false} rating={'4.3/5'} price={'$120'} name={item?.hotel?.houseTitle.slice(0, 40) + '...'} imgDet={item?.hotel?.homeType} date={dayjs(item.checkIn).format('MM-DD') + ' to ' + dayjs(item.checkOut).format('MM-DD')} img={item?.hotel?.idOfImage[0].url} />
                     })
                 }
             </div>

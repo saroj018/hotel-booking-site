@@ -4,7 +4,7 @@ import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'
 import Option from '../../component/common/Option'
 import PriceBox from '../../component/PriceBox'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams,useNavigate } from 'react-router-dom'
 import { Space, DatePicker } from 'antd'
 import ListPopup from '../../component/popup/ListPopup'
 import dayjs from 'dayjs'
@@ -46,6 +46,7 @@ const PayPrice = () => {
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
     const { hotelData } = useContext(Context)
     const { id } = useParams()
+    const navigate=useNavigate()
 
     const getDates = async () => {
         let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
@@ -118,6 +119,9 @@ const PayPrice = () => {
         let res=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
         console.log(res);
         setShow(false)
+        if(res.success){
+            navigate('/mytrips')
+        }
     }
 
     useEffect(() => {

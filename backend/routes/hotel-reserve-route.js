@@ -1,5 +1,5 @@
 import express from 'express'
-import {  approveReserve, getReservedHotelDetails, hotelReserveController, totalReservedHotel } from '../controllers/hotel-reserve-controller.js'
+import {  approveReserve, getReservedHotelDetails, hotelReserveController, reserveCancel, totalReservedHotel } from '../controllers/hotel-reserve-controller.js'
 import { authentication } from '../middleware/auth.js'
 import { checkVerifyUser } from '../middleware/verifiedAuth.js'
 
@@ -9,5 +9,6 @@ hotelReserveRouter.route('/addreserve').post(authentication,hotelReserveControll
 hotelReserveRouter.route('/getreservehoteldetails').get(authentication,getReservedHotelDetails)
 hotelReserveRouter.route('/totalreservehotel').get(authentication,totalReservedHotel)
 hotelReserveRouter.route('/approve').post(authentication,checkVerifyUser,approveReserve)
+hotelReserveRouter.route('/reservecancel/:id').delete(reserveCancel)
 
 export default hotelReserveRouter

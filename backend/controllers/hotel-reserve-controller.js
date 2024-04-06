@@ -50,7 +50,7 @@ export const hotelReserveController = async (req, resp) => {
       payMethod,
       payVia,
       hotel,
-      dateList
+      dateList,
     } = req.body;
 
     console.log(dateList);
@@ -67,13 +67,17 @@ export const hotelReserveController = async (req, resp) => {
     const reservedBy = req.user._id;
 
     const currentDate = new Date();
-    
-    const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: true })
-    
-    const reserveDate=currentDate.toISOString().slice(0,10)
-    const reserveTime=currentTime
 
-    const reserveType=await hotelDetailsModel.findOne({_id:hotel}).select('bookingType')
+    const currentTime = currentDate.toLocaleTimeString("en-US", {
+      hour12: true,
+    });
+
+    const reserveDate = currentDate.toISOString().slice(0, 10);
+    const reserveTime = currentTime;
+
+    const reserveType = await hotelDetailsModel
+      .findOne({ _id: hotel })
+      .select("bookingType");
     console.log(reserveType);
     const dbResult = await hotelReserveModel.create({
       checkIn,
@@ -88,7 +92,7 @@ export const hotelReserveController = async (req, resp) => {
       reserveDate,
       reserveTime,
       dateList,
-      reserveType:reserveType.bookingType
+      reserveType: reserveType.bookingType,
     });
 
     if (!dbResult) {
@@ -110,10 +114,12 @@ export const getReservedHotelDetails = async (req, resp) => {
   try {
     const { id } = req.user;
     console.log(id);
-    const result = await hotelReserveModel.find({ reservedBy: id }).populate([
-      { path: "hotel" },
-      { path: "reservedBy", select: "-password" },
-    ]);
+    const result = await hotelReserveModel
+      .find({ reservedBy: id })
+      .populate([
+        { path: "hotel" },
+        { path: "reservedBy", select: "-password" },
+      ]);
 
     if (!result) {
       throw new Error("You don't have any reserved");
@@ -133,17 +139,18 @@ export const totalReservedHotel = async (req, resp) => {
     if (!myHotel) {
       throw new Error("You haven't any hotel register");
     }
-    const myReserved = await hotelReserveModel.find({
-      hotel: { $in: myHotel },
-    }).populate([
-      {path:'reservedBy',select:'fullname'},
-      {path:'hotel',select:-'_id'}
-    ]);
+    const myReserved = await hotelReserveModel
+      .find({
+        hotel: { $in: myHotel },
+      })
+      .populate([
+        { path: "reservedBy", select: "fullname" },
+        { path: "hotel", select: -"_id" },
+      ]);
 
     if (!myReserved) {
       throw new Error("You haven't any reserved hotel");
     }
-
 
     return resp.json({ success: true, data: myReserved });
   } catch (error) {
@@ -151,23 +158,43 @@ export const totalReservedHotel = async (req, resp) => {
   }
 };
 
-
-
-export const approveReserve=async(req,resp)=>{
+export const approveReserve = async (req, resp) => {
   try {
-    const {id}=req.body
+    const { id } = req.body;
 
-  if(!id){
-    throw new Error("Please provide id")
-  }
+    if (!id) {
+      throw new Error("Please provide id");
+    }
 
-  
-  const result=await hotelReserveModel.findByIdAndUpdate({_id:id},{reserveType:'instant'},{new:true})
+    const result = await hotelReserveModel.findByIdAndUpdate(
+      { _id: id },
+      { reserveType: "instant" },
+      { new: true }
+    );
 
-
-  return resp.json({success:true,updated:result})
+    return resp.json({ success: true, updated: result });
   } catch (error) {
     console.log(error.message);
   }
-}
+};
 
+export const reserveCancel = async (req, resp) => {
+  try {
+    const { id } = req.params;
+    console.log('id>>>>',id);
+
+    if (!id) {
+      throw new Error("Please provide id");
+    }
+
+    const result = await hotelReserveModel.findByIdAndDelete(id);
+
+    if (!result) {
+      throw new Error("unabale to cancel reservation");
+    }
+
+    return resp.json({ success: true, message: "Reserve cancel successfully" });
+  } catch (err) {
+    resp.json({ success: false, error: err.message });
+  }
+};

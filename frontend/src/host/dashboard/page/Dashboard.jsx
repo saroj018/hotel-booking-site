@@ -13,13 +13,13 @@ const Dashboard = () => {
 
   const itemList = [
     {
-      name: `All reservations (${details?.length})`
+      name: `All reservations (${details?.length || 0})`
     },
     {
-      name: `Currently Hosting (${details?.filter((ele)=>ele.reserveType.includes('instant')).length})`
+      name: `Currently Hosting (${details?.filter((ele)=>ele.reserveType.includes('instant')).length || 0})`
     },
     {
-      name: `Wait for Approval (${details?.filter((ele)=>ele.reserveType.includes('approve')).length})`
+      name: `Wait for Approval (${details?.filter((ele)=>ele.reserveType.includes('approve')).length || 0})`
     },
   ]
 
@@ -123,7 +123,7 @@ const Dashboard = () => {
               </thead>
               <tbody className='border-2 border-gray-500 text-center uppercase'>
                 {
-                  details.filter((ele)=>ele.reserveType.includes('instant'))?.map((item) => {
+                  details?.filter((ele)=>ele.reserveType.includes('instant'))?.map((item) => {
                     return <tr key={item._id} className='border-2 border-gray-500'>
                       <td className='border-2 border-gray-500 w-[10%] '><img className='p-1 rounded-md' src={item.hotel.idOfImage[0].url} alt="" /></td>
                       <td className='border-2 border-gray-500'>{item.hotel.houseTitle.slice(0, 35)}</td>
@@ -166,7 +166,7 @@ const Dashboard = () => {
               </thead>
               <tbody className='border-2 border-gray-500 text-center uppercase'>
                 {
-                  details.filter((ele)=>ele.reserveType.includes('approve'))?.map((item) => {
+                  details?.filter((ele)=>ele.reserveType.includes('approve'))?.map((item) => {
                     return <tr key={item._id} className='border-2 border-gray-500'>
                       <td className='border-2 border-gray-500 w-[10%] '><img className='p-1 rounded-md' src={item.hotel.idOfImage[0].url} alt="" /></td>
                       <td className='border-2 border-gray-500'>{item.hotel.houseTitle.slice(0, 35)}</td>

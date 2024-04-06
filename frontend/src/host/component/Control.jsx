@@ -6,12 +6,13 @@ const Control = ({id,setId}) => {
     const [hotelDetails, setHotelDetails] = useState()
 
 
+    const getHotelDetails = async () => {
+        const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/gethoteldetails`)
+        setId(result?.detals?.[0]?._id)
+        setHotelDetails(result.detals)
+        console.log('damm>>>',result);
+    }
     useEffect(()=>{
-        const getHotelDetails = async () => {
-            const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/gethoteldetails`)
-            setId(result?.detals?.[0]?._id)
-            setHotelDetails(result.detals)
-        }
         getHotelDetails()
     },[])
 

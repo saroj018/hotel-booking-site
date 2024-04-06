@@ -2,9 +2,9 @@ import { BookHeart, Heart } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './common/Button'
-import { useDeleteFetch, usePostFetch } from '../hooks/fetch-data'
+import { useDeleteFetch, useGetFetch, usePostFetch } from '../hooks/fetch-data'
 
-const Cards = ({ id, removeId, btn, name, heart = true, imgDet, date, rating = '4.2/5', price, img, optional = true, setRef, refe }) => {
+const Cards = ({ id, removeId, btn,params, name, heart = true, imgDet, date, rating = '4.2/5', price, img, optional = true, setRef, refe }) => {
   const [resp, setResp] = useState(false)
   const clickHandler = async (e, ids) => {
     e.preventDefault()
@@ -14,8 +14,14 @@ const Cards = ({ id, removeId, btn, name, heart = true, imgDet, date, rating = '
 
   const removeHandler = async (e, id) => {
     e.preventDefault()
-    await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/removewishlist`, id)
-    setRef(!refe)
+    if(params=='wishlist'){
+
+      await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/wishlist/removewishlist`, id)
+      setRef(!refe)
+    }else{
+      await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/reservecancel/${id}`)
+      setRef(!refe)
+    }
   }
   return (
     <div className='mt-8 relative '>
