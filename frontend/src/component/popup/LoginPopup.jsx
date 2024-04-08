@@ -4,7 +4,7 @@ import Button from '../common/Button'
 import Popup from 'reactjs-popup'
 import Lable from '../common/Lable'
 import { X } from 'lucide-react'
-import { usePostFetch } from '../../hooks/fetch-data'
+import { useGetFetch, usePostFetch } from '../../hooks/fetch-data'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { user } from '../../validation/userValidation'
@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { Context } from '../../host/context/HotelDetailContext'
 import ChangePasswordPopup from './ChangePasswordPopup'
+
 
 const LoginPopup = () => {
 
@@ -39,6 +40,17 @@ const LoginPopup = () => {
             navigate('/')
         }
     }
+
+    const googleLoginHandler=async()=>{
+        const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/loginwithgoogle`)
+        console.log(result);
+        window.location.href='http://localhost:4000/api/user/loginwithgoogle'
+    }
+
+    const facebookLoginHandler=()=>{
+        
+    }
+
     return (
         <div>
             <Button className={'rounded-full bg-pink-500 outline-none border-none'} onClick={() => setIsShow(true)}>Login</Button>
@@ -56,8 +68,8 @@ const LoginPopup = () => {
                         <p onClick={()=>setIsOpen(true)} className='text-blue-500 cursor-pointer mt-3'>Forgot password</p>
                         <Button className={'w-full bg-pink-400 my-4 border-none outline-none py-3 rounded-full'}>Login</Button>
                         <p className='text-center text-xl'>Or</p>
-                        <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Google <span></span></p>
-                        <p className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Facebook</p>
+                        <p onClick={googleLoginHandler} className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Google <span></span></p>
+                        <p onClick={facebookLoginHandler} className='w-full rounded-full text-center py-4 my-4 font-bold cursor-pointer text-black border-2 border-neutral-500 text-xl'>Login with Facebook</p>
                     </form>
                 </div>
             </Popup>

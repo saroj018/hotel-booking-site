@@ -21,7 +21,7 @@ const WishList = () => {
     <div>
       <h1 className='text-4xl font-bold my-7 text-center'>WishList</h1>
       {
-        wishList.length<1 ?
+        wishList?.length<1 ?
         <h1 className='text-center text-4xl text-red-500 font-bold mt-10'>There is not any wishList</h1>:
         <div className='grid grid-cols-4 gap-5'>
         {

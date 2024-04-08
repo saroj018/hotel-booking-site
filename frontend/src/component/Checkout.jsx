@@ -97,7 +97,7 @@ const Checkout = ({ className, dateCollection }) => {
 
     return (
         <div className={twMerge('w-[500px] rounded-xl shadow-xl p-5 border-2 relative', className)}>
-            <h1 className='text-2xl font-bold'>33 <span>per night</span></h1>
+            <h1 className='text-2xl font-bold'>$ {hotelData?.price.adults} <span>per night</span></h1>
             <div className=' my-3'>
                 <Space className='w-full my-1' direction="vertical" size={100}>
                     <RangePicker disabledDate={disableDateHandler} format={'YYYY-MM-DD'} defaultValue={[dayjs(), dayjs().add(1, 'd')]} onChange={dateHandler} popupStyle={{ fontSize: '18px' }} size='large' className='w-full text-3xl cursor-pointer outline-none' />

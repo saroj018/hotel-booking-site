@@ -69,11 +69,9 @@ const hotelDetailsValidation = z.object({
 
 export const getAllHotelController = async (req, resp) => {
   try {
-    const { limitData } = req.query;
-    const { skipData } = req.query;
+    const { limitData,skipData } = req.query;
 
     const result = await hotelDetailsModel.find().skip(skipData).limit(limitData);
-    console.log('len>>>>',result.length);
     if (!result) {
       throw new Error("Hotel not found");
     }

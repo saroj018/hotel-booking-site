@@ -254,3 +254,4 @@ export const resetPassword = async (req, resp) => {
     return resp.json({ success: false, error: error.message });
   }
 };
+

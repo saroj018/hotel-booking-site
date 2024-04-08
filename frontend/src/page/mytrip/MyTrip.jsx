@@ -16,7 +16,7 @@ const MyTrip = () => {
     return (
         <>
             {
-                reserveInfo.length>0?
+                reserveInfo?.length>0?
                 <h1 className='text-4xl font-black text-center my-3 underline text-red-500'>Your Trip</h1>
             :
             <h1 className='text-4xl font-black text-center my-3 underline text-red-500'>There is not any reserve</h1>
@@ -24,7 +24,7 @@ const MyTrip = () => {
             <hr />
             <div className='grid grid-cols-4 gap-5 overflow-y-scroll'>
                 {
-                    reserveInfo.length > 0 && reserveInfo?.map((item) => {
+                    reserveInfo?.length > 0 && reserveInfo?.map((item) => {
                         return <Cards refe={refe} setRef={setRef} params={'mytrip'} removeId={item._id} btn={'Cancel'} id={item?.hotel?._id} key={item?._id} trip={false} optional={false} heart={false} rating={'4.3/5'} price={'$120'} name={item?.hotel?.houseTitle.slice(0, 40) + '...'} imgDet={item?.hotel?.homeType} date={dayjs(item.checkIn).format('MM-DD') + ' to ' + dayjs(item.checkOut).format('MM-DD')} img={item?.hotel?.idOfImage[0].url} />
                     })
                 }

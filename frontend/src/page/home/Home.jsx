@@ -12,7 +12,6 @@ import { useDebouce } from '../../hooks/useDebounce'
 import { Context } from '../../host/context/HotelDetailContext'
 
 const Home = () => {
-
   const [search, setSearch] = useState('')
   const [timeUp, setTimeUp] = useState(false)
   const { details, setDetails } = useContext(Context)
