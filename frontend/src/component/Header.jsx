@@ -57,9 +57,9 @@ const Header = ({ className, navlinks, accountSwitch, icon, profileItem, extraIt
     }
 
     const apiCall = async () => {
-        setTimeUp(false)
-        let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/searchhotels/?payload=${search}`)
-        setDetails(result.data)
+        // setTimeUp(false)
+        // let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/searchhotels/?payload=${search}`)
+        // setDetails(result.data)
     
       }
     

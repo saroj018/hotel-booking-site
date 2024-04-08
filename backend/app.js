@@ -14,6 +14,7 @@ dotenv.config({path:'./env'})
 app.use(cors({credentials:true,origin:'*'}))
 app.use(cookieParser())
 
+
 app.use('/api/user',userRouter)
 app.use('/api/hotel',hotelDetailRoute)
 app.use('/api/reserve',hotelReserveRouter)

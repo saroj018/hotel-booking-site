@@ -28,9 +28,6 @@ const Layout = () => {
         name:'Airbnb Your Home',
         url:'/host'
     },
-    {
-        name:'LogOut'
-    }
 ]
 
   const navlinks = [

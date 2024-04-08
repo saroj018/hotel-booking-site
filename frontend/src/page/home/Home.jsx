@@ -15,25 +15,49 @@ const Home = () => {
 
   const [search, setSearch] = useState('')
   const [timeUp, setTimeUp] = useState(false)
-  const{details,setDetails}=useContext(Context)
+  const { details, setDetails } = useContext(Context)
+  const [skip, setSkip] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const debounce = useDebouce(search, 1000)
+  const [count, setCount] = useState(0)
 
   const hotelDetails = async () => {
-    const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/getallhotel`)
-    setDetails(result.details)
+    setLoading(true)
+    const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/getallhotel/?limitData=${8}&&skipData=${skip}`)
+    setLoading(false)
+    setDetails((prv) => [...prv, ...result.details])
 
   }
 
   useEffect(() => {
     hotelDetails()
-  }, [])
+  }, [skip])
 
 
   const apiCall = async () => {
-    setTimeUp(false)
-    let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/searchhotels/?payload=${search}`)
-    setDetails(result.data)
+    setCount(count + 1)
+    if (count > 0) {
+      setTimeUp(false)
+      let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/searchhotels/?payload=${search}`)
+      setDetails(result.data)
+    }
 
   }
+
+
+  const scrollHandler = () => {
+    if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+
+      setSkip((prv) => prv + 8)
+    }
+  }
+
+  useEffect(() => {
+    document.documentElement.scrollTop = 0
+    window.addEventListener('scroll', scrollHandler)
+
+    return () => window.removeEventListener('scroll', scrollHandler)
+  }, [])
 
   useEffect(() => {
     let id
@@ -47,13 +71,9 @@ const Home = () => {
   }, [details])
 
   useEffect(() => {
-   
-    let id = setTimeout(() => {
-      apiCall()
-    }, 1000);
+    apiCall()
 
-    return () => clearTimeout(id)
-  }, [search])
+  }, [debounce])
 
   return (
     <div>
@@ -84,7 +104,11 @@ const Home = () => {
                   return <Cards key={item._id} id={item._id} price={item.price.adults} name={item.houseTitle.slice(0, 40) + '...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item?.idOfImage?.[0]?.url} />
                 })
               }
+
             </div>
+      }
+      {
+        loading ? <h1 className='text-red-500 text-center text-5xl font-bold my-7'>Loading......</h1> : null
       }
     </div>
 

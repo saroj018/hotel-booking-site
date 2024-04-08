@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 
-export const useDebouce = (fun, base, delay) => {
-  const [debounceResult, setDebounceResult] = useState();
-
+export const useDebouce = (state, delay) => {
+  const [debounceResult, setDebounceResult] = useState(state);
   useEffect(() => {
-    let id = setTimeout(async() => {
-      let result = await fun();
-      setDebounceResult(result);
+    let id = setTimeout(() => {
+      setDebounceResult(state);
     }, delay);
 
     return () => clearTimeout(id);
-  }, [base]);
+  },[state]);
 
-  return debounceResult;
+  return debounceResult
 };

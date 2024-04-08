@@ -69,7 +69,11 @@ const hotelDetailsValidation = z.object({
 
 export const getAllHotelController = async (req, resp) => {
   try {
-    const result = await hotelDetailsModel.find();
+    const { limitData } = req.query;
+    const { skipData } = req.query;
+
+    const result = await hotelDetailsModel.find().skip(skipData).limit(limitData);
+    console.log('len>>>>',result.length);
     if (!result) {
       throw new Error("Hotel not found");
     }
@@ -128,7 +132,7 @@ export const hotelDetailsController = async (req, resp) => {
       public_id: item.public_id,
     }));
     const uploadedBy = req.user._id;
-    console.log("price" >> price);
+    // console.log("price" >> price);
 
     const hotelDataOnDb = await hotelDetailsModel.create({
       uploadedBy,
@@ -313,7 +317,7 @@ export const filterViaHouseType = async (req, resp) => {
 export const filterHotels = async (req, resp) => {
   try {
     const { filterParams } = req.body;
-    console.log('filter>>>>>>>>',filterParams);
+    console.log("filter>>>>>>>>", filterParams);
 
     if (!filterHotels) {
       throw new Error("Please provide filterparams");
@@ -343,13 +347,13 @@ export const filterHotels = async (req, resp) => {
 export const searchHotels = async (req, resp) => {
   try {
     const { payload } = req.query;
-    if(payload==''){
-      let result=await hotelDetailsModel.find()
-      return resp.json({success:true,data:result})
+    if (payload == "") {
+      let result = await hotelDetailsModel.find();
+      return resp.json({ success: true, data: result });
     }
 
- const regex=new RegExp(payload,'i')
- let result=await hotelDetailsModel.find({aboutHome:regex})
+    const regex = new RegExp(payload, "i");
+    let result = await hotelDetailsModel.find({ aboutHome: regex });
 
     if (!result) {
       throw new Error("hotel not found");
@@ -361,3 +365,4 @@ export const searchHotels = async (req, resp) => {
     resp.json({ success: false, error: err.message });
   }
 };
+
