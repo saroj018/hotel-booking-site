@@ -24,7 +24,7 @@ const Home = () => {
     setLoading(true)
     const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/getallhotel/?limitData=${8}&&skipData=${skip}`)
     setLoading(false)
-    setDetails((prv) => [...prv, ...result.details])
+    setDetails((prv) => [...prv, ...result?.details])
 
   }
 
