@@ -30,27 +30,10 @@ const Layout = () => {
     },
 ]
 
-  const navlinks = [
-    {
-      title: 'Stays',
-      url: ''
-    },
-    {
-      title: 'Experinces',
-      url: ''
-    },
-    {
-      title: 'Online Experinces',
-      url: ''
-    },
-    {
-      title: 'Dashboard',
-      url: '/host/dashboard'
-    },
-  ]
+ 
   return (
     <div>
-      <Header profileItem={profileItem} profilePopup={<ProfilePopup/>} navlinks={navlinks} accountSwitch={'Airbnb Your Home'} icon={<Globe size={24}/>} />
+      <Header profileItem={profileItem} profilePopup={<ProfilePopup/>} />
       <main className='bg-white px-10'>
         <Outlet />
       </main>

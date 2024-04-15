@@ -21,8 +21,8 @@ const DiscountPage = () => {
        <>
         <div className='w-1/2 mx-auto'>
             <h1 className='text-center text-4xl font-bold'>Add discounts</h1>
-            <p className='text-xl text-center my-4'>Help your place stand out to get booked faster and earn your first reviews.</p>
-            <div className='mt-10'>
+            <p className='text-xl text-center my-2'>Help your place stand out to get booked faster and earn your first reviews.</p>
+            <div className='mt-5'>
                 <div className='flex cursor-pointer items-center justify-between border-2 border-neutral-300 rounded-md p-4 bg-neutral-100'>
                     <div className='flex items-center gap-6'>
                         <p className='text-2xl'>40%</p>

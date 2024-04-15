@@ -35,7 +35,7 @@ const HotelDetails = () => {
     {count===12 && <DiscountPage/>}
     {count===13 && <ReadyToSend/>}
     {count===14 && <FinalPage   />}
-      <div className='footer bg-red-500 flex justify-between items-center p-7 h-[80px] top-[90%] w-full fixed left-0  -z-1'>
+      <div className=' flex justify-between items-center p-7 h-[80px] top-[90%] w-full fixed left-0  -z-1'>
         {count>1 && <Button  className={`text-2xl py-0`} onClick={() => setCount(count-1)}> Back</Button>}
         {count<13 && <Button disabled={btnDisable}  className={`text-2xl py-0 ${btnDisable ? 'cursor-not-allowed':''}`} onClick={() => (setCount(count+1),setBtnDisable(true))}>Next</Button>}
       </div>

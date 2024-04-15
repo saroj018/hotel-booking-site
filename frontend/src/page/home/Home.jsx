@@ -23,6 +23,7 @@ const Home = () => {
   const hotelDetails = async () => {
     setLoading(true)
     const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/getallhotel/?limitData=${8}&&skipData=${skip}`)
+    console.log(result);
     setLoading(false)
     setDetails((prv) => [...prv, ...result?.details])
 
@@ -58,22 +59,27 @@ const Home = () => {
     return () => window.removeEventListener('scroll', scrollHandler)
   }, [])
 
-  useEffect(() => {
-    let id
-    if (details.length < 1) {
-      id = setTimeout(() => {
-        setTimeUp(true)
-      }, 1000);
-
-      return () => clearTimeout(id)
-    }
-  }, [details])
-
+  
   useEffect(() => {
     apiCall()
-
+    
   }, [debounce])
+  
+  useEffect(() => {
+    setTimeUp(false)
+    let id
+      id = setTimeout(() => {
+        console.log(details.length);
+        if(details?.length<1){
 
+          setTimeUp(true)
+        }
+      }, 2000);
+
+      return () => clearTimeout(id)
+  }, [details])
+
+  // console.log(timeUp);
   return (
     <div>
       <div className='w-fit mx-auto my-3 relative'>
@@ -100,7 +106,7 @@ const Home = () => {
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 '>
               {
                 details?.map((item, index) => {
-                  return <Cards key={item._id} id={item._id} price={item.price.adults} name={item.houseTitle.slice(0, 40) + '...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item?.idOfImage?.[0]?.url} />
+                  return <Cards key={uuid()} id={item._id} price={item.price.adults} name={item.houseTitle.slice(0, 40) + '...'} imgDet={item.aboutHome} date={'14th April-28 May'} img={item?.idOfImage?.[0]?.url} />
                 })
               }
 

@@ -51,7 +51,7 @@ const FilterBar = ({ setDetails,setTimeUp }) => {
         
     }
     return (
-        <div className='filterbar flex gap-5 px-2 mt-8 items-center justify-between sticky border-2 rounded-md  top-[17%] bg-white'>
+        <div className='filterbar flex gap-5 px-2 items-center justify-between sticky border-2 rounded-md  top-[15%] bg-white'>
             <div className='flex gap-2 rounded-xl cursor-pointer max-w-[85%]  overflow-x-scroll px-5'>
                 {
                     filterOption.map((item, index) => {

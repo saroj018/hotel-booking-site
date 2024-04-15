@@ -4,7 +4,7 @@ import Input from '../../component/common/Input'
 import Select from '../../component/common/Select'
 import Option from '../../component/common/Option'
 import PriceBox from '../../component/PriceBox'
-import { useParams, useSearchParams,useNavigate } from 'react-router-dom'
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { Space, DatePicker } from 'antd'
 import ListPopup from '../../component/popup/ListPopup'
 import dayjs from 'dayjs'
@@ -14,6 +14,7 @@ import { XCircle } from 'lucide-react'
 import { Context } from '../../host/context/HotelDetailContext'
 import { useDateListMaker } from '../../hooks/useDateListMaker'
 import { toast } from 'react-toastify'
+import { nightCalculator } from '../../component/utlils/nightCalculator'
 
 const PayPrice = () => {
     const [datePicker, setDatePicker] = useState(false)
@@ -31,7 +32,8 @@ const PayPrice = () => {
         payMethod: '',
         payVia: '',
         hotel: '',
-        dateList: []
+        dateList: [],
+        price:0
     })
     const [searchParams, setSearchParams] = useSearchParams()
     const [reservedDateList, setReservedDateList] = useState()
@@ -46,7 +48,9 @@ const PayPrice = () => {
     const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
     const { hotelData } = useContext(Context)
     const { id } = useParams()
-    const navigate=useNavigate()
+    const navigate = useNavigate()
+    const totalNight = nightCalculator([checkIn, checkOut])
+const totalPrice = (Adults * hotelData?.price?.adults) * totalNight + (Children * hotelData?.price?.childrens) * totalNight + (Infants * hotelData?.price?.infants) * totalNight
 
     const getDates = async () => {
         let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/${id}`)
@@ -81,7 +85,7 @@ const PayPrice = () => {
         setPaymentOption(e.target.value)
     }
 
-    const reserveHandler = () => {
+    function reserveDetails() {
         let startingDate = searchParams.get('checkIn')
         let endingDate = searchParams.get('checkOut')
         const dates = useDateListMaker(startingDate, endingDate)
@@ -97,6 +101,30 @@ const PayPrice = () => {
             return
         }
         setShow(true)
+        
+    }
+    const sendDataHandler = async () => {
+        let res = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
+        console.log(res);
+        return res.details._id
+    }
+
+    const paymentInitate = async () => {
+        reserveDetails()
+        let reserveId=await sendDataHandler()
+        setShow(false)
+        console.log(reserveInfo);
+        const result = await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/payment`,{...reserveInfo,reserveId})
+        console.log(result);
+        console.log(result.success);
+
+        if(result?.data?.payment_url){
+
+            window.location.href=result?.data?.payment_url
+        }
+    }
+
+    useEffect(()=>{
         setReserveInfo({
             checkIn,
             checkOut,
@@ -105,24 +133,14 @@ const PayPrice = () => {
             Infants,
             payMethod: payment,
             payVia: paymentOption,
-            hotel: hotelData._id,
-            dateList: dateCollection
+            hotel: hotelData?._id,
+            dateList: dateCollection,
+            price:totalPrice,
         })
+    },[show])
 
 
-    }
-
-
-    const sendDataHandler = async () => {
-        console.log(reserveInfo);
-
-        let res=await usePostFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/addreserve`, reserveInfo)
-        console.log(res);
-        setShow(false)
-        if(res.success){
-            navigate('/mytrips')
-        }
-    }
+   
 
     useEffect(() => {
         getDates()
@@ -200,15 +218,15 @@ const PayPrice = () => {
                         </div>
                     </div>
                     <div>
-                        <Select onChange={paymentOptionHandler}  className={'w-full h-14 rounded-md px-6 text-2xl'}>
+                        <Select onChange={paymentOptionHandler} className={'w-full h-14 rounded-md px-6 text-2xl'}>
                             <Option name={'paymentoption'} value="" >Select Payment Method</Option>
-                            <Option name={'paymentoption'} value={'esewa'}>Esewa</Option>
+                            {/* <Option name={'paymentoption'} value={'esewa'}>Esewa</Option> */}
                             <Option name={'paymentoption'} value={'khalti'}>Khalti</Option>
-                            <Option name={'paymentoption'} value={'imepay'}>IME Pay</Option>
-                            <Option name={'paymentoption'} value={'mastercard'}>Mastercard</Option>
+                            {/* <Option name={'paymentoption'} value={'imepay'}>IME Pay</Option>
+                            <Option name={'paymentoption'} value={'mastercard'}>Mastercard</Option> */}
                         </Select>
                     </div>
-                    <Button onClick={reserveHandler} className={'bg-[#E00B41] border-none outline-none py-5 px-14 my-7 float-right'}>Confirm and Pay</Button>
+                    <Button onClick={()=>setShow(true)} className={'bg-[#E00B41] border-none outline-none py-5 px-14 my-7 float-right'}>Confirm and Pay</Button>
                 </div>
             </div>
             <PriceBox />
@@ -219,7 +237,7 @@ const PayPrice = () => {
                     <h1 className='text-center text-4xl font-bold '>Are you sure?</h1>
                     <h1 className='text-xl text-center my-4 font-extrabold text-red-500'>View your reserve info from Trips page</h1>
                     <div className='flex h-[23%] items-end gap-x-3 justify-between'>
-                        <Button onClick={sendDataHandler} className={'w-[200px] bg-red-500 border-none'}>Yes</Button>
+                        <Button onClick={paymentInitate} className={'w-[200px] bg-red-500 border-none'}>Yes</Button>
                         <Button onClick={() => setShow(false)} className={'w-[200px] bg-green-500 border-none'}>No</Button>
                     </div>
                 </div>

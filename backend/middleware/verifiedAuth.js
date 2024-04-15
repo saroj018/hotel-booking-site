@@ -3,7 +3,7 @@ import { userVerifyModel } from "../model/user-verify-model.js";
 export const checkVerifyUser = async (req, resp, next) => {
   try {
     const user = await userVerifyModel.findOne({ logindetails: req.user._id });
-    console.log(user);
+    
     if (user) {
       return next();
     }

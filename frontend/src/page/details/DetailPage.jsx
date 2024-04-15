@@ -110,7 +110,7 @@ const DetailPage = () => {
 
           <div className='mt-6 w-1/2 border-2 rounded-md shadow-sm p-5'>
         <p className='text-xl'>{details?.description?.slice(0,300)+'...'}</p>
-        <AboutPopup/>
+        <AboutPopup details={details}/>
       </div>
         </div>
         <Checkout dateCollection={dateCollection} className={'float-right sticky '} />

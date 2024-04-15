@@ -68,7 +68,6 @@ const Listing = () => {
                 <Button onClick={() => navigate('/host/hoteldetails')}>+ Create Listing</Button>
             </div>
             {state && <div className='w-fit mx-auto flex'>
-                <p className='border-2 px-8 py-2 border-neutral-600 rounded-full text-lg mx-2 cursor-pointer'>Edit</p>
                 <p onClick={deleteHandler} className='border-2 px-8 py-2 border-neutral-600 rounded-full text-lg mx-2 cursor-pointer'>Delete</p>
             </div>}
             <div className={'overflow-scroll max-h-[600px]'}>

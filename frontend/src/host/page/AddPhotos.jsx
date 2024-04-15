@@ -55,9 +55,9 @@ const AddPhotos = () => {
     return (
         <>
             <div className=' w-full'>
-                <div className='my-16'>
-                    <h1 className='text-4xl font-bold text-center mb-5'>Add some photos of your house</h1>
-                    <p className='text-xl font-bold text-center'>You'll need 5 photos to get started. You can add more or make changes later.</p>
+                <div className='my-6'>
+                    <h1 className='text-4xl font-bold text-center'>Add some photos of your house</h1>
+                    <p className='text-xl font-bold text-center my-4'>You'll need 5 photos to get started. You can add more or make changes later.</p>
                 </div>
                 <div onClick={() => inputFile.current.click()} className='border-2 border-dotted border-neutral-800 rounded-md w-1/2 mx-auto text-center p-5 h-[400px] cursor-pointer'>
                     <ImagePlus strokeWidth={1} size={100} className='mx-auto' />

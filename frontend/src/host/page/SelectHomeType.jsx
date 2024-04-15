@@ -58,12 +58,12 @@ const SelectHomeType = () => {
   return (
     <>
         <h1 className='text-center text-4xl font-bold my-8'>Which of these best describes your place?</h1>
-        <div className='grid grid-cols-3 w-[50%] gap-5 mx-auto'>
+        <div className='grid grid-cols-3 w-[50%] gap-5 mx-auto '>
             {
                 homeTypes.map((ele,index)=>{
-                    return <div  onClick={()=>clickHandler(ele.name.toLocaleLowerCase())} key={index+ele.name} className={`p-4 border-2 border-neutral-600 cursor-pointer rounded-md shadow-sm ${hotelDetails.homeType===ele.name.toLocaleLowerCase() ? 'bg-[#ff5a5f] text-white border-none':''}`}>
+                    return <div  onClick={()=>clickHandler(ele.name.toLocaleLowerCase())} key={index+ele.name} className={`p-4 border-2 border-neutral-600 cursor-pointer flex justify-center items-center flex-col rounded-md shadow-sm ${hotelDetails.homeType===ele.name.toLocaleLowerCase() ? 'bg-[#ff5a5f] text-white border-none':''}`}>
                         <span>{ele.icon}</span>
-                        <p className='text-2xl font-bold'>{ele.name}</p>
+                        <p className='text-xl font-bold'>{ele.name}</p>
                     </div>
                 })
             }

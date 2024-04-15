@@ -48,7 +48,7 @@ const HomeSummery = () => {
         <div className='grid grid-cols-3 gap-4'>
             {
                 item.map((ele,index)=>{
-                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 rounded-full p-4 flex items-center cursor-pointer border-neutral-600 gap-3 ${hotelDetails.aboutHome===ele.name ? 'bg-[#ff5a5f] border-none text-white':''}`}>
+                    return <div onClick={()=>clickHandler(ele.name)} key={index+ele.name} className={`border-2 rounded-full p-2 flex items-center cursor-pointer border-neutral-600 gap-3 ${hotelDetails.aboutHome===ele.name ? 'bg-[#ff5a5f] border-none text-white':''}`}>
                         <span>{ele.icon}</span>
                         <span className='text-xl'>{ele.name}</span>
                     </div>

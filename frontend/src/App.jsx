@@ -33,6 +33,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import MyTrip from './page/mytrip/MyTrip'
 import EditForm from './page/account/EditForm'
+import ErrorComponent from './component/ErrorComponent'
+import PaymentErrorPage from './component/PaymentErrorPage'
 
 const App = () => {
   return (
@@ -40,6 +42,8 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path='*' element={<ErrorComponent />} />
+          <Route path='/payment-error' element={<PaymentErrorPage />} />
           <Route path='details/:id' element={<DetailPage />} />
           <Route path=':id/payprice' element={<PayPrice />} />
           <Route path='account' element={<Account />}/>

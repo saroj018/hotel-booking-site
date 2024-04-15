@@ -42,6 +42,10 @@ const hotelReserveSchema=new Schema({
         type:String,
         required:true
     },
+    paid:{
+        type:Boolean,
+        required:true
+    },
     reserveTime:{
         type:String,
         required:true

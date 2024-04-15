@@ -29,35 +29,31 @@ const priceHandler = (para, e) => {
 }
 return (
     <>
-        <div className='w-1/2 mx-auto'>
+        <div className='w-1/2 b mx-auto'>
             <h1 className=' text-4xl text-center font-bold'>Now, set your price</h1>
-            <p className='text-2xl my-4 text-center'>You can change it anytime.</p>
-            <div className='relative'>
-                <p className='text-center text-2xl my-2'>For Adults (Age 13+)</p>
-                <div className='relative  flex items-center text-9xl font-extrabold min-w-[700px]  mx-auto'>
-                    <h1 className='mx-4' >$</h1>
-                    <Input value={hotelDetails.price.adults} onChange={(e) => priceHandler('adults', e)} className=' p-0 h-[150px] w-[350px] text-center text-9xl font-extrabold border-2 border-black ' />
-                    <p className='text-3xl self-end mx-2 '>Per Night</p>
+            <div className=' w-1/2 mx-auto'>
+                <p className=' text-2xl my-2'>For Adults (Age 13+)</p>
+                <div className='font-extrabold flex items-center gap-2'>
+                    <span className='text-5xl' >$</span>
+                    <Input value={hotelDetails.price.adults} onChange={(e) => priceHandler('adults', e)} className=' p-0 h-[100px]  w-full text-center text-7xl font-extrabold border-2 border-black ' />
                 </div>
                 {/* <p onClick={(e) => { e.stopPropagation(), setPriceDrop(!priceDrop) }} className='text-lg text-blue-800 w-fit mx-auto underline cursor-pointer mt-10'>Show Price Details</p> */}
 
             </div>
-            <div className='relative'>
-                <p className='text-center text-2xl my-2'>For Children(Age 2-12)</p>
-                <div className='relative  flex items-center text-9xl font-extrabold min-w-[700px]  mx-auto'>
-                    <h1 className='mx-4' >$</h1>
-                    <Input value={hotelDetails.price.childrens} onChange={(e) => priceHandler('childrens', e)} className=' p-0 h-[150px] w-[350px] text-center text-9xl font-extrabold border-2 border-black ' />
-                    <p className='text-3xl self-end mx-2 '>Per Night</p>
+            <div className='w-1/2 mx-auto'>
+                <p className=' text-2xl my-2'>For Children(Age 2-12)</p>
+                <div className=' font-extrabold flex items-center gap-3'>
+                    <sapn className='text-5xl' >$</sapn>
+                    <Input value={hotelDetails.price.childrens} onChange={(e) => priceHandler('childrens', e)} className=' p-0 h-[100px]  w-full text-center text-7xl font-extrabold border-2 border-black ' />
                 </div>
                 {/* <p onClick={(e) => { e.stopPropagation(), setPriceDrop(!priceDrop) }} className='text-lg text-blue-800 w-fit mx-auto underline cursor-pointer mt-10'>Show Price Details</p> */}
 
             </div>
-            <div className='relative'>
-                <p className='text-center text-2xl my-2'>For Infants(Age Under 2)</p>
-                <div className='relative  flex items-center text-9xl font-extrabold min-w-[700px]  mx-auto'>
-                    <h1 className='mx-4' >$</h1>
-                    <Input value={hotelDetails.price.infants} onChange={(e) => priceHandler('infants', e)} className=' p-0 h-[150px] w-[350px] text-center text-9xl font-extrabold border-2 border-black ' />
-                    <p className='text-3xl self-end mx-2 '>Per Night</p>
+            <div className='w-1/2 mx-auto'>
+                <p className='text-2xl my-1'>For Infants(Age Under 2)</p>
+                <div className='flex gap-3 items-center font-extrabold'>
+                    <span className='text-5xl' >$</span>
+                    <Input value={hotelDetails.price.infants} onChange={(e) => priceHandler('infants', e)} className=' p-0 h-[100px] w-full text-center text-7xl font-extrabold border-2 border-black ' />
                 </div>
                 {/* <p onClick={(e) => { e.stopPropagation(), setPriceDrop(!priceDrop) }} className='text-lg text-blue-800 w-fit mx-auto underline cursor-pointer mt-10'>Show Price Details</p> */}
 

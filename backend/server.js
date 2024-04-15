@@ -10,4 +10,5 @@ connectToDb()
   })
   .catch((error) => {
     console.log("Server Connection is Failed: ", error.message);
+    process.exit(1)
   });

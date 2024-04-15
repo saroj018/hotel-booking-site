@@ -78,10 +78,9 @@ const OfferServices = () => {
     }, [hotelDetails.offerServices])
     return (
         <>
-            <div className='w-[45%] mx-auto '>
-                <h1 className='text-4xl font-bold text-center'>Tell guests what your place has to offer</h1>
-                <p className='text-center text-2xl my-6'>You can add more amenities after you publish your listing.</p>
-                <div className='grid grid-cols-3 gap-3'>
+            <div className='w-[55%] mx-auto '>
+                <h1 className='text-3xl my-8 font-bold text-center'>Tell guests what your place has to offer</h1>
+                <div className='grid grid-cols-4 gap-3'>
                     {
                         servicesOffer.map((ele, index) => {
                             return <div onClick={() => clickHandler(ele.name)} key={index + ele.name} className={`border-2 select-none cursor-pointer z-10 border-neutral-600 rounded-md p-3 flex justify-between items-center flex-col ${hotelDetails.offerServices.find((item) => item == ele.name) ? 'bg-red-500 text-white border-none' : ''}`}>

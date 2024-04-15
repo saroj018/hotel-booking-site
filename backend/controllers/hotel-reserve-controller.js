@@ -2,6 +2,11 @@ import { z } from "zod";
 import { hotelReserveModel } from "../model/hotel-reserve-model.js";
 import { hotelDetailsModel } from "../model/hotel-details-model.js";
 import { genToken } from "../utils/token.js";
+import request from "request";
+import axios from "axios";
+import fetch from "node-fetch";
+import { purchaseOrderModel } from "../model/purchase-order-model.js";
+import { paymentModel } from "../model/payment-model.js";
 
 const reserveValidator = z.object({
   checkIn: z
@@ -93,6 +98,7 @@ export const hotelReserveController = async (req, resp) => {
       reserveTime,
       dateList,
       reserveType: reserveType.bookingType,
+      paid: false,
     });
 
     if (!dbResult) {
@@ -101,7 +107,7 @@ export const hotelReserveController = async (req, resp) => {
 
     return resp.json({
       success: true,
-      message: "Reserved successfully",
+      // message: "Reserved successfully",
       details: dbResult,
     });
   } catch (error) {
@@ -115,7 +121,7 @@ export const getReservedHotelDetails = async (req, resp) => {
     const { id } = req.user;
     console.log(id);
     const result = await hotelReserveModel
-      .find({ reservedBy: id })
+      .find({ reservedBy: id, paid: true })
       .populate([
         { path: "hotel" },
         { path: "reservedBy", select: "-password" },
@@ -181,7 +187,7 @@ export const approveReserve = async (req, resp) => {
 export const reserveCancel = async (req, resp) => {
   try {
     const { id } = req.params;
-    console.log('id>>>>',id);
+    console.log("id>>>>", id);
 
     if (!id) {
       throw new Error("Please provide id");
@@ -196,5 +202,110 @@ export const reserveCancel = async (req, resp) => {
     return resp.json({ success: true, message: "Reserve cancel successfully" });
   } catch (err) {
     resp.json({ success: false, error: err.message });
+  }
+};
+
+export const paymentController = async (req, resp) => {
+  try {
+    const reserveInfo = req.body;
+    console.log("sora>>>>>>", reserveInfo);
+
+    const dbQuery = await purchaseOrderModel.create({
+      itemName: reserveInfo.hotel,
+      price: reserveInfo.price,
+      reserveId: reserveInfo.reserveId,
+    });
+    if (!dbQuery) {
+      throw new Error("dbQuery failed");
+    }
+
+    const header = {
+      Authorization: "Key 0c05e393ff924ec2827d3fbe33f013ad",
+      "Content-Type": "application/json",
+    };
+
+    const formData = {
+      return_url: "http://localhost:4000/api/reserve/payment/callback",
+      website_url: "http://localhost:4000",
+      amount: 5000,
+      purchase_order_id: dbQuery._id,
+      purchase_order_name: dbQuery.reserveId,
+    };
+    console.log(formData);
+
+    const response = await fetch(
+      "https://a.khalti.com/api/v2/epayment/initiate/",
+      {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(formData),
+      }
+    );
+    const result = await response.json();
+    console.log("resp>>>>>>", result);
+    return resp.json({ success: true, data: result, sora: "kora" });
+  } catch (err) {
+    console.log(err.stack);
+    console.log({ success: false, error: err.message });
+    resp.redirect('http://localhost:5173/payment-error')
+  }
+};
+
+export const paymentCallbackResponse = async (req, resp) => {
+  try {
+    const {
+      pidx,
+      transaction_id,
+      amount,
+      status,
+      purchase_order_id,
+      mobile,
+      total_amount,
+      purchase_order_name
+    } = req.query;
+    const header = {
+      Authorization: "Key 0c05e393ff924ec2827d3fbe33f013ad",
+      "Content-Type": "application/json",
+    };
+
+    const response = await fetch(
+      "https://a.khalti.com/api/v2/epayment/lookup/",
+      {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify({ pidx }),
+      }
+    );
+    const result = await response.json();
+
+    if (result) {
+      const findReserve = await hotelReserveModel.findOne({
+        _id: purchase_order_name,
+      });
+
+      if (!findReserve) {
+        throw new Error("reserve not found");
+      }
+
+      findReserve.paid = true;
+      await findReserve.save();
+      const paymentOnDb = await paymentModel.create({
+        payment_id: pidx,
+        purchase_order_id,
+        amount,
+        status,
+        mobile,
+        transaction_id,
+        total_amount,
+      });
+
+      if(!paymentOnDb){
+        throw new Error("faild to dbQuery on payment")
+      }
+      resp.redirect(`http://localhost:5173/mytrips`);
+    }
+  } catch (err) {
+    console.log({ success: false, error: err.message });
+    resp.redirect('http://localhost:5173/payment-error')
   }
 };

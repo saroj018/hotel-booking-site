@@ -98,6 +98,7 @@ export const hotelDetailsController = async (req, resp) => {
       locatedPlace,
     } = hotelInfo;
     let hotelImage = req.files;
+    console.log(hotelImage);
 
     const validateDetails = hotelDetailsValidation.safeParse({
       homeType,
@@ -327,10 +328,10 @@ export const filterHotels = async (req, resp) => {
       "customerNumber.bed": filterParams.BRB.Beds,
       "customerNumber.bathroom": filterParams.BRB.Bathrooms,
       "customerNumber.bedroom": filterParams.BRB.Rooms,
-      // "price.adults": {
-      //   $gte: filterParams.price.min,
-      //   $lte: filterParams.price.max,
-      // },
+      "price.adults": {
+        $gte: filterParams.price.min,
+        $lte: filterParams.price.max,
+      },
     });
 
     if (!result) {

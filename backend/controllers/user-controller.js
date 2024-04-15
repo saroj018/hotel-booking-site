@@ -217,6 +217,15 @@ export const verifyUser = async (req, resp, next) => {
       logindetails: req.user._id,
     });
 
+    if(findUser){
+      const result=await userVerifyModel.findOne({email:data?.email})
+      console.log(result);
+      if(result && result.verified){
+        throw new Error("This email is already verified")
+      }
+    }
+    
+
     if (data) {
       if (findUser?.email == data.email || findUser?.verified == true) {
         throw new Error("This email is already verified");

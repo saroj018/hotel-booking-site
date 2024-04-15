@@ -11,16 +11,16 @@ import { Context } from '../host/context/HotelDetailContext'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useGetFetch } from '../hooks/fetch-data'
 
-const Header = ({ className, navlinks, accountSwitch, icon, profileItem, extraItem = true }) => {
 
+const Header = ({ className,navlinks, profileItem, extraItem = true }) => {
 
 
 
     const [scrollValue, setScrollValue] = useState(false)
     const [showProfileModal, setShowProfileModal] = useState(false)
     const [search, setSearch] = useState('')
-    const[timeUp,setTimeUp]=useState(false)
-    const { isAuth, setIsAuth, setDetails,details } = useContext(Context)
+    const [timeUp, setTimeUp] = useState(false)
+    const { isAuth, setIsAuth, setDetails, details } = useContext(Context)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -57,64 +57,66 @@ const Header = ({ className, navlinks, accountSwitch, icon, profileItem, extraIt
     }
 
     const apiCall = async () => {
-        // setTimeUp(false)
-        // let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/searchhotels/?payload=${search}`)
-        // setDetails(result.data)
-    
-      }
-    
-      useEffect(() => {
+        setTimeUp(false)
+        let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/searchhotels/?payload=${search}`)
+        setDetails(result.data)
+
+    }
+
+    useEffect(() => {
         let id
         if (details.length < 1) {
-          id = setTimeout(() => {
-            setTimeUp(true)
-          }, 500);
-    
-          return () => clearTimeout(id)
+            id = setTimeout(() => {
+                setTimeUp(true)
+            }, 500);
+
+            return () => clearTimeout(id)
         }
-      }, [details])
-    
-      useEffect(() => {
-       
+    }, [details])
+
+    useEffect(() => {
+
         let id = setTimeout(() => {
-          apiCall()
+            apiCall()
         }, 1000);
-    
+
         return () => clearTimeout(id)
-      }, [search])
+    }, [search])
 
-
+  
     return (
-        <header className={twMerge(`flex items-center shadow-md z-10 justify-between px-10 py-8 text-xl text-neutral-700 ${extraItem ? 'sticky' : ''} top-0 bg-white`, className)}>
-            <Link to={'/'}><img className='h-10' src="https://th.bing.com/th/id/R.11566b13ebe3fe195137ce2bd1804a69?rik=Og%2bcKTbfN4mhBA&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2016%2f03%2fAirbnb_logo.png&ehk=QhLUqOjF6HxBvuuxjqpvtKEeCf%2bnDOuAUWx8DInRPOo%3d&risl=&pid=ImgRaw&r=0" alt="" /></Link>
+        <header className={twMerge(`flex items-center shadow-md z-10 justify-between px-10 py-2 text-xl text-neutral-700 ${extraItem ? 'sticky' : ''} top-0 bg-white`, className)}>
+            <Link to={'/'}><img className='w-[80px]' src="https://imgs.search.brave.com/rCW37zsT-MV2TZdWc2wtqIXBoinS9sD8aN2uba2BOYg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/ZG93bmxvYWQub3Jn/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDE2/LzEwL2FpcmJuYi1s/b2dvLTAucG5n" alt="" /></Link>
 
-            <div className='relative lg:block hidden'>
+             <div className='relative lg:block hidden'>
 
-
-                <nav className={`flex items-center gap-8 ${scrollValue ? 'hidden' : ''}`}>
-                    {
-                        navlinks.map((ele, index) => {
-                            return <Link to={ele.url} key={index}>{ele.title}</Link>
-                        })
-                    }
-                </nav>
-                {scrollValue && extraItem && <Input onChange={(e)=>setSearch(e.target.value)} value={search} type='text' className={' border-2 border-neutral-600 min-w-[600px] rounded-full pl-4 '} placeholder={'Search your destinations...'} />}
+                {scrollValue && extraItem && <Input onChange={(e) => setSearch(e.target.value)} value={search} type='text' className={' border-2 border-neutral-600 min-w-[600px] rounded-full pl-4 '} placeholder={'Search your destinations...'} />}
                 {scrollValue && extraItem && <Search className='absolute left-[93%] top-4 ' />}
             </div>
 
+            <ul className='flex gap-8'>
+                {
+                    navlinks?.map((ele,index)=>{
+                       return <Link key={index} to={ele.url}><li>{ele.title}</li></Link>
+                    })
+                }
+            </ul>
+
 
             <nav className='flex relative items-center gap-6'>
-                <Link to={'/host'} className='font-semibold text-black'>{accountSwitch}</Link>
+                {isAuth && <Link to={'/host'} className='font-semibold text-black'>Airbnb Your Home</Link>}
+                {isAuth && <Link to={'/host/dashboard'}>
+                    Dashboard
+                </Link>}
                 {extraItem && !isAuth && <LoginPopup />}
                 {extraItem && !isAuth && <SignupPopup />}
                 {isAuth && <Button onClick={logoutHandler}>Log Out</Button>}
-                <span className='cursor-pointer border-2 rounded-full p-1'>{icon}</span>
 
                 <div onClick={(e) => { e.stopPropagation(), setShowProfileModal(!showProfileModal) }} className='flex  items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
                     {isAuth ? <p className='text-lg select-none font-black  uppercase'>{localStorage.getItem('user')?.split(' ')[0]}</p> : <Menu />}
                     <img className='h-10 w-10 rounded-full' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
                 </div>
-                {showProfileModal && <ProfilePopup closePopup={closePopup} profileItem={profileItem} onClick={(e) => e.stopPropagation()} className={'absolute  w-[300px] left-[60%] top-[120%]'} />}
+                {showProfileModal && <ProfilePopup closePopup={closePopup} profileItem={profileItem} onClick={(e) => e.stopPropagation()} className={'absolute  w-[300px] left-[33%] top-[120%]'} />}
             </nav>
         </header>
     )

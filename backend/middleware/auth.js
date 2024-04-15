@@ -20,6 +20,7 @@ export const authentication = async (req, resp, next) => {
       throw new Error("User not found")
     }
     req.user = user;
+    console.log('pass');
     next();
   } catch (error) {
     return resp.json({ success: false, error: error.message });
