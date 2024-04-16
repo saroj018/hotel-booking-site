@@ -11,6 +11,9 @@ import { User } from "../model/user-model.js";
 import { genToken } from "../utils/token.js";
 import { hotelReserveModel } from "../model/hotel-reserve-model.js";
 
+
+
+
 const hotelDetailsValidation = z.object({
   homeType: z
     .string({
@@ -84,6 +87,7 @@ export const getAllHotelController = async (req, resp) => {
 export const hotelDetailsController = async (req, resp) => {
   try {
     let hotelInfo = JSON.parse(req.body.details);
+    console.log('info', req.body.details);
     let {
       homeType,
       roomType,
@@ -98,7 +102,6 @@ export const hotelDetailsController = async (req, resp) => {
       locatedPlace,
     } = hotelInfo;
     let hotelImage = req.files;
-    console.log(hotelImage);
 
     const validateDetails = hotelDetailsValidation.safeParse({
       homeType,
@@ -117,6 +120,8 @@ export const hotelDetailsController = async (req, resp) => {
     if (validateDetails.error) {
       return resp.json({ error: validateDetails.error.format() });
     }
+
+   
 
     const resultOfUploadedImage = await uploadImageOnCloudinary(
       hotelImage,

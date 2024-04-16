@@ -12,6 +12,7 @@ const ReadyToSend = () => {
 
     const clickHandler = async () => {
         console.log(hotelInformantion);
+        console.log('hotelInformantion');
         try {
             const resp = await fetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/addhoteldetails`, {
                 method: "POST",
@@ -21,6 +22,7 @@ const ReadyToSend = () => {
                 }
             })
             const result = await resp.json()
+            console.log(result);
             setHotelInfo(result.hotelDetails)
             if (result.success) {
 
@@ -29,8 +31,13 @@ const ReadyToSend = () => {
                 navigate('/host/finalpage')
             }
             else {
+
+                toast.error(result.errmsg)
+            }
+            if (result.verify) {
+                console.log(result.error);
+                console.log(result);
                 setVerify(true)
-                toast.error(result.error)
             }
         } catch (error) {
             toast.error(error.message)

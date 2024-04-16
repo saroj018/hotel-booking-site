@@ -42,9 +42,10 @@ const LoginPopup = () => {
     }
 
     const googleLoginHandler=async()=>{
-        const result=await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/user/loginwithgoogle`)
-        console.log(result);
-        window.location.href='http://localhost:4000/api/user/loginwithgoogle'
+        const resp=await fetch(`${import.meta.env.VITE_HOSTNAME}/api/user/loginwithgoogle`,{
+        })
+        console.log(resp);
+        // window.location.href=resp.url
     }
 
     const facebookLoginHandler=()=>{

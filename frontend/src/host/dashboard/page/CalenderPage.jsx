@@ -57,7 +57,7 @@ const CalenderPage = () => {
   }
   return (
     <div>
-      <div className='w-full flex gap-5 mt-5 border-2 max-h-screen'>
+      <div className='w-full flex gap-5 mt-5 border-2 '>
         <Calendar cellRender={cellRender} onChange={changeHandler} className='text-center max-w-[72%] text-xl' />
         <CalendarPopup hotelInfo={hotelInfo} id={id} setId={setId} />
       </div>

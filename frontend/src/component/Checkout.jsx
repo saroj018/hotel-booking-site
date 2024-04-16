@@ -79,6 +79,9 @@ const Checkout = ({ className, dateCollection }) => {
                 toast.error("Selected date is unavilable")
                 return
             }
+            if(totalNight<1){
+                toast.error("Minimum 1 night is required")
+            }
 
             navigate(`/${id}/payprice?checkIn=${checkIn}&checkOut=${checkOut}&Adults=${Adults}&Children=${Children}&Infants=${Infants}`) 
         } catch (error) {

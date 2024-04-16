@@ -219,15 +219,13 @@ export const verifyUser = async (req, resp, next) => {
 
     if(findUser){
       const result=await userVerifyModel.findOne({email:data?.email})
-      console.log(result);
       if(result && result.verified){
         throw new Error("This email is already verified")
       }
     }
-    
 
     if (data) {
-      if (findUser?.email == data.email || findUser?.verified == true) {
+      if (findUser?.email == data.email ) {
         throw new Error("This email is already verified");
       }
       req.verifyUser = data;

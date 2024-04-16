@@ -4,11 +4,11 @@ export const checkVerifyUser = async (req, resp, next) => {
   try {
     const user = await userVerifyModel.findOne({ logindetails: req.user._id });
     
-    if (user) {
+    if (user && user.verified==true) {
       return next();
     }
     else{
-      return resp.json({success:false,message:'User not found'})
+      return resp.json({success:false,verify:true,error:'User not found'})
     }
 
   } catch (error) {

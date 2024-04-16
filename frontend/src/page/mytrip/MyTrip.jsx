@@ -23,9 +23,9 @@ const MyTrip = () => {
             }
             <hr />
             {
-                reserveInfo.length === 0 ?
+                reserveInfo?.length === 0 ?
                     <h1 className='text-5xl text-center  w-full mt-4 text-red-500'>Loading........</h1>
-                    : <div className='grid grid-cols-4 gap-5 overflow-y-scroll'>
+                    : <div className='grid grid-cols-4 gap-5 '>
                         {
 
                             reserveInfo?.map((item) => {

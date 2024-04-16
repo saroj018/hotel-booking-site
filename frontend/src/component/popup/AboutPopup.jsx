@@ -11,7 +11,7 @@ const AboutPopup = ({details}) => {
     <div>
         <button onClick={()=>setOpen(true)} className='text-xl font-bold my-4'>Show More..</button>
         <Popup open={open} lockScroll={true} onClose={()=>setOpen(false)} {...{overlayStyle}}>
-            <div className='mx-auto relative w-1/2 h-fit bg-white pl-10 py-3 rounded-md shadow-md max-h-[600px] overflow-scroll'>
+            <div className='mx-auto relative w-1/2 h-fit bg-white pl-10 py-3 rounded-md shadow-md max-h-[600px] overflow-y-scroll'>
                 <X onClick={()=>setOpen(false)} className='absolute left-[95%] top-6 cursor-pointer'/>
                 <h1 className='text-3xl font-bold my-3 underline'>About this space</h1>
                 <div>

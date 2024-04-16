@@ -25,7 +25,9 @@ const SetPrice = () => {
     }, [hotelDetails.price])
 
 const priceHandler = (para, e) => {
-    setHotelDetails((prv) => ({ ...prv, price: { ...prv.price, [para]: e.target.value } }))
+    let price=Number(e.target.value)
+    setHotelDetails((prv) => ({ ...prv, price: { ...prv.price, [para]: price } }))
+    
 }
 return (
     <>

@@ -48,7 +48,7 @@ useEffect(()=>{
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <CurrentMarker setLocation={setLocation} />
+            <CurrentMarker setLocation={setLocation} toolTip={'your is here'} draggable={true} />
             </MapContainer>
         </div>
       </div>

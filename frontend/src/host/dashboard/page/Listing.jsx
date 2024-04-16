@@ -15,8 +15,8 @@ const Listing = () => {
 
     const getHotelDetails = async () => {
         const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/hotel/gethoteldetails`)
-        console.log(result.success);
-        setVerify(!result.success)
+        console.log(result);
+        setVerify(result.verify)
         setHotelDetails(result.detals)
     }
 
@@ -70,12 +70,12 @@ const Listing = () => {
             {state && <div className='w-fit mx-auto flex'>
                 <p onClick={deleteHandler} className='border-2 px-8 py-2 border-neutral-600 rounded-full text-lg mx-2 cursor-pointer'>Delete</p>
             </div>}
-            <div className={'overflow-scroll max-h-[600px]'}>
+            <div className={' max-h-[600px]'}>
                 <table className='text-center text-xl mt-10'>
                     <thead className='border-2 border-neutral-700 border-l-0 border-r-0 '>
                         <th>Select</th>
                         <th className='p-4'>Listing</th>
-                        <th className='p-4 w-[150px]'>Status</th>
+                        {/* <th className='p-4 w-[150px]'>Status</th> */}
                         <th className='p-4 w-[350px]'>House Title</th>
                         <th className='p-4'>Bed Rooms</th>
                         <th className='p-4'>Beds</th>
@@ -94,7 +94,7 @@ const Listing = () => {
                                     <td className='w-[10%] p-3'>
                                         <img className='w-[100%] rounded-md' src={item?.idOfImage[0]?.url} alt="" />
                                     </td>
-                                    <td className='p-3'>pending</td>
+                                    {/* <td className='p-3'>pending</td> */}
                                     <td className='p-3 text-left'>{`${item?.houseTitle.slice(0, 30)}...`}</td>
                                     <td className='p-3'>{item?.customerNumber?.bedroom}</td>
                                     <td className='p-3'>{item?.customerNumber?.bed}</td>

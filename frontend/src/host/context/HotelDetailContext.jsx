@@ -49,6 +49,7 @@ const HotelDetailContext = ({ children }) => {
   photo?.forEach((item) => {
     hotelInformantion.append('photo', item)
   })
+  console.log('sos'.hotelInformantion);
 
   
 

@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className='mt-3 overflow-scroll'>
+      <div className='mt-3'>
         <h1 className='text-5xl font-bold '>Welcome back, {localStorage.getItem('user')}</h1>
         <div className='flex justify-between mt-10'>
           <p className='text-3xl font-bold'>Your reservations</p>

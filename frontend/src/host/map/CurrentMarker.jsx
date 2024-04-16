@@ -3,7 +3,7 @@ import { Marker, Popup, useMapEvents } from 'react-leaflet'
 import locationLogo from '../../../src/assets/location.png'
 import L from "leaflet";
 
-const CurrentMarker = ({setLocation}) => {
+const CurrentMarker = ({setLocation,toolTip,draggable}) => {
     const [position, setPosition] = useState(null)
     const map = useMapEvents({
         click() {
@@ -33,8 +33,8 @@ const eventHandlers = {
 
 
     return position === null ? null : (
-        <Marker icon={pointerIcon} autoPan={true} eventHandlers={eventHandlers} draggable={true} position={position}>
-            <Popup>You are here</Popup>
+        <Marker icon={pointerIcon} autoPan={true} eventHandlers={eventHandlers} draggable={draggable} position={position}>
+            <Popup>{toolTip}</Popup>
         </Marker>
     )
 

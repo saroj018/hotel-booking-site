@@ -11,7 +11,7 @@ import emailRouter  from './routes/mail-route.js'
 export const app=express()
 app.use(express.json({limit:'16kb'}))
 dotenv.config({path:'./env'})
-app.use(cors({credentials:true,origin:'*'}))
+app.use(cors({origin:'*'}))
 app.use(cookieParser())
 
 

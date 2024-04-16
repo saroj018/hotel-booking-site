@@ -85,7 +85,7 @@ const Header = ({ className,navlinks, profileItem, extraItem = true }) => {
 
   
     return (
-        <header className={twMerge(`flex items-center shadow-md z-10 justify-between px-10 py-2 text-xl text-neutral-700 ${extraItem ? 'sticky' : ''} top-0 bg-white`, className)}>
+        <header className={twMerge(`flex items-center shadow-md z-10 justify-between px-10 py-6 text-xl text-neutral-700 ${extraItem ? 'sticky' : ''} top-0 bg-white`, className)}>
             <Link to={'/'}><img className='w-[80px]' src="https://imgs.search.brave.com/rCW37zsT-MV2TZdWc2wtqIXBoinS9sD8aN2uba2BOYg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/ZG93bmxvYWQub3Jn/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDE2/LzEwL2FpcmJuYi1s/b2dvLTAucG5n" alt="" /></Link>
 
              <div className='relative lg:block hidden'>
@@ -112,11 +112,12 @@ const Header = ({ className,navlinks, profileItem, extraItem = true }) => {
                 {extraItem && !isAuth && <SignupPopup />}
                 {isAuth && <Button onClick={logoutHandler}>Log Out</Button>}
 
-                <div onClick={(e) => { e.stopPropagation(), setShowProfileModal(!showProfileModal) }} className='flex  items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
+                <div onClick={(e) => { e.stopPropagation(), setShowProfileModal(!showProfileModal) }} className='flex relative items-center gap-3 border-2 border-neutral-300 px-3 py-2 cursor-pointer rounded-full'>
+                    {/* <p className='absolute top-[65%] left-4 text-sm text-red-500'>verified</p> */}
                     {isAuth ? <p className='text-lg select-none font-black  uppercase'>{localStorage.getItem('user')?.split(' ')[0]}</p> : <Menu />}
                     <img className='h-10 w-10 rounded-full' src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/35af6a41332353.57a1ce913e889.jpg" alt="" />
                 </div>
-                {showProfileModal && <ProfilePopup closePopup={closePopup} profileItem={profileItem} onClick={(e) => e.stopPropagation()} className={'absolute  w-[300px] left-[33%] top-[120%]'} />}
+                {showProfileModal && <ProfilePopup closePopup={closePopup} profileItem={profileItem} onClick={(e) => e.stopPropagation()} className={'absolute  w-[300px] left-[45%] top-[120%]'} />}
             </nav>
         </header>
     )
