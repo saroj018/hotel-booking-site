@@ -1,18 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { useGetFetch } from '../../hooks/fetch-data'
+import { useDeleteFetch, useGetFetch } from '../../hooks/fetch-data'
 import Cards from '../../component/Cards'
 import dayjs from 'dayjs'
+
+
 
 const MyTrip = () => {
     const [reserveInfo, setReserveInfo] = useState([])
     const [refe, setRef] = useState(false)
+    const [needToDelete, setNeedToDelete] = useState([])
     const reserveInfoData = async () => {
         let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/getreservehoteldetails`)
         setReserveInfo(result.data)
+        setNeedToDelete([])
     }
     useEffect(() => {
         reserveInfoData()
     }, [refe])
+
+    useEffect(() => {
+        reserveInfo.forEach((ele) => {
+            let date = new Date(ele.checkOut)
+            if (date < new Date()) {
+                setNeedToDelete((prv) => [...prv, ele._id])
+            }
+        })
+    }, [])
+
+
+    useEffect(() => {
+        needToDelete.forEach(async (ele) => {
+             await useDeleteFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/reservecancel/${ele}`)
+        })
+    },[needToDelete])
+
     return (
         <>
             {
