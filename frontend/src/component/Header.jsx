@@ -20,6 +20,7 @@ const Header = ({ className,navlinks, profileItem, extraItem = true }) => {
     const [showProfileModal, setShowProfileModal] = useState(false)
     const [search, setSearch] = useState('')
     const [timeUp, setTimeUp] = useState(false)
+    const[nav,setNav]=useState('Today')
     const { isAuth, setIsAuth, setDetails, details } = useContext(Context)
     const navigate = useNavigate()
 
@@ -97,7 +98,7 @@ const Header = ({ className,navlinks, profileItem, extraItem = true }) => {
             <ul className='flex gap-8'>
                 {
                     navlinks?.map((ele,index)=>{
-                       return <Link key={index} to={ele.url}><li>{ele.title}</li></Link>
+                       return <Link onClick={()=>setNav(ele.title)} className={nav==ele.title ? 'text-red-500 underline':''} key={index} to={ele.url}><li>{ele.title}</li></Link>
                     })
                 }
             </ul>

@@ -21,10 +21,6 @@ const Navbar = () => {
         title:'Inbox',
         url:'/host/dashboard/inbox'
     },
-    {
-        title:'Menu',
-        url:''
-    }
  ]
 
  const profileItem=[

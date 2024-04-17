@@ -12,12 +12,14 @@ import Skeloten from '../../component/utlils/Skeloten'
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import CurrentMarker from '../../host/map/CurrentMarker'
+import ReviewCard from '../../component/ReviewCard'
 
 const DetailPage = () => {
 
   const [details, setDetails] = useState({})
   const [dateCollection, setDateCollection] = useState()
-  const [location, setLocation] = useState({lat:27.70169, lan:85.3206})
+  const [location, setLocation] = useState({ lat: 27.70169, lan: 85.3206 })
+  const[review,setReview]=useState()
   const { setHotelData } = useContext(Context)
   const { id } = useParams()
   const { pathname } = useLocation()
@@ -28,18 +30,24 @@ const DetailPage = () => {
     setDetails(result?.data)
     setHotelData(result?.data)
     setDateCollection(result?.dates)
-    setLocation({lat:result.data.locatedPlace.lat,lan:result.data.locatedPlace.lan})
+    setLocation({ lat: result.data.locatedPlace.lat, lan: result.data.locatedPlace.lan })
   }
 
+  const getReview = async () => {
+    const result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/feedback/review/${id}`)
+    setReview(result.review)
+  }
   useEffect(() => {
     getDetails()
+    getReview()
   }, [])
+  console.log('rr>>>',review);
 
-  useEffect(()=>{
-    let map=document.getElementById('map')
+  useEffect(() => {
+    let map = document.getElementById('map')
 
-    map.scrollLeft=300
-  },[])
+    map.scrollLeft = 300
+  }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -158,6 +166,14 @@ const DetailPage = () => {
           <CurrentMarker draggable={false} toolTip={`hotel is here, lat:${location.lat},lan:${location.lan}`} />
         </MapContainer>
       </div>
+      <section className='mt-10'>
+        <h1 className='text-4xl font-bold my-4'>Reviews & Ratings</h1>
+        {
+          review?.map((ele,index)=>{
+            return <ReviewCard key={ele._id} reviewMessage={ele.reviewMessage} user={ele.user.fullname} star={ele.rating}/>
+          })
+        }
+      </section>
 
     </div>
   )

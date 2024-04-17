@@ -18,6 +18,10 @@ const HotelDetailContext = ({ children }) => {
   const [photo, setPhoto] = useState([])
   const[verify,setVerify]=useState(false)
   const[details,setDetails]=useState([])
+  const[reviewPopup,setReviewPopup]=useState(false)
+  const[hotelId,setHotelId]=useState([])
+ 
+
 
   const [hotelDetails, setHotelDetails] = useState({
     homeType: '',
@@ -72,7 +76,11 @@ const HotelDetailContext = ({ children }) => {
     verify,
     setVerify,
     details,
-    setDetails
+    setDetails,
+    setReviewPopup,
+    reviewPopup,
+    setHotelId,
+    hotelId
   }
 
   return (

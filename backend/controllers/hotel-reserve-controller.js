@@ -110,6 +110,7 @@ export const hotelReserveController = async (req, resp) => {
       // message: "Reserved successfully",
       details: dbResult,
     });
+    
   } catch (error) {
     console.log(error.message);
     return resp.json({ success: false, error: error.message });
@@ -130,7 +131,9 @@ export const getReservedHotelDetails = async (req, resp) => {
     if (!result) {
       throw new Error("You don't have any reserved");
     }
-    console.log(result);
+    
+    await hotelReserveModel.findOneAndDelete({paid:false})
+
     return resp.json({ success: true, data: result });
   } catch (error) {
     return resp.json({ success: false, error: error.message });
@@ -242,7 +245,6 @@ export const paymentController = async (req, resp) => {
       }
     );
     const result = await response.json();
-    console.log("resp>>>>>>", result);
     return resp.json({ success: true, data: result, sora: "kora" });
   } catch (err) {
     console.log(err.stack);
@@ -287,8 +289,7 @@ export const paymentCallbackResponse = async (req, resp) => {
         throw new Error("reserve not found");
       }
 
-      findReserve.paid = true;
-      await findReserve.save();
+      console.log('>>>>>>>>payment success');
       const paymentOnDb = await paymentModel.create({
         payment_id: pidx,
         purchase_order_id,
@@ -298,10 +299,12 @@ export const paymentCallbackResponse = async (req, resp) => {
         transaction_id,
         total_amount,
       });
-
+      
       if(!paymentOnDb){
         throw new Error("faild to dbQuery on payment")
       }
+      findReserve.paid = true;
+      await findReserve.save();
       resp.redirect(`http://localhost:5173/mytrips`);
     }
   } catch (err) {

@@ -29,6 +29,7 @@ export const usePostFetch = async (
   bodyData,
   header = "application/json"
 ) => {
+  console.log(bodyData);
   try {
     const resp = await fetch(url, {
       method: "POST",

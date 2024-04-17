@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDeleteFetch, useGetFetch } from '../../hooks/fetch-data'
 import Cards from '../../component/Cards'
 import dayjs from 'dayjs'
+import { Context } from '../../host/context/HotelDetailContext'
 
 
 
@@ -9,8 +10,10 @@ const MyTrip = () => {
     const [reserveInfo, setReserveInfo] = useState([])
     const [refe, setRef] = useState(false)
     const [needToDelete, setNeedToDelete] = useState([])
+    const{setReviewPopup,setHotelId}=useContext(Context)
     const reserveInfoData = async () => {
         let result = await useGetFetch(`${import.meta.env.VITE_HOSTNAME}/api/reserve/getreservehoteldetails`)
+        console.log(result);
         setReserveInfo(result.data)
         setNeedToDelete([])
     }
@@ -20,8 +23,11 @@ const MyTrip = () => {
 
     useEffect(() => {
         reserveInfo.forEach((ele) => {
+            console.log(ele);
             let date = new Date(ele.checkOut)
             if (date < new Date()) {
+                setReviewPopup(true)
+                setHotelId((prv)=>[...prv,ele?.hotel?._id])
                 setNeedToDelete((prv) => [...prv, ele._id])
             }
         })

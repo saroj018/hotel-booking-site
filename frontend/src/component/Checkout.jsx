@@ -81,6 +81,7 @@ const Checkout = ({ className, dateCollection }) => {
             }
             if(totalNight<1){
                 toast.error("Minimum 1 night is required")
+                return
             }
 
             navigate(`/${id}/payprice?checkIn=${checkIn}&checkOut=${checkOut}&Adults=${Adults}&Children=${Children}&Infants=${Infants}`) 
