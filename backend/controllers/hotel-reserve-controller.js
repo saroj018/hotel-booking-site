@@ -7,6 +7,7 @@ import axios from "axios";
 import fetch from "node-fetch";
 import { purchaseOrderModel } from "../model/purchase-order-model.js";
 import { paymentModel } from "../model/payment-model.js";
+import { nightCalculator } from "../../frontend/src/component/utlils/nightCalculator.js";
 
 const reserveValidator = z.object({
   checkIn: z
@@ -312,3 +313,26 @@ export const paymentCallbackResponse = async (req, resp) => {
     resp.redirect('http://localhost:5173/payment-error')
   }
 };
+
+
+export const chartInfo=async(req,resp)=>{
+  try {
+    const user=req.user
+    const hotelInfo=await hotelDetailsModel.find({uploadedBy:user._id})
+    let hotelArr=[]
+    for(let i=0;i<hotelInfo.length;i++){
+      hotelArr.push(hotelInfo[i]._id)
+    }
+    const reserveInfo=await hotelReserveModel.find({hotel:{$in:hotelArr}}).populate('hotel')
+  
+
+
+    if(!reserveInfo){
+      throw new Error("not found reserve")
+    }
+
+    return resp.json({success:true,details:reserveInfo})
+  } catch (err) {
+    return resp.json({success:false,error:err.message})
+  }
+}

@@ -35,6 +35,7 @@ import MyTrip from './page/mytrip/MyTrip'
 import EditForm from './page/account/EditForm'
 import ErrorComponent from './component/ErrorComponent'
 import PaymentErrorPage from './component/PaymentErrorPage'
+import Stats from './host/dashboard/page/Stats'
 
 const App = () => {
   return (
@@ -75,6 +76,7 @@ const App = () => {
           <Route path='listing' element={<Listing />} />
           <Route path='calender' element={<CalenderPage />} />
           <Route path='inbox' element={<Inbox />} />
+          <Route path='stats' element={<Stats />} />
         </Route>
       </Routes>
       <ToastContainer />

@@ -21,6 +21,10 @@ const Navbar = () => {
         title:'Inbox',
         url:'/host/dashboard/inbox'
     },
+    {
+        title:'Stats.',
+        url:'/host/dashboard/stats'
+    },
  ]
 
  const profileItem=[

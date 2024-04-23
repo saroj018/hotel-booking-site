@@ -57,7 +57,7 @@ const hotelReserveSchema=new Schema({
     reserveType:{
         type:String,
         required:true
-    }
+    },
 },
 {
     timestamps:true
